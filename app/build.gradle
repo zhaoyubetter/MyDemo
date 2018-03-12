@@ -25,6 +25,11 @@ android {
         }
     }
 
+    // 实验性阶段
+    androidExtensions {
+        experimental = true
+    }
+
 }
 
 dependencies {

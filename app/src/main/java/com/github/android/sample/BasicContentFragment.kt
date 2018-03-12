@@ -36,7 +36,9 @@ class BasicContentFragment : Fragment() {
         val items = AnimFunTemplate.getInstance(activity)[id]
         items?.let {
             recycler.adapter = Adapter(it) {
-                startActivity(Intent(activity, it.clazz))
+                startActivity(Intent(activity, it.clazz).apply {
+                    putExtra("item", it)
+                })
             }
         }
     }
