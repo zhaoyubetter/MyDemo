@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+     android:duration="3000"
+     android:fillAfter="true">
+
+    <alpha
+        android:fromAlpha="0.2"
+        android:toAlpha="1.0"/>
+
+    <scale
+        android:fromXScale="0.0"
+        android:fromYScale="0.0"
+        android:toXScale="1.0"
+        android:toYScale="1.0"/>
+
+    <rotate
+        android:fromDegrees="0"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:toDegrees="360"/>
+</set>
+
+    <!--
+        set 标签的属性，从Animation继承而来，set标签上的所有属性会对所有动画生效
+
+        可以给 scale 标签加上：
+        android:pivotX="50%"
+        android:pivotY="50%"
+        看看效果
+    -->

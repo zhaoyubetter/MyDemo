@@ -4,18 +4,27 @@
        android:fromXScale="1.0"
        android:fromYScale="1.0"
        android:toXScale="1.5"
+       android:fillAfter="true"
        android:toYScale="1.5">
 
 
 <!--
 参考：http://blog.csdn.net/harvic880925/article/details/39996643
+
     a.fromXScale,fromYScale: [default 0.0] 动画开始前X,Y的缩放，如：0.0为不显示，1.0为正常大小, 0.5为起始时缩小一倍;
     b.toXScale，toYScale:     动画最终缩放的倍数，1.0为正常大小，大于1.0放大，小于1.0缩放；
     c.pivotX,pivotY:          动画起始位置，可以是数值、百分数、百分数p 三种样式，比如 50、50%、50%p，
                             1.当为数值时，表示在当前View的左上角，加上数值，做为起始缩放点；
                             2.如果是50%，表示在当前控件的左上角加上自己宽度的50%做为起始点(以自己为中心进行scale)；
                             3.如果是50%p，那么就是表示在当前的左上角加上父控件宽度的50%做为起始点x轴坐标;
-    d.
+
+    // 从Animation类继承的属性
+    a.fillAfter: true 控件动画结束时，将保持动画最后时的状态
+    b.repeatCount: 重复次数
+    c.repeatMode: 重复类型，有reverse和restart两个值，reverse表示倒序回放，restart表示重新放一遍，
+        必须与repeatCount一起使用才能看到效果。
+    d.interpolator :插值器
+    e.duration: 时间
 
 -->
 

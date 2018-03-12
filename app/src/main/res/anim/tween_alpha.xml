@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<alpha xmlns:android="http://schemas.android.com/apk/res/android"
+       android:duration="2500"
+       android:fromAlpha="0.1"
+       android:fillAfter="true"
+       android:toAlpha="0.8">
+
+</alpha>
+
+    <!--
+
+        alpha 比较简单
+
+        alpha 取值范围 [0,1]
+    -->

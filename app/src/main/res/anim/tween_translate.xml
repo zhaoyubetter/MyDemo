@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+           android:duration="2000"
+           android:fillBefore="true"
+           android:fromXDelta="50%"
+           android:fromYDelta="50%"
+           android:toXDelta="0"
+           android:toYDelta="-100">
+
+</translate>
+
+    <!--
+    平移动画
+        a.fromXDelta: 起始点X轴坐标，可以是数值、百分数、百分数p 三种样式, scale 中描述过了
+        b.toXDelta: 结束点X轴坐标，0 为原始位置
+    -->

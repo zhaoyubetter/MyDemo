@@ -12,7 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.better.base.model.SampleItem
-import com.github.android.sample.amin.AnimFunTemplate
+import com.github.android.sample.anim.AnimFunTemplate
 import org.jetbrains.anko.find
 
 /**

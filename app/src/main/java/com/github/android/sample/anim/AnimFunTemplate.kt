@@ -1,4 +1,4 @@
-package com.github.android.sample.amin
+package com.github.android.sample.anim
 
 import android.app.Activity
 import android.content.Context
