@@ -47,8 +47,8 @@ class AnimFunTemplate private constructor(ctx: Context) {
                 // dsl 嵌套
                 item {
                     pid = 1
-                    title = "tween动画之(alpha、scale)"
-                    desc = "tween动画之(alpha、scale)"
+                    title = "tween动画"
+                    desc = "tween动画基本使用"
                     clazz = TweenAnim1Activity::class.java
                 }
             }

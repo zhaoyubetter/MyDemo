@@ -7,9 +7,8 @@ import android.support.v4.app.FragmentActivity
 
 /**
  * Created by zhaoyu on 2018/3/11.
- */
-class CommonActivityLifeCycleCallback : Application.ActivityLifecycleCallbacks {
 
+class CommonActivityLifeCycleCallback : Application.ActivityLifecycleCallbacks {
     private val fragmentLifeCycle = CommonFragmentLifeCycleCallBack()
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
@@ -18,16 +17,16 @@ class CommonActivityLifeCycleCallback : Application.ActivityLifecycleCallbacks {
         }
     }
 
-    override fun onActivityPaused(activity: Activity?) {
+    override fun onActivityPaused(activity: Activity) {
     }
 
-    override fun onActivityResumed(activity: Activity?) {
+    override fun onActivityResumed(activity: Activity) {
     }
 
-    override fun onActivityStarted(activity: Activity?) {
+    override fun onActivityStarted(activity: Activity) {
     }
 
-    override fun onActivityDestroyed(activity: Activity?) {
+    override fun onActivityDestroyed(activity: Activity) {
     }
 
     override fun onActivitySaveInstanceState(activity: Activity?, outState: Bundle?) {
@@ -36,3 +35,4 @@ class CommonActivityLifeCycleCallback : Application.ActivityLifecycleCallbacks {
     override fun onActivityStopped(activity: Activity?) {
     }
 }
+ */

@@ -13,7 +13,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.better.base.model.SampleItem
 import com.github.android.sample.anim.AnimFunTemplate
-import org.jetbrains.anko.find
+import org.jetbrains.anko.*
 
 /**
  * Created by zhaoyu on 2018/3/9.
@@ -44,12 +44,29 @@ class BasicContentFragment : Fragment() {
     }
 
     inner class Adapter(val items: List<SampleItem<Activity>>,
-                        val listener: (SampleItem<Activity>) -> Unit) : RecyclerView.Adapter<Adapter.ViewHolder>() {
+                        val listener: ((SampleItem<Activity>) -> Unit)? = null) : RecyclerView.Adapter<Adapter.ViewHolder>() {
 
         override fun getItemCount(): Int = items.size
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            return ViewHolder(LayoutInflater.from(parent.context).
-                    inflate(android.R.layout.simple_list_item_2, parent, false))
+            val view = with(parent.context) {
+                verticalLayout {
+                    padding = dip(16)
+                    textView {
+                        id = android.R.id.text1
+                        textSize = sp(16).toFloat()
+                        textColor = android.R.color.black
+                    }
+                    textView {
+                        id = android.R.id.text2
+                        textSize = sp(14).toFloat()
+                        textColor = android.R.color.darker_gray
+                    }
+                }
+            }
+            return ViewHolder(view)
+
+//            return ViewHolder(LayoutInflater.from(parent.context).
+//                    inflate(android.R.layout.simple_list_item_2, parent, false))
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -58,10 +75,12 @@ class BasicContentFragment : Fragment() {
         }
 
         inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            fun bind(item: SampleItem<Activity>, listener: (SampleItem<Activity>) -> Unit) = with(itemView) {
+            fun bind(item: SampleItem<Activity>, listener: ((SampleItem<Activity>) -> Unit)?) = with(itemView) {
                 find<TextView>(android.R.id.text1).text = item.title
                 find<TextView>(android.R.id.text2).text = item.desc
-                setOnClickListener { listener(item) }
+                listener?.let {
+                    setOnClickListener { listener(item) }
+                }
             }
         }
     }

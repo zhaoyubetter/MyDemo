@@ -17,7 +17,6 @@ class TweenAnim1Activity : ToolbarActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tween_anim1)
-
         intent.getParcelableExtra<SampleItem<Activity>>("item")?.let {
             toolbar.title = it.title
             toolbar.subtitle = it.desc
