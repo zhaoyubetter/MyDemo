@@ -2,6 +2,7 @@ package com.github.android.sample
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
@@ -50,19 +51,23 @@ class BasicContentFragment : Fragment() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val view = with(parent.context) {
                 verticalLayout {
-                    padding = dip(16)
                     textView {
                         id = android.R.id.text1
-                        textSize = sp(16).toFloat()
-                        textColor = android.R.color.black
+                        textSize = 16f
+                        typeface = Typeface.DEFAULT_BOLD
+                        topPadding = dip(4)
+                        bottomPadding = dip(4)
                     }
                     textView {
                         id = android.R.id.text2
-                        textSize = sp(14).toFloat()
-                        textColor = android.R.color.darker_gray
+                        textSize = 14f
+                        topPadding = dip(2)
+                        bottomPadding = dip(4)
+                        maxLines = 2
                     }
                 }
             }
+
             return ViewHolder(view)
 
 //            return ViewHolder(LayoutInflater.from(parent.context).
