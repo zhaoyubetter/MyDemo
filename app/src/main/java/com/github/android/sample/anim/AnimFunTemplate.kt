@@ -51,6 +51,13 @@ class AnimFunTemplate private constructor(ctx: Context) {
                     desc = "tween动画基本使用"
                     clazz = TweenAnim1Activity::class.java
                 }
+
+                item {
+                    pid = 1
+                    title = "tween动画Interpolator"
+                    desc = "tween动画Interpolator详解"
+                    clazz = TweenAnimInterpolatorActivity::class.java
+                }
             }
         }
     }
