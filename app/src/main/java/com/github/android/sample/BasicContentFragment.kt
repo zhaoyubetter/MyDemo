@@ -45,48 +45,51 @@ class BasicContentFragment : Fragment() {
     }
 
     inner class Adapter(val items: List<SampleItem<Activity>>,
-                        val listener: ((SampleItem<Activity>) -> Unit)? = null) : RecyclerView.Adapter<Adapter.ViewHolder>() {
+                        val listener: ((SampleItem<Activity>) -> Unit)? = null) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         override fun getItemCount(): Int = items.size
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
             val view = with(parent.context) {
                 verticalLayout {
+                    padding = dip(8)
                     textView {
                         id = android.R.id.text1
                         textSize = 16f
                         typeface = Typeface.DEFAULT_BOLD
                         topPadding = dip(4)
-                        bottomPadding = dip(4)
-                    }
+                    }.lparams()
                     textView {
                         id = android.R.id.text2
                         textSize = 14f
                         topPadding = dip(2)
                         bottomPadding = dip(4)
-                        maxLines = 2
-                    }
+                    }.lparams()
                 }
             }
-
-            return ViewHolder(view)
+            return object : RecyclerView.ViewHolder(view){}
 
 //            return ViewHolder(LayoutInflater.from(parent.context).
 //                    inflate(android.R.layout.simple_list_item_2, parent, false))
         }
 
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             val item = items[position]
-            holder.bind(item, listener)
+            holder.itemView.find<TextView>(android.R.id.text1).text = item.title
+            holder.itemView.find<TextView>(android.R.id.text2).text = item.desc
+            if(listener != null) {
+                holder.itemView.setOnClickListener { listener?.invoke(item) }
+            }
+//            holder.bind(item, listener)
         }
 
-        inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            fun bind(item: SampleItem<Activity>, listener: ((SampleItem<Activity>) -> Unit)?) = with(itemView) {
-                find<TextView>(android.R.id.text1).text = item.title
-                find<TextView>(android.R.id.text2).text = item.desc
-                listener?.let {
-                    setOnClickListener { listener(item) }
-                }
-            }
-        }
+//        inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+//            fun bind(item: SampleItem<Activity>, listener: ((SampleItem<Activity>) -> Unit)?) = with(itemView) {
+//                find<TextView>(android.R.id.text1).text = item.title
+//                find<TextView>(android.R.id.text2).text = item.desc
+//                listener?.let {
+//                    setOnClickListener { listener(item) }
+//                }
+//            }
+//        }
     }
 }
