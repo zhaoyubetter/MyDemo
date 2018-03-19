@@ -1,11 +1,11 @@
 package com.github.android.sample.anim
 
-import android.animation.Animator
-import android.animation.ArgbEvaluator
-import android.animation.IntEvaluator
-import android.animation.ValueAnimator
+import android.animation.*
 import android.app.Activity
 import android.os.Bundle
+import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.AccelerateInterpolator
 import android.view.animation.TranslateAnimation
 import com.better.base.ToolbarActivity
 import com.better.base.e
@@ -88,7 +88,6 @@ class PropertyAnim1Activity : ToolbarActivity() {
             toast("Property Button is Clicked!")
         }
 
-
         // evaluator
         btn_evaluator.onClick {
             val animator = ValueAnimator.ofInt(-0x100, -0xffff01)
@@ -98,7 +97,31 @@ class PropertyAnim1Activity : ToolbarActivity() {
                 val curValue = animation.animatedValue as Int
                 btn_evaluator.setBackgroundColor(curValue)
             }
+            animator.interpolator
             animator.start()
+        }
+
+        // 自定义evaluator1
+        btn_custom_evaluator.setOnClickListener (
+                {
+                    ValueAnimator.ofObject(CharEvaluator(), 'A', 'Z').apply {
+                        duration = 5000
+                        addUpdateListener { it ->
+                            e(it.animatedValue.toString())
+                            btn_custom_evaluator.text = it.animatedValue.toString()
+                        }
+                        interpolator = AccelerateInterpolator() as TimeInterpolator
+                    }.start()
+                }
+        )
+    }
+
+    private inner class CharEvaluator : TypeEvaluator<Char> {
+        override fun evaluate(fraction: Float, startValue: Char, endValue: Char): Char {
+            val startInt = startValue.toInt()
+            val endInt = endValue.toInt()
+            val curInt = startInt + (endInt - startInt) * fraction
+            return curInt.toChar()
         }
     }
 
