@@ -72,6 +72,14 @@ class AnimFunTemplate private constructor(ctx: Context) {
                     desc = "自定义Evaluator"
                     clazz = CustomEvaluatorActivity::class.java
                 }
+
+                item {
+                    pid = 1
+                    title = "ObjectAnimator"
+                    desc = "派生自ValueAnimator"
+                    clazz = ObjectAnimatorActivity::class.java
+                }
+
             }
         }
     }

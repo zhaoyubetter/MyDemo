@@ -77,7 +77,13 @@ open class ToolbarActivity : AppCompatActivity() {
     }
 
     override fun setTitle(@StringRes res: Int) {
+        super.setTitle(res)
         toolbar.setTitle(res)
+    }
+
+    override fun setTitle(title: CharSequence?) {
+        super.setTitle(title)
+        toolbar.setTitle(title)
     }
 
     fun setLogo(@DrawableRes res: Int) {
