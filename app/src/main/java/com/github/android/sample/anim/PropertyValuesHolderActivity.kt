@@ -1,5 +1,6 @@
 package com.github.android.sample.anim
 
+import android.animation.Keyframe
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.animation.TypeEvaluator
@@ -11,7 +12,7 @@ import com.github.android.sample.R
 import kotlinx.android.synthetic.main.activity_property_values_holder1.*
 
 
-class PropertyValuesHolder1Activity : ToolbarActivity() {
+class PropertyValuesHolderActivity : ToolbarActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,12 +33,23 @@ class PropertyValuesHolder1Activity : ToolbarActivity() {
             }.start()
         }
 
-
+        /* 有问题,很奇怪
         btn_property_values_1.setOnClickListener {
             val propertyValuesHolder = PropertyValuesHolder.ofObject("text", object : TypeEvaluator<String> {
                 override fun evaluate(fraction: Float, startValue: String, endValue: String): String {
-                    val char = (startValue[0].toInt() + (endValue[0].toInt() - startValue[0].toInt()) * fraction).toChar()
-                    return Character.toString(char)
+                    val char = (startValue[0].toInt() + fraction * (endValue[0].toInt() - startValue[0].toInt()))
+                    return char.toString()
+                }
+            }, "A", "Z")
+            ObjectAnimator.ofPropertyValuesHolder(btn_property_values_1, propertyValuesHolder).apply {
+                duration = 3000
+            }.start()
+        }*/
+
+        btn_property_values_1.setOnClickListener {
+            val propertyValuesHolder = PropertyValuesHolder.ofObject("CharText", object : TypeEvaluator<Char> {
+                override fun evaluate(fraction: Float, startValue: Char, endValue: Char): Char {
+                    return (startValue.toInt() + fraction * (endValue.toInt() - startValue.toInt())).toChar()
                 }
             }, 'A', 'Z')
             ObjectAnimator.ofPropertyValuesHolder(btn_property_values_1, propertyValuesHolder).apply {

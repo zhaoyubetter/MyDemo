@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.github.android.sample.anim.PropertyValuesHolder1Activity">
+    tools:context="com.github.android.sample.anim.PropertyValuesHolderActivity">
 
     <TextView
         android:id="@+id/text"
@@ -20,6 +20,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <!--
     <Button
         android:id="@+id/btn_property_values_1"
         android:layout_width="wrap_content"
@@ -29,5 +30,19 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text"/>
+-->
+
+    <com.github.android.sample.anim.MyTextView
+        android:id="@+id/btn_property_values_1"
+        android:layout_width="wrap_content"
+        android:padding="16dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="start"
+        android:background="@color/colorAccent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text"
+        />
 
 </android.support.constraint.ConstraintLayout>

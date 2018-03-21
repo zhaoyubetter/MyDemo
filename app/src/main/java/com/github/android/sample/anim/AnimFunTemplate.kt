@@ -82,9 +82,16 @@ class AnimFunTemplate private constructor(ctx: Context) {
 
                 item {
                     pid = 1
-                    title = "PropertyValuesHolder使用1"
+                    title = "PropertyValuesHolder使用"
                     desc = "ObjectAnimator使用PropertyValuesHolder构造动画"
-                    clazz = PropertyValuesHolder1Activity::class.java
+                    clazz = PropertyValuesHolderActivity::class.java
+                }
+
+                item {
+                    pid = 1
+                    title = "Keyframe关键字"
+                    desc = "Keyframe->PropertyValuesHolder->ObjectAnimator"
+                    clazz = KeyframeActivity::class.java
                 }
 
             }
