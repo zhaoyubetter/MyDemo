@@ -24,6 +24,8 @@
         <activity android:name=".anim.CustomEvaluatorActivity"/>
         <activity android:name=".anim.ObjectAnimatorActivity">
         </activity>
+        <activity android:name=".anim.PropertyValuesHolder1Activity">
+        </activity>
     </application>
 
 </manifest>

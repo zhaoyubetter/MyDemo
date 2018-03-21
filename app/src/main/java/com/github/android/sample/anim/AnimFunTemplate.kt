@@ -80,6 +80,13 @@ class AnimFunTemplate private constructor(ctx: Context) {
                     clazz = ObjectAnimatorActivity::class.java
                 }
 
+                item {
+                    pid = 1
+                    title = "PropertyValuesHolder使用1"
+                    desc = "ObjectAnimator使用PropertyValuesHolder构造动画"
+                    clazz = PropertyValuesHolder1Activity::class.java
+                }
+
             }
         }
     }

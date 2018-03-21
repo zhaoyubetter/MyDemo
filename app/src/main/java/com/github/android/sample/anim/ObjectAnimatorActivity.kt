@@ -55,5 +55,6 @@ class ObjectAnimatorActivity : ToolbarActivity() {
         btn_scale_y.setOnClickListener {
             ObjectAnimator.ofFloat(text, "scaleY", 0f, 2f, 1f).setDuration(800).start()
         }
+
     }
 }
