@@ -94,6 +94,12 @@ class AnimFunTemplate private constructor(ctx: Context) {
                     clazz = KeyframeActivity::class.java
                 }
 
+                item {
+                    pid = 1
+                    title = "AnimatorSet联合动画"
+                    desc = "AnimatorSet"
+                    clazz = AnimatorSetActivity::class.java
+                }
             }
         }
     }

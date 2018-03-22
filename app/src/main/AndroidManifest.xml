@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.github.android.sample">
+<manifest package="com.github.android.sample"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:name="com.better.base.CommonApplication"
@@ -12,19 +12,21 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".constraintLayout.ConstaintLayoutDemo1Activity" />
-        <activity android:name=".anim.TweenAnim1Activity" />
-        <activity android:name=".anim.TweenAnimInterpolatorActivity" />
-        <activity android:name=".anim.PropertyAnim1Activity" />
-        <activity android:name=".anim.CustomEvaluatorActivity" />
-        <activity android:name=".anim.ObjectAnimatorActivity"></activity>
-        <activity android:name=".anim.PropertyValuesHolderActivity"></activity>
-        <activity android:name=".anim.KeyframeActivity"></activity>
+        <activity android:name=".constraintLayout.ConstaintLayoutDemo1Activity"/>
+        <activity android:name=".anim.TweenAnim1Activity"/>
+        <activity android:name=".anim.TweenAnimInterpolatorActivity"/>
+        <activity android:name=".anim.PropertyAnim1Activity"/>
+        <activity android:name=".anim.CustomEvaluatorActivity"/>
+        <activity android:name=".anim.ObjectAnimatorActivity"/>
+        <activity android:name=".anim.PropertyValuesHolderActivity"/>
+        <activity android:name=".anim.KeyframeActivity"/>
+        <activity android:name=".anim.AnimatorSetActivity">
+        </activity>
     </application>
 
 </manifest>

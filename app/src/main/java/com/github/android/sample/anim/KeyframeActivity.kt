@@ -98,5 +98,7 @@ class KeyframeActivity : ToolbarActivity() {
         }
 
 
+        AnimatorSet().playSequentially()
+
     }
 }
