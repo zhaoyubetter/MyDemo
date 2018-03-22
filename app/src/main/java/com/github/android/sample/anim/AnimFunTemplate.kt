@@ -107,6 +107,14 @@ class AnimFunTemplate private constructor(ctx: Context) {
                     desc = "从xml中装载属性动画"
                     clazz = PropertyAnimFromXmlActivity::class.java
                 }
+
+                item {
+                    pid = 1
+                    title = "综合示例"
+                    desc = "属性动画综合例子"
+                    clazz = AnimatorSetSampleDemoActivity::class.java
+                }
+
             }
         }
     }
