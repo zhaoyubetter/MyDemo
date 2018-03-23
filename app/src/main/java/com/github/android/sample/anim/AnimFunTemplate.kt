@@ -115,6 +115,12 @@ class AnimFunTemplate private constructor(ctx: Context) {
                     clazz = AnimatorSetSampleDemoActivity::class.java
                 }
 
+                item {
+                    pid = 1
+                    title = "LayoutAnimation"
+                    desc = "ViewGroup的LayoutAnimation"
+                    clazz = LayoutAnimationActivity::class.java
+                }
             }
         }
     }
