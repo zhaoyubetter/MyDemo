@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.github.android.sample.anim.AnimateLayoutChangesActivity">
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="100dp"
+        android:layout_height="360dp"
+        android:layout_marginTop="8dp"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_change_add">
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="添加"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/btn_remove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="remove"
+        app:layout_constraintLeft_toRightOf="@+id/btn_add"/>
+
+    <Button
+        android:id="@+id/btn_layout_transition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="LayoutTransition_add"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_add"/>
+
+    <Button
+        android:id="@+id/btn_layout_remove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Layout_remove"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btn_layout_transition"
+        app:layout_constraintStart_toEndOf="@+id/btn_layout_transition"/>
+
+    <Button
+        android:id="@+id/btn_change_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Change_add"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_layout_transition"/>
+
+    <Button
+        android:id="@+id/btn_change_remove"
+        android:layout_width="wrap_content"
+        android:layout_height="49dp"
+        android:layout_marginStart="8dp"
+        android:text="change_remove"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btn_change_add"
+        app:layout_constraintStart_toEndOf="@+id/btn_change_add"/>
+
+</android.support.constraint.ConstraintLayout>

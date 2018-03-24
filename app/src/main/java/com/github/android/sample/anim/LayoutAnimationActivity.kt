@@ -2,7 +2,6 @@ package com.github.android.sample.anim
 
 import android.app.Activity
 import android.graphics.Typeface
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
@@ -34,16 +33,16 @@ class LayoutAnimationActivity : ToolbarActivity() {
         }
 
         recycler = find<RecyclerView>(R.id.recycler)
-        recycler.apply {
-            layoutManager = LinearLayoutManager(context)
-            addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
-            // 設置無效
-            // layoutAnimation = AnimationUtils.loadLayoutAnimation(applicationContext, R.anim.tween_layout)
-        }
 
         // load data
         btn_start.setOnClickListener {
             // 有效
+            recycler.apply {
+                layoutManager = LinearLayoutManager(context)
+                addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
+                // 設置無效
+                // layoutAnimation = AnimationUtils.loadLayoutAnimation(applicationContext, R.anim.tween_layout)
+            }
             recycler.layoutAnimation = AnimationUtils.loadLayoutAnimation(applicationContext, R.anim.tween_layout)
             adapter = Adapter(mutableListOf("java", "Android", "Python", "javascript"))
             recycler.adapter = adapter
@@ -66,6 +65,26 @@ class LayoutAnimationActivity : ToolbarActivity() {
             adapter = Adapter(mutableListOf("java", "Android", "Python", "javascript"))
             recycler.adapter = adapter
         }
+
+        /* 报错
+        // gridView
+        btn_grid.setOnClickListener {
+            recycler.apply {
+                val anim = AnimationUtils.loadAnimation(baseContext, android.R.anim.slide_in_left)
+                layoutAnimation = GridLayoutAnimationController(anim).apply {
+                    columnDelay = 0.75f
+                    rowDelay = 0.5f
+                    direction = GridLayoutAnimationController.DIRECTION_BOTTOM_TO_TOP or GridLayoutAnimationController.DIRECTION_LEFT_TO_RIGHT
+                    directionPriority = GridLayoutAnimationController.PRIORITY_NONE
+                }
+
+                layoutManager = GridLayoutManager(context,5)
+                addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
+                adapter = Adapter(mutableListOf("java", "Android", "Python", "javascript",
+                        "kotlin", "Google", "JetBrains", "Subline", "Html5"))
+                recycler.adapter = adapter
+            }
+        }*/
     }
 
     class Adapter(val data: MutableList<String>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
