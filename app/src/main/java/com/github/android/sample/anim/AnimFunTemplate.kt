@@ -3,6 +3,7 @@ package com.github.android.sample.anim
 import android.app.Activity
 import android.content.Context
 import com.better.base.model.SampleItem
+import com.github.android.sample.canvas_paint.PaintCanvas_Base1_Activity
 
 /**
  * Created by zhaoyu on 2018/3/11.
@@ -127,6 +128,14 @@ class AnimFunTemplate private constructor(ctx: Context) {
                     title = "AnimateLayoutChanges"
                     desc = "ViewGroup添加Item 动画"
                     clazz = AnimateLayoutChangesActivity::class.java
+                }
+
+                // paint_canvas部分
+                item {
+                    pid = 1
+                    title = "Paint & Canvas基础1"
+                    desc = "Paint & Canvas基础1"
+                    clazz = PaintCanvas_Base1_Activity::class.java
                 }
             }
         }
