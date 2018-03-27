@@ -18,7 +18,7 @@ class AnimFunTemplate private constructor(ctx: Context) {
 
         fun getInstance(context: Context): AnimFunTemplate {
             if (instance == null)
-                instance = AnimFunTemplate(context)
+                instance = com.github.android.sample.anim.AnimFunTemplate(context)
             return instance!!
         }
 

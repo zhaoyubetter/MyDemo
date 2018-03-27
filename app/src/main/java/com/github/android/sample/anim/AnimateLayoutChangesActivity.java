@@ -18,100 +18,119 @@ import java.util.Random;
 
 public class AnimateLayoutChangesActivity extends AppCompatActivity {
 
-	private LinearLayout container;
-	private LayoutTransition transition;
+    private LinearLayout container;
+    private LayoutTransition transition;
 
-	@Override
-	protected void onCreate(@Nullable Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_animate_layout_changes);
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_animate_layout_changes);
 
-		container = findViewById(R.id.container);
-
-		// LayoutTransition.APPEARING
-		transition = new LayoutTransition();
-		transition.setAnimator(LayoutTransition.APPEARING,
-				ObjectAnimator.ofFloat(null, "rotationY", 0.5f, 1.0f, 0.8f, 1.0f));
-
-		// LayoutTransition.DISAPPEARING
-		transition.setAnimator(LayoutTransition.DISAPPEARING,
-				ObjectAnimator.ofFloat(null, "rotationX", 0f, 90f));
-
-		// 设置给ViewGroup
-		container.setLayoutTransition(transition);
+        container = findViewById(R.id.container);
 
 
-		// 添加
-		findViewById(R.id.btn_layout_transition).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				container.addView(getCustomView(), 0);
-			}
-		});
+        // default
+        findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                container.addView(getCustomView());
+            }
+        });
 
-		// 移除
-		findViewById(R.id.btn_layout_remove).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (container.getChildCount() > 0) {
-					container.removeViewAt(0);
-				}
-			}
-		});
+        findViewById(R.id.btn_remove).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (container.getChildCount() > 0) {
+                    container.removeViewAt(0);
+                }
+            }
+        });
 
-		// LayoutTransition.CHANGE_APPEARING和LayoutTransition.CHANGE_DISAPPEARING必须使用
-		// PropertyValuesHolder所构造的动画才会有效果，不然无效
 
-		// LayoutTransition.CHANGE_APPEARING，添加元素调用addView()方法时，index值，不能是最后一个
-		findViewById(R.id.btn_change_add).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// 必须的left与top
-				PropertyValuesHolder pvhLeft = PropertyValuesHolder.ofInt("left", 0, 20, 0);
-				PropertyValuesHolder pvhTop = PropertyValuesHolder.ofInt("top", 0, 20, 0);
-				PropertyValuesHolder scaleX = PropertyValuesHolder.ofFloat("scaleX", 1f, 0.5f, 1f);
-				transition.setAnimator(LayoutTransition.CHANGE_APPEARING,
-						ObjectAnimator.ofPropertyValuesHolder(container, pvhLeft, pvhTop, scaleX));
-				//设置单个item间的动画间隔
-				transition.setStagger(LayoutTransition.CHANGE_APPEARING, 100);
-				container.setLayoutTransition(transition);
-				container.addView(getCustomView(), 0);
-				transition.addTransitionListener(new LayoutTransition.TransitionListener() {
-					@Override
-					public void startTransition(LayoutTransition transition, ViewGroup container, View view, int transitionType) {
-					}
+        // LayoutTransition.APPEARING
+        transition = new LayoutTransition();
+        transition.setAnimator(LayoutTransition.APPEARING,
+                ObjectAnimator.ofFloat(null, "rotationY", -90f, 90f, 0f));
 
-					@Override
-					public void endTransition(LayoutTransition transition, ViewGroup container, View view, int transitionType) {
+        // LayoutTransition.DISAPPEARING
+        transition.setAnimator(LayoutTransition.DISAPPEARING,
+                ObjectAnimator.ofFloat(null, "rotationX", 0f, 90f));
 
-					}
-				});
-			}
-		});
+        // 设置给ViewGroup
+        container.setLayoutTransition(transition);
 
-		// LayoutTransition.CHANGE_DISAPPEARING
-		findViewById(R.id.btn_change_remove).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				PropertyValuesHolder outLeft = PropertyValuesHolder.ofInt("left", 0, 0);
-				PropertyValuesHolder outTop = PropertyValuesHolder.ofInt("top", 0, 0);
-				PropertyValuesHolder rotation = PropertyValuesHolder.ofFloat("rotationY", 0f, 90f, 0f);
-				transition.setAnimator(LayoutTransition.CHANGE_DISAPPEARING,
-						ObjectAnimator.ofPropertyValuesHolder(container, outLeft, outTop, rotation));
-				if(container.getChildCount() > 0) {
-					container.removeViewAt(0);
-				}
-			}
-		});
-	}
 
-	private Button getCustomView() {
-		Button btn = new Button(this);
-		btn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-				LinearLayout.LayoutParams.WRAP_CONTENT));
-		btn.setText("abc" + new Random().nextInt(20));
-		return btn;
-	}
+        // 添加
+        findViewById(R.id.btn_layout_transition).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                container.addView(getCustomView(), 0);
+            }
+        });
+
+        // 移除
+        findViewById(R.id.btn_layout_remove).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (container.getChildCount() > 0) {
+                    container.removeViewAt(0);
+                }
+            }
+        });
+
+        // LayoutTransition.CHANGE_APPEARING和LayoutTransition.CHANGE_DISAPPEARING必须使用
+        // PropertyValuesHolder所构造的动画才会有效果，不然无效
+
+        // LayoutTransition.CHANGE_APPEARING，添加元素调用addView()方法时，index值，不能是最后一个
+        findViewById(R.id.btn_change_add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 必须的left与top
+                PropertyValuesHolder pvhLeft = PropertyValuesHolder.ofInt("left", 0, 20, 0);
+                PropertyValuesHolder pvhTop = PropertyValuesHolder.ofInt("top", 0, 20, 0);
+                PropertyValuesHolder scaleX = PropertyValuesHolder.ofFloat("scaleX", 1f, 0.5f, 1f);
+                transition.setAnimator(LayoutTransition.CHANGE_APPEARING,
+                        ObjectAnimator.ofPropertyValuesHolder(container, pvhLeft, pvhTop, scaleX));
+                //设置单个item间的动画间隔
+                transition.setStagger(LayoutTransition.CHANGE_APPEARING, 800);
+                container.setLayoutTransition(transition);
+                container.addView(getCustomView(), 0);
+                transition.addTransitionListener(new LayoutTransition.TransitionListener() {
+                    @Override
+                    public void startTransition(LayoutTransition transition, ViewGroup container, View view, int transitionType) {
+                    }
+
+                    @Override
+                    public void endTransition(LayoutTransition transition, ViewGroup container, View view, int transitionType) {
+
+                    }
+                });
+            }
+        });
+
+        // LayoutTransition.CHANGE_DISAPPEARING
+        findViewById(R.id.btn_change_remove).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PropertyValuesHolder outLeft = PropertyValuesHolder.ofInt("left", 0, 0);
+                PropertyValuesHolder outTop = PropertyValuesHolder.ofInt("top", 0, 0);
+                PropertyValuesHolder rotation = PropertyValuesHolder.ofFloat("rotationY", 0f, 90f, 0f);
+                transition.setAnimator(LayoutTransition.CHANGE_DISAPPEARING,
+                        ObjectAnimator.ofPropertyValuesHolder(container, outLeft, outTop, rotation));
+                if (container.getChildCount() > 0) {
+                    container.removeViewAt(0);
+                }
+            }
+        });
+    }
+
+    private Button getCustomView() {
+        Button btn = new Button(this);
+        btn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+        btn.setText("abc" + new Random().nextInt(20));
+        return btn;
+    }
 }
 
 
