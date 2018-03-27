@@ -3,20 +3,30 @@ package com.github.better.recycler
 import java.util.*
 
 /**
- * Created by zhaoyu on 2018/3/26.
+ * TreeAdapter 数据处理类
  */
-class TreeDataUtils<T> constructor(val srcDataList: MutableList<TreeNode<T>>) {
+internal class TreeDataUtils<T>
 
+/**
+ * @param srcDataList 原始数据
+ */
+constructor(val srcDataList: MutableList<TreeNode<T>>) {
+
+    /** 处理过的数据，所有的item集合 */
     private val transformOriginDataList = mutableListOf<TreeNode<T>>()
+    /** 折叠后的数据位置 和 原始数据集合位置的映射数组, posMapArray[0] = 0, posMapArray[1] = 5(父) 这种 */
     private lateinit var posMapArray: IntArray
-    private var curAvailableCount: Int = 0
+    /** 当前可用的item个数 */
+    var curAvailableCount: Int = 0
+        private set(value) {
+            field = value
+        }
 
     init {
         updateSrcData(srcDataList)
     }
 
-    fun updateSrcData(dataList: MutableList<TreeNode<T>>) {
-        //更新originDataList
+    fun updateSrcData(dataList: List<TreeNode<T>>) {
         transform(dataList, 0, transformOriginDataList)
         posMapArray = IntArray(transformOriginDataList.size)
         curAvailableCount = obtainPosMapArray(transformOriginDataList, posMapArray)
@@ -32,9 +42,6 @@ class TreeDataUtils<T> constructor(val srcDataList: MutableList<TreeNode<T>>) {
      *
      * */
     private fun transform(dataList: List<TreeNode<T>>, layerLevel: Int, transformOriginDataList: MutableList<TreeNode<T>>) {
-        if (dataList == null) {
-            return
-        }
         for (baseBean in dataList) {
             baseBean.level = layerLevel
             transformOriginDataList.add(baseBean)
@@ -44,27 +51,24 @@ class TreeDataUtils<T> constructor(val srcDataList: MutableList<TreeNode<T>>) {
 
     /**
      * 遍历转换后的数据集合，得到折叠后的数据位置和原始数据集合位置的映射数组
-     *
-     * return 映射数组的实际大小，也是视图上所需展示的未被折叠的item的个数
-     *
-     * */
+     * return 映射数组的实际大小，也是视图上所需展示的【未被折叠的item的个数】
+     **/
     private fun obtainPosMapArray(transformOriginDataList: List<TreeNode<T>>, posMapArray: IntArray): Int {
         var i = 0
         var j = 0
         while (j < transformOriginDataList.size) {
-            posMapArray[i++] = j
-            val node = transformOriginDataList[j]
-            val curLayer = node.level
-            //如果折叠
-            if (!node.expand) {
-                j++
-                while (j < transformOriginDataList.size && transformOriginDataList[j].level > curLayer) {
-                    j++
+            posMapArray[i++] = j     // posMapArray[0] = 0, posMapArray[1] = 5 这种
+            val curNode = transformOriginDataList[j]
+            val curLevel = curNode.level
+            j++
+            // 如果折叠
+            if (!curNode.expand) {
+                while (j < transformOriginDataList.size && transformOriginDataList[j].level > curLevel) {
+                    j++  // 后续的level比curNode的大，即：后续的node为curNode的孩子，故j++
                 }
-            } else {
-                j++
             }
         }
+
         return i
     }
 
@@ -83,27 +87,27 @@ class TreeDataUtils<T> constructor(val srcDataList: MutableList<TreeNode<T>>) {
         return notifyPos
     }
 
-    /*
-    * 获取折叠或展开所需要改变的item的位置范围, startPos, count
-    * 改变动作包括：插入，删除，改变
-    * */
+    /**
+     * 获取折叠或展开所需要改变的item的位置范围, startPos, count
+     * 改变动作包括：插入，删除，改变
+     * */
     private fun getItemRange(position: Int): IntArray {
-        val curLevel = transformOriginDataList.get(posMapArray!![position]).layerLevel
+        val curLevel = transformOriginDataList[posMapArray[position]].level
         val res = intArrayOf(-1, -1)
         var count = 0
-        var i = posMapArray!![position] + 1
-        while (i < transformOriginDataList.size && transformOriginDataList.get(i).layerLevel > curLevel) {
+        var i = posMapArray[position] + 1   // 当前点击的下一个位置开始
+        while (i < transformOriginDataList.size && transformOriginDataList[i].level > curLevel) {
             if (res[0] == -1) {
                 res[0] = position + 1
             }
-            if (!transformOriginDataList.get(i).isExtended) {
-                val itemLevel = transformOriginDataList.get(i).layerLevel
-                var j: Int
-                j = i + 1
-                while (j < transformOriginDataList.size && transformOriginDataList.get(j).layerLevel > itemLevel) {
+
+            if (!transformOriginDataList.get(i).expand) {   // 如果折叠，则i跳跃时增加
+                val itemLevel = transformOriginDataList.get(i).level
+                var j = i + 1
+                while (j < transformOriginDataList.size && transformOriginDataList.get(j).level > itemLevel) {
                     j++
                 }
-                i = j
+                i = j   // 跳跃时增加
             } else {
                 i++
             }
@@ -115,136 +119,142 @@ class TreeDataUtils<T> constructor(val srcDataList: MutableList<TreeNode<T>>) {
 
     /*-------------------------------------------------------删除操作------------------------------------------------------------*/
 
-    fun getRecursionDeleteNode(position: Int, layer: Int): ExtendedNode {
-        var deleteNode = transformOriginDataList.get(posMapArray!![position])
+    /**
+     * 获取递归删除的节点
+     */
+    fun getRecursionDeleteNode(position: Int, level: Int): TreeNode<T>? {
+        if (position > posMapArray.size) {
+            return null
+        }
+
+        var deleteNode = transformOriginDataList[posMapArray[position]]  // 原始节点
         var parent = deleteNode.parent
-        while (parent != null && parent!!.getSons().size() <= 1 && parent!!.layerLevel > layer) {
+        while (parent != null && parent.children.size <= 1 && parent.level > level) {
             deleteNode = parent
-            parent = parent!!.parent
+            parent = parent.parent
         }
         return deleteNode
     }
 
-    /*
-    * return 删除节点子树包含的展开的节点数量
-    * */
-    fun deleteNode(deleteNode: ExtendedNode): Int {
+    /**
+     * return 删除节点子树包含的展开的节点数量
+     **/
+    fun deleteNode(deleteNode: TreeNode<T>): Int {
         val deleteCount = getAvailableCount(deleteNode)
 
-        //删除源数据
+        //1.设置 deletedNode parent 为 null
         val parent = deleteNode.parent
         deleteNode.parent = null
+        // 2. parent不为null时，从parent中删除，否则从原始数据中移除
         if (parent != null) {
-            parent!!.getSons().remove(deleteNode)
+            parent.children.remove(deleteNode)
         } else {
-            srcDataList!!.remove(deleteNode)
+            srcDataList.remove(deleteNode)
         }
 
-        //删除转换集合内的数据
-        val deleteNodeLayerLevel = deleteNode.layerLevel
+        // 3. 删除转换集合内的数据
+        val deleteNodeLayerLevel = deleteNode.level
         val deletePos = transformOriginDataList.indexOf(deleteNode)
         transformOriginDataList.removeAt(deletePos)
-        while (deletePos < transformOriginDataList.size && transformOriginDataList.get(deletePos).layerLevel > deleteNodeLayerLevel) {
+        while (deletePos < transformOriginDataList.size && transformOriginDataList[deletePos].level > deleteNodeLayerLevel) {
             transformOriginDataList.removeAt(deletePos)
         }
 
+        // 4.重新变更数据
         curAvailableCount = obtainPosMapArray(transformOriginDataList, posMapArray)
-
         return deleteCount
     }
 
-    //找出Node在RecyclerView中的位置【注：onBindViewHolder中的position并不总是对应list数据中的位置，所以不可采用，{“Do not treat position as fixed”}】
-    fun getNodeRecyclerPos(deleteNode: ExtendedNode): Int {
+    /**
+     * 找出Node在RecyclerView中的位置【注：onBindViewHolder中的position并不总是对应list数据中的位置，
+     * 所以不可采用，{“Do not treat position as fixed”}】
+     */
+    fun getNodeRecyclerPos(deleteNode: TreeNode<T>): Int {
         val tempIndex = transformOriginDataList.indexOf(deleteNode)
         var deleteNodeIndex = -1
-        for (i in 0 until curAvailableCount) {
-            if (posMapArray!![i] == tempIndex) {
+
+        /*for (i in 0 until curAvailableCount) {
+            if (posMapArray[i] == tempIndex) {
                 deleteNodeIndex = i
                 break
             }
-        }
-        return deleteNodeIndex
+        }*/
+        // 可使用2分法查找,优化
+        return Arrays.binarySearch(posMapArray, tempIndex)
     }
 
     /*-----------------------------------------增加节点-------------------------------------------*/
 
-    //返回需要扩展开的父类节点位置集合
-    fun insertItems(parent: ExtendedNode, sonInsertIndex: Int, items: ArrayList<ExtendedNode>?): List<ExtendedNode>? {
+    /**
+     * 添加节点，返回需要扩展开的父类节点位置集合
+     */
+    fun insertItems(parent: TreeNode<T>, sonInsertIndex: Int, items: List<TreeNode<T>>, closure: (index: Int) -> Unit): List<TreeNode<T>> {
         var sonInsertIndex = sonInsertIndex
-        if (sonInsertIndex < 0 || items == null || items.size() <= 0) {
-            return null
-        }
+        // 设置层级，并转换数据
+        val transformItems = mutableListOf<TreeNode<T>>()
+        transform(items, parent.level + 1, transformItems)
 
-        //设置层级，转换数据
-        val transformItems = ArrayList()
-        transform(items, parent.layerLevel + 1, transformItems)
-
-        //设置转换数据集合
-        val sons = parent.getSons()
-        if (sonInsertIndex > sons.size()) {
-            sonInsertIndex = sons.size()
+        val sons = parent.children
+        if (sonInsertIndex > sons.size) {
+            sonInsertIndex = sons.size
         }
 
         val index: Int
-        if (sonInsertIndex < sons.size()) {
-            val node = sons.get(sonInsertIndex)
+        if (sonInsertIndex < sons.size) {    // 中间位置
+            val node = sons[sonInsertIndex]
             index = transformOriginDataList.indexOf(node)
             transformOriginDataList.addAll(index, transformItems)
-        } else {
+        } else {                            // 最后
             val node = getLastSonNode(parent)
             index = transformOriginDataList.indexOf(node) + 1
             transformOriginDataList.addAll(index, transformItems)
         }
+
+        // 更新 posMapArray 与 curAvailableCount
         posMapArray = IntArray(transformOriginDataList.size)
         curAvailableCount = obtainPosMapArray(transformOriginDataList, posMapArray)
 
-        val tempList = ArrayList()
-        var node: ExtendedNode? = parent
-        while (node != null && !node!!.isExtended) {
+        // 返回扩展开的父类节点位置集合
+        val tempList = mutableListOf<TreeNode<T>>()
+        var node: TreeNode<T>? = parent
+        while (node != null && !node.expand) { // 向上遍历获取父，父收缩时，添加父
             tempList.add(node)
             node = parent.parent
         }
-        Collections.reverse(tempList)
-
-        tempList.add(ExtendedNode(index, true))
-
+        tempList.reverse()      // 3,2,1 -> 1,2,3
+        closure.invoke(index)   // 闭包返回transformOriginDataList的插入index位置
         //设置原始数据集合
-        parent.addSons(sonInsertIndex, items)
+        parent.addChildren(sonInsertIndex, items)
 
         return tempList
     }
 
     /*---------------------------------------------数据通用操作-----------------------------------------------------*/
 
-    private fun getLastSonNode(node: ExtendedNode): ExtendedNode {
-        return if (!node.hasSons()) {
+    private fun getLastSonNode(node: TreeNode<T>): TreeNode<T> {
+        return if (!node.hasChildren()) {
             node
-        } else getLastSonNode(node.getSons().get(node.getSons().size() - 1) as ExtendedNode)
+        } else getLastSonNode(node.children.get(node.children.size - 1))
     }
 
-    fun getAvailableCount(deleteNode: ExtendedNode?): Int {
-        if (deleteNode == null) {
-            return 0
-        }
-        if (!deleteNode!!.isExtended || deleteNode!!.getSons() == null || deleteNode!!.getSons().size() === 0) {
+    fun getAvailableCount(node: TreeNode<T>): Int {
+        // 没有展开，或者没有孩子 return 1
+        if (!node.expand || node.children == null || node.children.size == 0) {
             return 1
         }
         var count = 1
-        for (son in deleteNode!!.getSons()) {
-            count += getAvailableCount(son as ExtendedNode)
+        for (son in node.children) {
+            count += getAvailableCount(son)
         }
         return count
     }
 
-    fun getExtendedNode(recyclerPosition: Int): ExtendedNode {
-        return transformOriginDataList.get(posMapArray!![recyclerPosition])
+    fun getExtendedNode(recyclerPosition: Int): TreeNode<T> {
+        return transformOriginDataList[posMapArray[recyclerPosition]]
     }
 
-    fun getCurAvailableCount(): Int {
-        return curAvailableCount
-    }
-
-    fun getTransformOriginDataList(): List<ExtendedNode> {
+    fun getTransformOriginDataList(): List<TreeNode<T>> {
         return transformOriginDataList
     }
 }
+

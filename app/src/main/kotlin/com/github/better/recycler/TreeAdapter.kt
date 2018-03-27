@@ -2,126 +2,128 @@ package com.github.better.recycler
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import android.view.LayoutInflater
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.view.View
+import android.support.v7.widget.LinearLayoutManager
 
 
 /**
- * 参考：
  * https://github.com/liyuzero/extendedRecyclerView/blob/master/extendedRecyclerView/src/main/java/com/yu/bundles/extended/recyclerview/ExtendedRecyclerAdapter.java
  *
- * Created by zhaoyu on 2018/3/26.
  */
-class TreeAdapter<E>(val dataList: MutableList<E>, var treeHolderFactory: TreeHolderFactory)
+class TreeAdapter<E>(val recyclerView: RecyclerView, dataList: MutableList<TreeNode<E>>,
+                     var treeHolderFactory: TreeHolderFactory)
     : RecyclerView.Adapter<TreeHolder<E>>(), TreeRecyclerViewHelper<E> {
 
-    /**
-     * // 树的列表展示节点
-     */
-    var nodeItems: MutableList<TreeNode<E>>? = null
-    var items: MutableList<E> = mutableListOf()
-    var rootNode: TreeNode<E>? = null
-    private val layoutInflater: LayoutInflater? = null
+    //    var nodeItems: MutableList<TreeNode<E>>? = null
+//    var items: MutableList<E> = mutableListOf()
+//    var rootNode: TreeNode<E>? = null
+    var isEnableExpand = true
+    private val dataUtils: TreeDataUtils<E> = TreeDataUtils(dataList)
 
-    var isEnableExtended = true
-
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TreeHolder<E> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TreeHolder<E> {
+        return treeHolderFactory.getHolder(this, parent, viewType)
     }
 
-    override fun getItemCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun getItemCount() = dataUtils.curAvailableCount
+
+    override fun onBindViewHolder(holder: TreeHolder<E>, position: Int) {
+        holder.setData(dataUtils.getExtendedNode(position))
     }
 
-    override fun onBindViewHolder(holder: TreeHolder<E>?, position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    ///------------
-    override fun updateSrcData(dataList: List<TreeNode<E>>, extendedHolderFactory: TreeHolderFactory) {
-        if (extendedHolderFactory != null) {
-            this.treeHolderFactory = extendedHolderFactory
+    /*------------------------------------- 接口实现 -----------------------------------------------*/
+    override fun updateSrcData(dataList: List<TreeNode<E>>, extendedHolderFactory: TreeHolderFactory?) {
+        extendedHolderFactory?.let {
+            this.treeHolderFactory = it
         }
-        updateSrcData(dataList, extendedHolderFactory)
+        dataUtils.updateSrcData(dataList)
     }
 
-    override fun recursionDelete(position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun recursionDelete(position: Int, layer: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun recursionDelete(position: Int, level: Int) {
+        val deleteNode = dataUtils.getRecursionDeleteNode(position, level) ?: return
+        val deletePos = dataUtils.getNodeRecyclerPos(deleteNode)
+        if (deletePos <= -1) {
+            return
+        }
+        if (deleteNode.parent != null) {
+            val parent = deleteNode.parent
+            notifyItemChanged(dataUtils.getNodeRecyclerPos(parent!!))
+        }
+        notifyItemRangeRemoved(deletePos, dataUtils.deleteNode(deleteNode))
     }
 
     override fun usuallyDelete(position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val deleteNode = dataUtils.getExtendedNode(position)
+        val deletePos = dataUtils.getNodeRecyclerPos(deleteNode)
+        if (deletePos == -1) {
+            return
+        }
+        // 有parent，则更新parent
+        if (deleteNode.parent != null) {
+            notifyItemChanged(dataUtils.getNodeRecyclerPos(deleteNode.parent!!))
+        }
+        notifyItemRangeRemoved(deletePos, dataUtils.deleteNode(deleteNode))
     }
 
     override fun onExtendedItemClick(position: Int): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val extendNode = dataUtils.getExtendedNode(position)
+        val preAvailableCount = dataUtils.curAvailableCount
+        // 获取通知更新范围
+        val notifyPos = dataUtils.onExtendedItemClick(extendNode, position)
+        val curAvailableCount = dataUtils.curAvailableCount
+        if (notifyPos[0] != -1) {
+            notifyItemChanged(position)
+            if (curAvailableCount > preAvailableCount) {
+                // expand
+                notifyItemRangeInserted(notifyPos[0], notifyPos[1])
+                if (notifyPos[0] > (recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()) {
+                    recyclerView.scrollToPosition(notifyPos[0])
+                }
+            } else if (curAvailableCount < preAvailableCount) {
+                // fold
+                notifyItemRangeRemoved(notifyPos[0], notifyPos[1])
+            } else {
+                // change
+                notifyItemRangeChanged(notifyPos[0], notifyPos[1])
+            }
+        }
+        return extendNode.expand
     }
 
-    override fun insertItems(parent: TreeNode<E>, index: Int, items: ArrayList<TreeNode<E>>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun insertItems(parent: TreeNode<E>, sonInsertIndex: Int, items: List<TreeNode<E>>) {
+        if (sonInsertIndex < 0) {
+            return
+        }
+        // 所有添加的item个数
+        var availableCount = 0
+        for (node in items) {
+            availableCount += dataUtils.getAvailableCount(node)
+        }
+
+        // 插入点
+        var insertIndex = 0
+        // 插入点，返回的父节点集合
+        val tempList = dataUtils.insertItems(parent, sonInsertIndex, items, { it ->
+            insertIndex = it
+        })
+        for (tempNode in tempList) {
+            if (!tempNode.expand) {
+                onExtendedItemClick(dataUtils.getNodeRecyclerPos(tempNode))
+            }
+        }
+        notifyItemRangeInserted(insertIndex, availableCount)
+        notifyItemChanged(dataUtils.getTransformOriginDataList().indexOf(parent))
     }
 
     override fun getCurItemCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return dataUtils.curAvailableCount
     }
 
-    override fun <T> getNode(recyclerPos: Int): TreeNode<T> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun getNode(recyclerPos: Int): TreeNode<E> {
+        return dataUtils.getExtendedNode(recyclerPos)
     }
 
     override fun getExtendedRecyclerAdapter(): TreeAdapter<E> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return this
     }
 }
 
-interface TreeRecyclerViewHelper<T> {
-    fun updateSrcData(dataList: List<TreeNode<T>>, extendedHolderFactory: TreeHolderFactory? = null)
-    fun recursionDelete(position: Int)
-    fun recursionDelete(position: Int, layer: Int)
-    fun usuallyDelete(position: Int)
-    fun onExtendedItemClick(position: Int): Boolean
-    fun insertItems(parent: TreeNode<T>, index: Int, items: ArrayList<TreeNode<T>>)
-    fun getCurItemCount(): Int
-    fun <T> getNode(recyclerPos: Int): TreeNode<T>
-    fun getExtendedRecyclerAdapter(): TreeAdapter<T>
-}
 
-interface TreeHolderFactory {
-    fun <T> getHolder(helper: TreeRecyclerViewHelper<T>, parent: ViewGroup, viewType: Int): TreeHolder<T>
-}
-
-abstract class TreeHolder<T>(val helper: TreeRecyclerViewHelper<T>, itemView: View) : RecyclerView.ViewHolder(itemView) {
-    init {
-        if (helper is TreeAdapter && helper.isEnableExtended) {
-            val view = if (getExtendedClickView() == null) itemView else getExtendedClickView()
-            view?.setOnClickListener {
-                View.OnClickListener {
-                    if (getOnExtendedItemClickListener() != null) {
-                        val isExtended = helper.onExtendedItemClick(layoutPosition)
-                        if (isExtended) {
-                            getOnExtendedItemClickListener()!!.onExtendedClick()
-                        } else {
-                            getOnExtendedItemClickListener()!!.onFoldClick()
-                        }
-                    }
-                }
-
-            }
-        }
-    }
-
-    abstract fun setData(node: TreeNode<T>)
-    protected abstract fun getExtendedClickView(): View?
-    fun getOnExtendedItemClickListener(): OnExtendedItemClickListener? {
-        return null
-    }
-
-    interface OnExtendedItemClickListener {
-        fun onExtendedClick()
-        fun onFoldClick()
-    }
-}
