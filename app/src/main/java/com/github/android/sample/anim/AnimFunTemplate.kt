@@ -38,7 +38,7 @@ class AnimFunTemplate private constructor(ctx: Context) {
 
     init {
         group {
-            // sampleItem
+            // 第一部分 动画
             item {
                 pid = 0
                 id = 1
@@ -129,10 +129,17 @@ class AnimFunTemplate private constructor(ctx: Context) {
                     desc = "ViewGroup添加Item 动画"
                     clazz = AnimateLayoutChangesActivity::class.java
                 }
+            }
 
-                // paint_canvas部分
+            // 第二部分 paint_canvas部分
+            item {
+                pid = 0
+                id = 2
+                title = "自定义控件系列"
+                desc = "由浅入深介绍"
+
                 item {
-                    pid = 1
+                    pid = 2
                     title = "Paint & Canvas基础1"
                     desc = "Paint & Canvas基础1"
                     clazz = PaintCanvas_Base1_Activity::class.java

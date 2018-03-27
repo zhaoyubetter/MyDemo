@@ -1,36 +1,40 @@
 package com.github.better.recycler
 
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import android.support.v7.widget.LinearLayoutManager
 
 
 /**
  * https://github.com/liyuzero/extendedRecyclerView/blob/master/extendedRecyclerView/src/main/java/com/yu/bundles/extended/recyclerview/ExtendedRecyclerAdapter.java
  *
  */
-class TreeAdapter<E>(val recyclerView: RecyclerView, dataList: MutableList<TreeNode<E>>,
-                     var treeHolderFactory: TreeHolderFactory)
-    : RecyclerView.Adapter<TreeHolder<E>>(), TreeRecyclerViewHelper<E> {
+class ExpandAdapter<E>(val recyclerView: RecyclerView, dataList: MutableList<ExpandNode<E>>,
+                       var treeHolderFactory: ExpandHolderFactory<E>)
+    : RecyclerView.Adapter<ExpandViewHolder<E>>(), ExpandRecyclerViewHelper<E> {
 
     //    var nodeItems: MutableList<TreeNode<E>>? = null
 //    var items: MutableList<E> = mutableListOf()
 //    var rootNode: TreeNode<E>? = null
     var isEnableExpand = true
-    private val dataUtils: TreeDataUtils<E> = TreeDataUtils(dataList)
+    private val dataUtils: ExpandDataUtils<E> = ExpandDataUtils(dataList)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TreeHolder<E> {
-        return treeHolderFactory.getHolder(this, parent, viewType)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExpandViewHolder<E> {
+        return treeHolderFactory.getHolder(this, parent, viewType) as ExpandViewHolder<E>
     }
 
     override fun getItemCount() = dataUtils.curAvailableCount
 
-    override fun onBindViewHolder(holder: TreeHolder<E>, position: Int) {
+    override fun onBindViewHolder(holder: ExpandViewHolder<E>, position: Int) {
         holder.setData(dataUtils.getExtendedNode(position))
     }
 
+    override fun getItemViewType(position: Int): Int {
+        return dataUtils.getExtendedNode(position).level
+    }
+
     /*------------------------------------- 接口实现 -----------------------------------------------*/
-    override fun updateSrcData(dataList: List<TreeNode<E>>, extendedHolderFactory: TreeHolderFactory?) {
+    override fun updateSrcData(dataList: List<ExpandNode<E>>, extendedHolderFactory: ExpandHolderFactory<E>?) {
         extendedHolderFactory?.let {
             this.treeHolderFactory = it
         }
@@ -88,7 +92,7 @@ class TreeAdapter<E>(val recyclerView: RecyclerView, dataList: MutableList<TreeN
         return extendNode.expand
     }
 
-    override fun insertItems(parent: TreeNode<E>, sonInsertIndex: Int, items: List<TreeNode<E>>) {
+    override fun insertItems(parent: ExpandNode<E>, sonInsertIndex: Int, items: List<ExpandNode<E>>) {
         if (sonInsertIndex < 0) {
             return
         }
@@ -117,11 +121,11 @@ class TreeAdapter<E>(val recyclerView: RecyclerView, dataList: MutableList<TreeN
         return dataUtils.curAvailableCount
     }
 
-    override fun getNode(recyclerPos: Int): TreeNode<E> {
+    override fun getNode(recyclerPos: Int): ExpandNode<E> {
         return dataUtils.getExtendedNode(recyclerPos)
     }
 
-    override fun getExtendedRecyclerAdapter(): TreeAdapter<E> {
+    override fun getExtendedRecyclerAdapter(): ExpandAdapter<E> {
         return this
     }
 }

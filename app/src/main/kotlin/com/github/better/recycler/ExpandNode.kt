@@ -5,7 +5,7 @@ package com.github.better.recycler
  * 结点
  * Created by zhaoyu on 2018/3/26.
  */
-data class TreeNode<T>
+data class ExpandNode<T>
 /**
  * constructor
  *  @param data <T>
@@ -15,9 +15,9 @@ data class TreeNode<T>
  *  @param son
  */
 constructor(var data: T, var level: Int = 0, var expand: Boolean = true,
-            var parent: TreeNode<T>? = null, private val son: MutableList<TreeNode<T>>? = null) {
+            var parent: ExpandNode<T>? = null, private val son: MutableList<ExpandNode<T>>? = null) {
     // 孩子
-    val children = mutableListOf<TreeNode<T>>()
+    val children = mutableListOf<ExpandNode<T>>()
 
     init {
         if (son != null) {
@@ -31,10 +31,14 @@ constructor(var data: T, var level: Int = 0, var expand: Boolean = true,
         }
     }
 
-    fun addChildren(index: Int = children.size, sons: List<TreeNode<T>>): TreeNode<T> {
+    fun addChildren(index: Int = children.size, sons: List<ExpandNode<T>>): ExpandNode<T> {
         this.children.addAll(index, sons)
         sons.forEach { it.parent = this }  // 设置父
         return this
+    }
+
+    fun addChildren(sons: List<ExpandNode<T>>): ExpandNode<T> {
+        return addChildren(children.size, sons)
     }
 
     fun hasChildren() = children.size > 0

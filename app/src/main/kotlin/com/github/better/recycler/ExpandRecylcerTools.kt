@@ -1,9 +1,9 @@
 package com.github.better.recycler
 
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import android.support.v7.widget.LinearLayoutManager
 
 
 /**
@@ -12,9 +12,9 @@ import android.support.v7.widget.LinearLayoutManager
 /**
  * 自定义Holder
  */
-abstract class TreeHolder<T>(val helper: TreeRecyclerViewHelper<T>, itemView: View) : RecyclerView.ViewHolder(itemView) {
+abstract class ExpandViewHolder<T>(val helper: ExpandRecyclerViewHelper<T>, itemView: View) : RecyclerView.ViewHolder(itemView) {
     init {
-        if (helper is TreeAdapter && helper.isEnableExpand) {
+        if (helper is ExpandAdapter<*> && helper.isEnableExpand) {
             val view = if (getExtendedClickView() == null) itemView else getExtendedClickView()
             view?.setOnClickListener {
                 View.OnClickListener {
@@ -34,7 +34,7 @@ abstract class TreeHolder<T>(val helper: TreeRecyclerViewHelper<T>, itemView: Vi
     /**
      * 渲染数据
      */
-    abstract fun setData(node: TreeNode<T>)
+    abstract fun setData(node: ExpandNode<T>)
 
     /**
      * 获取点击View
@@ -55,11 +55,11 @@ abstract class TreeHolder<T>(val helper: TreeRecyclerViewHelper<T>, itemView: Vi
 /**
  * 用来实现TreeAdapter的Helper帮助类
  */
-interface TreeRecyclerViewHelper<E> {
+interface ExpandRecyclerViewHelper<E> {
     /**
      * 更新数据源
      */
-    fun updateSrcData(dataList: List<TreeNode<E>>, extendedHolderFactory: TreeHolderFactory? = null)
+    fun updateSrcData(dataList: List<ExpandNode<E>>, extendedHolderFactory: ExpandHolderFactory<E>? = null)
 
     /**
      * 递归删除
@@ -82,7 +82,7 @@ interface TreeRecyclerViewHelper<E> {
     /**
      * 添加item
      */
-    fun insertItems(parent: TreeNode<E>, index: Int, items: List<TreeNode<E>>)
+    fun insertItems(parent: ExpandNode<E>, index: Int, items: List<ExpandNode<E>>)
 
     /**
      * 获取当前item个数
@@ -92,19 +92,19 @@ interface TreeRecyclerViewHelper<E> {
     /**
      * 获取指定位置上的node节点
      */
-    fun getNode(recyclerPos: Int): TreeNode<E>
+    fun getNode(recyclerPos: Int): ExpandNode<E>
 
     /**
      * 获取原始adapter
      */
-    fun getExtendedRecyclerAdapter(): TreeAdapter<E>
+    fun getExtendedRecyclerAdapter(): ExpandAdapter<*>
 }
 
 /**
  * 生成TreeHolder接口
  */
-interface TreeHolderFactory {
-    fun <T> getHolder(helper: TreeRecyclerViewHelper<T>, parent: ViewGroup, viewType: Int): TreeHolder<T>
+interface ExpandHolderFactory<E> {
+    fun getHolder(helper: ExpandRecyclerViewHelper<E>, parent: ViewGroup, viewType: Int): ExpandViewHolder<E>
 }
 
 /**
@@ -112,8 +112,8 @@ interface TreeHolderFactory {
  */
 class ExpandRecyclerViewBuilder<T> private constructor(private val recyclerView: RecyclerView) {
 
-    private lateinit var dataList: MutableList<TreeNode<T>>
-    private lateinit var extendedHolderFactory: TreeHolderFactory
+    private lateinit var dataList: MutableList<ExpandNode<T>>
+    private lateinit var extendedHolderFactory: ExpandHolderFactory<T>
     private var isEnableExpand = true
     private var isInit: Boolean = false
 
@@ -128,7 +128,7 @@ class ExpandRecyclerViewBuilder<T> private constructor(private val recyclerView:
         isInit = false
     }
 
-    fun init(dataList: MutableList<TreeNode<T>>, extendedHolderFactory: TreeHolderFactory): ExpandRecyclerViewBuilder<T> {
+    fun init(dataList: MutableList<ExpandNode<T>>, extendedHolderFactory: ExpandHolderFactory<T>): ExpandRecyclerViewBuilder<T> {
         this.dataList = dataList
         this.extendedHolderFactory = extendedHolderFactory
         isInit = true
@@ -140,11 +140,11 @@ class ExpandRecyclerViewBuilder<T> private constructor(private val recyclerView:
         return this
     }
 
-    fun complete(): TreeRecyclerViewHelper<T> {
+    fun complete(): ExpandRecyclerViewHelper<*> {
         if (!isInit) {
             throw IllegalArgumentException("must call the method init()")
         }
-        val adapter = TreeAdapter(recyclerView, dataList, extendedHolderFactory)
+        val adapter = ExpandAdapter(recyclerView, dataList, extendedHolderFactory)
         adapter.isEnableExpand = isEnableExpand
         recyclerView.adapter = adapter
         return adapter

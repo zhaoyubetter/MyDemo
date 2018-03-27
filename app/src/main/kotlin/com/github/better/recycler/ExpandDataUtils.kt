@@ -5,15 +5,15 @@ import java.util.*
 /**
  * TreeAdapter 数据处理类
  */
-internal class TreeDataUtils<T>
+internal class ExpandDataUtils<T>
 
 /**
  * @param srcDataList 原始数据
  */
-constructor(val srcDataList: MutableList<TreeNode<T>>) {
+constructor(private val srcDataList: MutableList<ExpandNode<T>>) {
 
     /** 处理过的数据，所有的item集合 */
-    private val transformOriginDataList = mutableListOf<TreeNode<T>>()
+    private val transformOriginDataList = mutableListOf<ExpandNode<T>>()
     /** 折叠后的数据位置 和 原始数据集合位置的映射数组, posMapArray[0] = 0, posMapArray[1] = 5(父) 这种 */
     private lateinit var posMapArray: IntArray
     /** 当前可用的item个数 */
@@ -26,7 +26,7 @@ constructor(val srcDataList: MutableList<TreeNode<T>>) {
         updateSrcData(srcDataList)
     }
 
-    fun updateSrcData(dataList: List<TreeNode<T>>) {
+    fun updateSrcData(dataList: List<ExpandNode<T>>) {
         transform(dataList, 0, transformOriginDataList)
         posMapArray = IntArray(transformOriginDataList.size)
         curAvailableCount = obtainPosMapArray(transformOriginDataList, posMapArray)
@@ -41,7 +41,7 @@ constructor(val srcDataList: MutableList<TreeNode<T>>) {
      * @param layerLevel, 该数组所处的树内层次
      *
      * */
-    private fun transform(dataList: List<TreeNode<T>>, layerLevel: Int, transformOriginDataList: MutableList<TreeNode<T>>) {
+    private fun transform(dataList: List<ExpandNode<T>>, layerLevel: Int, transformOriginDataList: MutableList<ExpandNode<T>>) {
         for (baseBean in dataList) {
             baseBean.level = layerLevel
             transformOriginDataList.add(baseBean)
@@ -53,7 +53,7 @@ constructor(val srcDataList: MutableList<TreeNode<T>>) {
      * 遍历转换后的数据集合，得到折叠后的数据位置和原始数据集合位置的映射数组
      * return 映射数组的实际大小，也是视图上所需展示的【未被折叠的item的个数】
      **/
-    private fun obtainPosMapArray(transformOriginDataList: List<TreeNode<T>>, posMapArray: IntArray): Int {
+    private fun obtainPosMapArray(transformOriginDataList: List<ExpandNode<T>>, posMapArray: IntArray): Int {
         var i = 0
         var j = 0
         while (j < transformOriginDataList.size) {
@@ -80,7 +80,7 @@ constructor(val srcDataList: MutableList<TreeNode<T>>) {
      * return 当前点击触发的是扩展事件：true， 触发折叠事件：false
      *
      * */
-    fun onExtendedItemClick(extendNode: TreeNode<T>, position: Int): IntArray {
+    fun onExtendedItemClick(extendNode: ExpandNode<T>, position: Int): IntArray {
         extendNode.expand = !extendNode.expand
         val notifyPos = getItemRange(position)
         curAvailableCount = obtainPosMapArray(transformOriginDataList, posMapArray)
@@ -107,7 +107,7 @@ constructor(val srcDataList: MutableList<TreeNode<T>>) {
                 while (j < transformOriginDataList.size && transformOriginDataList.get(j).level > itemLevel) {
                     j++
                 }
-                i = j   // 跳跃时增加
+                i = j   // 跳跃式增加
             } else {
                 i++
             }
@@ -122,7 +122,7 @@ constructor(val srcDataList: MutableList<TreeNode<T>>) {
     /**
      * 获取递归删除的节点
      */
-    fun getRecursionDeleteNode(position: Int, level: Int): TreeNode<T>? {
+    fun getRecursionDeleteNode(position: Int, level: Int): ExpandNode<T>? {
         if (position > posMapArray.size) {
             return null
         }
@@ -139,7 +139,7 @@ constructor(val srcDataList: MutableList<TreeNode<T>>) {
     /**
      * return 删除节点子树包含的展开的节点数量
      **/
-    fun deleteNode(deleteNode: TreeNode<T>): Int {
+    fun deleteNode(deleteNode: ExpandNode<T>): Int {
         val deleteCount = getAvailableCount(deleteNode)
 
         //1.设置 deletedNode parent 为 null
@@ -169,7 +169,7 @@ constructor(val srcDataList: MutableList<TreeNode<T>>) {
      * 找出Node在RecyclerView中的位置【注：onBindViewHolder中的position并不总是对应list数据中的位置，
      * 所以不可采用，{“Do not treat position as fixed”}】
      */
-    fun getNodeRecyclerPos(deleteNode: TreeNode<T>): Int {
+    fun getNodeRecyclerPos(deleteNode: ExpandNode<T>): Int {
         val tempIndex = transformOriginDataList.indexOf(deleteNode)
         var deleteNodeIndex = -1
 
@@ -188,10 +188,10 @@ constructor(val srcDataList: MutableList<TreeNode<T>>) {
     /**
      * 添加节点，返回需要扩展开的父类节点位置集合
      */
-    fun insertItems(parent: TreeNode<T>, sonInsertIndex: Int, items: List<TreeNode<T>>, closure: (index: Int) -> Unit): List<TreeNode<T>> {
+    fun insertItems(parent: ExpandNode<T>, sonInsertIndex: Int, items: List<ExpandNode<T>>, closure: (index: Int) -> Unit): List<ExpandNode<T>> {
         var sonInsertIndex = sonInsertIndex
         // 设置层级，并转换数据
-        val transformItems = mutableListOf<TreeNode<T>>()
+        val transformItems = mutableListOf<ExpandNode<T>>()
         transform(items, parent.level + 1, transformItems)
 
         val sons = parent.children
@@ -215,8 +215,8 @@ constructor(val srcDataList: MutableList<TreeNode<T>>) {
         curAvailableCount = obtainPosMapArray(transformOriginDataList, posMapArray)
 
         // 返回扩展开的父类节点位置集合
-        val tempList = mutableListOf<TreeNode<T>>()
-        var node: TreeNode<T>? = parent
+        val tempList = mutableListOf<ExpandNode<T>>()
+        var node: ExpandNode<T>? = parent
         while (node != null && !node.expand) { // 向上遍历获取父，父收缩时，添加父
             tempList.add(node)
             node = parent.parent
@@ -231,13 +231,13 @@ constructor(val srcDataList: MutableList<TreeNode<T>>) {
 
     /*---------------------------------------------数据通用操作-----------------------------------------------------*/
 
-    private fun getLastSonNode(node: TreeNode<T>): TreeNode<T> {
+    private fun getLastSonNode(node: ExpandNode<T>): ExpandNode<T> {
         return if (!node.hasChildren()) {
             node
         } else getLastSonNode(node.children.get(node.children.size - 1))
     }
 
-    fun getAvailableCount(node: TreeNode<T>): Int {
+    fun getAvailableCount(node: ExpandNode<T>): Int {
         // 没有展开，或者没有孩子 return 1
         if (!node.expand || node.children == null || node.children.size == 0) {
             return 1
@@ -249,11 +249,11 @@ constructor(val srcDataList: MutableList<TreeNode<T>>) {
         return count
     }
 
-    fun getExtendedNode(recyclerPosition: Int): TreeNode<T> {
+    fun getExtendedNode(recyclerPosition: Int): ExpandNode<T> {
         return transformOriginDataList[posMapArray[recyclerPosition]]
     }
 
-    fun getTransformOriginDataList(): List<TreeNode<T>> {
+    fun getTransformOriginDataList(): List<ExpandNode<T>> {
         return transformOriginDataList
     }
 }
