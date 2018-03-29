@@ -23,6 +23,12 @@
             android:layout_height="wrap_content"
             android:text="弧" />
 
+        <Button
+            android:id="@+id/btn_draw_path"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Path"/>
+
     </LinearLayout>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
