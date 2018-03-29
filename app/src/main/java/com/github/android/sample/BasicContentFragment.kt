@@ -1,19 +1,17 @@
 package com.github.android.sample
 
 import android.app.Activity
-import android.content.Intent
-import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import com.better.base.holder.Type1Holder
 import com.better.base.model.SampleItem
-import org.jetbrains.anko.*
+import com.github.better.recycler.*
+import org.jetbrains.anko.find
 
 /**
  * Created by zhaoyu on 2018/3/9.
@@ -28,67 +26,44 @@ class BasicContentFragment : Fragment() {
         return view
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        val id = arguments?.getInt("id", 1) ?: 1
-        recycler.layoutManager = LinearLayoutManager(activity)
-        recycler.addItemDecoration(DividerItemDecoration(activity, LinearLayoutManager.VERTICAL))
-        val items = AnimFunTemplate.getInstance(activity)[id]
-        items?.let {
-            recycler.adapter = Adapter(it) {
-                startActivity(Intent(activity, it.clazz).apply {
-                    putExtra("item", it)
-                })
+    private fun getData(pid: Int?, datas: MutableList<ExpandNode<SampleItem<Activity>>>):
+            MutableList<ExpandNode<SampleItem<Activity>>>? {
+        if (pid == null) {
+            return null
+        }
+        // 模板数据
+        val curItems = FunItemTemplate.getInstance(activity)[pid]
+        // ExpandNode
+        val curExpandNodes = mutableListOf<ExpandNode<SampleItem<Activity>>>()
+        curItems?.forEach { it ->
+            val node = ExpandNode(it, 0, false)
+            curExpandNodes.add(node)                // 父节点
+            // 孩子节点
+            getData(it.id, mutableListOf())?.let {
+                node.addChildren(it)
             }
         }
+        datas.addAll(curExpandNodes)
+        return datas
     }
 
-    inner class Adapter(val items: List<SampleItem<Activity>>,
-                        val listener: ((SampleItem<Activity>) -> Unit)? = null) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-        override fun getItemCount(): Int = items.size
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-            val view = with(parent.context) {
-                verticalLayout {
-                    padding = dip(8)
-                    textView {
-                        id = android.R.id.text1
-                        textSize = 16f
-                        typeface = Typeface.DEFAULT_BOLD
-                        topPadding = dip(4)
-                    }.lparams()
-                    textView {
-                        id = android.R.id.text2
-                        textSize = 14f
-                        topPadding = dip(2)
-                        bottomPadding = dip(4)
-                    }.lparams()
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val datas = mutableListOf<ExpandNode<SampleItem<Activity>>>()
+        getData(0, datas)
+
+        recycler.layoutManager = LinearLayoutManager(activity)
+        recycler.adapter = ExpandAdapter(recycler, datas, object : ExpandHolderFactory<SampleItem<Activity>> {
+            override fun getHolder(helper: ExpandRecyclerViewHelper<SampleItem<Activity>>,
+                                   parent: ViewGroup, viewType: Int): ExpandViewHolder<SampleItem<Activity>> {
+                return when (viewType) {
+                    0 -> Type1Holder(helper, LayoutInflater.from(context).inflate(R.layout.type_item_1, parent, false))
+                    1 -> Type1Holder(helper, LayoutInflater.from(context).inflate(R.layout.type_item_2, parent, false))
+                    2 -> Type1Holder(helper, LayoutInflater.from(context).inflate(R.layout.type_item_3, parent, false))
+                    else -> Type1Holder(helper, LayoutInflater.from(context).inflate(R.layout.type_item_1, parent, false))
                 }
             }
-            return object : RecyclerView.ViewHolder(view){}
-
-//            return ViewHolder(LayoutInflater.from(parent.context).
-//                    inflate(android.R.layout.simple_list_item_2, parent, false))
-        }
-
-        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-            val item = items[position]
-            holder.itemView.find<TextView>(android.R.id.text1).text = item.title
-            holder.itemView.find<TextView>(android.R.id.text2).text = item.desc
-            if(listener != null) {
-                holder.itemView.setOnClickListener { listener?.invoke(item) }
-            }
-//            holder.bind(item, listener)
-        }
-
-//        inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-//            fun bind(item: SampleItem<Activity>, listener: ((SampleItem<Activity>) -> Unit)?) = with(itemView) {
-//                find<TextView>(android.R.id.text1).text = item.title
-//                find<TextView>(android.R.id.text2).text = item.desc
-//                listener?.let {
-//                    setOnClickListener { listener(item) }
-//                }
-//            }
-//        }
+        })
     }
 }
