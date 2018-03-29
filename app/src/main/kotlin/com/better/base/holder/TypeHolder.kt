@@ -1,6 +1,7 @@
 package com.better.base.holder
 
 import android.app.Activity
+import android.content.Intent
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -27,12 +28,31 @@ class Type1Holder(helper: ExpandRecyclerViewHelper<SampleItem<Activity>>, itemVi
     override fun getExtendedClickView(): View = itemView
 }
 
+/**
+ * 节点，并设置点击事件
+ */
 class Type2Holder(helper: ExpandRecyclerViewHelper<SampleItem<Activity>>, itemView: View) :
         ExpandViewHolder<SampleItem<Activity>>(helper, itemView) {
-
+    lateinit var node: ExpandNode<SampleItem<Activity>>
     override fun setData(node: ExpandNode<SampleItem<Activity>>) {
+        this.node = node
         itemView.find<TextView>(android.R.id.text1).text = node.data.title
         itemView.find<TextView>(android.R.id.text2).text = node.data.desc
+    }
+
+    override fun getOnExpandItemClickListener(): OnExtendedItemClickListener? {
+        return object : OnExtendedItemClickListener {
+            override fun onExtendedClick() {
+                itemView.context.startActivity(Intent(itemView.context, node.data.clazz).apply {
+                    putExtra("item", node.data)
+                })
+            }
+            override fun onFoldClick() {
+                itemView.context.startActivity(Intent(itemView.context, node.data.clazz).apply {
+                    putExtra("item", node.data)
+                })
+            }
+        }
     }
 
     override fun getExtendedClickView(): View = itemView

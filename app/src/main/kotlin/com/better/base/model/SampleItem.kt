@@ -1,8 +1,6 @@
 package com.better.base.model
 
-import android.os.Parcel
 import android.os.Parcelable
-import kotlinx.android.parcel.Parceler
 
 /**
  * cz

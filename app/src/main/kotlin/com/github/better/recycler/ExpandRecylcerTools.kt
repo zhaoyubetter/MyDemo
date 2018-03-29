@@ -17,14 +17,12 @@ abstract class ExpandViewHolder<T>(val helper: ExpandRecyclerViewHelper<T>, item
         if (helper is ExpandAdapter<*> && helper.isEnableExpand) {
             val view = if (getExtendedClickView() == null) itemView else getExtendedClickView()
             view?.setOnClickListener {
-                View.OnClickListener {
-                    if (getOnExpandItemClickListener() != null) {
-                        val isExtended = helper.onExtendedItemClick(layoutPosition)
-                        if (isExtended) {
-                            getOnExpandItemClickListener()?.onExtendedClick()
-                        } else {
-                            getOnExpandItemClickListener()?.onFoldClick()
-                        }
+                val isExtended = helper.onExtendedItemClick(layoutPosition)
+                if (getOnExpandItemClickListener() != null) {
+                    if (isExtended) {
+                        getOnExpandItemClickListener()?.onExtendedClick()
+                    } else {
+                        getOnExpandItemClickListener()?.onFoldClick()
                     }
                 }
             }
@@ -44,7 +42,7 @@ abstract class ExpandViewHolder<T>(val helper: ExpandRecyclerViewHelper<T>, item
     /**
      * 可展开的View点击事件
      */
-    fun getOnExpandItemClickListener(): OnExtendedItemClickListener? = null
+    open fun getOnExpandItemClickListener(): OnExtendedItemClickListener? = null
 
     interface OnExtendedItemClickListener {
         fun onExtendedClick()

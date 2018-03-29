@@ -42,4 +42,5 @@ constructor(var data: T, var level: Int = 0, var expand: Boolean = true,
     }
 
     fun hasChildren() = children.size > 0
+
 }

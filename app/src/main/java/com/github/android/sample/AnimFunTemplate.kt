@@ -1,8 +1,9 @@
-package com.github.android.sample.anim
+package com.github.android.sample
 
 import android.app.Activity
 import android.content.Context
 import com.better.base.model.SampleItem
+import com.github.android.sample.anim.*
 import com.github.android.sample.canvas_paint.PaintCanvas_Base1_Activity
 
 /**
@@ -18,7 +19,7 @@ class AnimFunTemplate private constructor(ctx: Context) {
 
         fun getInstance(context: Context): AnimFunTemplate {
             if (instance == null)
-                instance = com.github.android.sample.anim.AnimFunTemplate(context)
+                instance = AnimFunTemplate(context)
             return instance!!
         }
 
@@ -45,19 +46,25 @@ class AnimFunTemplate private constructor(ctx: Context) {
                 title = "Android 动画体系"
                 desc = "介绍tween动画、属性动画"
 
-                // dsl 嵌套
                 item {
                     pid = 1
-                    title = "tween动画"
-                    desc = "tween动画基本使用"
-                    clazz = TweenAnim1Activity::class.java
-                }
+                    id = 22
+                    title = "tween 动画（View动画）"
+                    desc = "介绍tween动画、属性动画"
 
-                item {
-                    pid = 1
-                    title = "tween动画Interpolator"
-                    desc = "tween动画Interpolator详解"
-                    clazz = TweenAnimInterpolatorActivity::class.java
+                    item {
+                        pid = 22
+                        title = "tween动画"
+                        desc = "tween动画基本使用"
+                        clazz = TweenAnim1Activity::class.java
+                    }
+
+                    item {
+                        pid = 22
+                        title = "tween动画Interpolator"
+                        desc = "tween动画Interpolator详解"
+                        clazz = TweenAnimInterpolatorActivity::class.java
+                    }
                 }
 
                 item {
@@ -131,20 +138,20 @@ class AnimFunTemplate private constructor(ctx: Context) {
                 }
             }
 
-            // 第二部分 paint_canvas部分
+            /*第二部分 paint_canvas部分
             item {
                 pid = 0
-                id = 2
+                id = 3
                 title = "自定义控件系列"
                 desc = "由浅入深介绍"
 
                 item {
-                    pid = 2
+                    pid = 3
                     title = "Paint & Canvas基础1"
                     desc = "Paint & Canvas基础1"
                     clazz = PaintCanvas_Base1_Activity::class.java
                 }
-            }
+            }*/
         }
     }
 }

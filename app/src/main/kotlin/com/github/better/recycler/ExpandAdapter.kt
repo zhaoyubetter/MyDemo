@@ -20,7 +20,7 @@ class ExpandAdapter<E>(val recyclerView: RecyclerView, dataList: MutableList<Exp
     private val dataUtils: ExpandDataUtils<E> = ExpandDataUtils(dataList)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExpandViewHolder<E> {
-        return treeHolderFactory.getHolder(this, parent, viewType) as ExpandViewHolder<E>
+        return treeHolderFactory.getHolder(this, parent, viewType)
     }
 
     override fun getItemCount() = dataUtils.curAvailableCount
@@ -69,6 +69,11 @@ class ExpandAdapter<E>(val recyclerView: RecyclerView, dataList: MutableList<Exp
 
     override fun onExtendedItemClick(position: Int): Boolean {
         val extendNode = dataUtils.getExtendedNode(position)
+        // 沒有孩子，直接返回
+        if(extendNode.children.size == 0) {
+            return extendNode.expand
+        }
+
         val preAvailableCount = dataUtils.curAvailableCount
         // 获取通知更新范围
         val notifyPos = dataUtils.onExtendedItemClick(extendNode, position)
