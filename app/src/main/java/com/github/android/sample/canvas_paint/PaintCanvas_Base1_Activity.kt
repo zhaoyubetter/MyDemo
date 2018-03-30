@@ -5,10 +5,7 @@ import android.os.Bundle
 import com.better.base.ToolbarActivity
 import com.better.base.model.SampleItem
 import com.github.android.sample.R
-import com.github.android.sample.canvas_paint.view.PaintCanvasView1
-import com.github.android.sample.canvas_paint.view.PaintCanvasView2
-import com.github.android.sample.canvas_paint.view.PaintCanvasView3
-import com.github.android.sample.canvas_paint.view.PaintCanvasView4
+import com.github.android.sample.canvas_paint.view.*
 import kotlinx.android.synthetic.main.activity_paint_canvas__base1.*
 
 class PaintCanvas_Base1_Activity : ToolbarActivity() {
@@ -40,6 +37,18 @@ class PaintCanvas_Base1_Activity : ToolbarActivity() {
         btn_draw_path.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(PaintCanvasView4(this))
+        }
+
+        // 文字1
+        btn_draw_font_style1.setOnClickListener {
+            root_container.removeAllViews()
+            root_container.addView(PaintFontView1(this))
+        }
+
+        // 文字2
+        btn_draw_font_style2.setOnClickListener {
+            root_container.removeAllViews()
+            root_container.addView(PaintFontView2(this))
         }
     }
 }

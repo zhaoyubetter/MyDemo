@@ -33,10 +33,8 @@ class PaintCanvasView4(ctx: Context, attr: AttributeSet? = null) : View(ctx, att
         }
 
         // 圆角矩形
-
         path.let {
         }
-
 
         canvas.drawPath(path, paint)
     }

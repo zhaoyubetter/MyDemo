@@ -29,8 +29,9 @@
         <activity android:name=".anim.PropertyAnimFromXmlActivity" />
         <activity android:name=".anim.AnimatorSetSampleDemoActivity" />
         <activity android:name=".anim.LayoutAnimationActivity" />
-        <activity android:name=".anim.AnimateLayoutChangesActivity"></activity>
-        <activity android:name=".canvas_paint.PaintCanvas_Base1_Activity"></activity>
+        <activity android:name=".anim.AnimateLayoutChangesActivity" />
+        <activity android:name=".canvas_paint.PaintCanvas_Base1_Activity" />
+        <activity android:name=".canvas_paint.PaintCanvas_Base2_Activity"></activity>
     </application>
 
 </manifest>
