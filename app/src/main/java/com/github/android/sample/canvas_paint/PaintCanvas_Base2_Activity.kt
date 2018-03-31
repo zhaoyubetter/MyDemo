@@ -24,9 +24,5 @@ class PaintCanvas_Base2_Activity : ToolbarActivity() {
             root_container.addView(PaintFontView3_OnPath(this))
         }
 
-        // typeface
-        btn_draw_font_typeface.setOnClickListener {
-
-        }
     }
 }

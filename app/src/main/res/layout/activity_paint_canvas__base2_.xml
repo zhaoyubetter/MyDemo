@@ -16,12 +16,6 @@
             android:layout_height="wrap_content"
             android:text="文字(Path)" />
 
-        <Button
-            android:id="@+id/btn_draw_font_typeface"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="文字(TypeFace)" />
-
     </LinearLayout>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"

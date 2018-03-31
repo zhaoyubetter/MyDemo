@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_set_region"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="set_region"/>
+
+        <Button
+            android:id="@+id/btn_region_path"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="setPath()"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/root_container"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_intersect"
+            android:layout_width="56dp"
+            android:layout_height="wrap_content"
+            android:text="交集"/>
+
+        <Button
+            android:id="@+id/btn_union"
+            android:layout_width="56dp"
+            android:layout_height="wrap_content"
+            android:text="并集"/>
+
+        <Button
+            android:id="@+id/btn_replace"
+            android:layout_width="56dp"
+            android:layout_height="wrap_content"
+            android:text="替换"/>
+
+
+        <Button
+            android:id="@+id/btn_diff"
+            android:layout_width="56dp"
+            android:layout_height="wrap_content"
+            android:text="补集"/>
+
+        <Button
+            android:id="@+id/btn_reverse_diff"
+            android:layout_width="56dp"
+            android:layout_height="wrap_content"
+            android:text="反转补集"/>
+
+        <Button
+            android:id="@+id/btn_xor"
+            android:layout_width="56dp"
+            android:layout_height="wrap_content"
+            android:text="异或集"/>
+
+    </LinearLayout>
+
+</LinearLayout>

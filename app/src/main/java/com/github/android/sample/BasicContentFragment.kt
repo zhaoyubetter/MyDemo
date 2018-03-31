@@ -26,20 +26,21 @@ class BasicContentFragment : Fragment() {
         return view
     }
 
-    private fun getData(pid: Int?, datas: MutableList<ExpandNode<SampleItem<Activity>>>):
+    private fun getData(pid: Int?, datas: MutableList<ExpandNode<SampleItem<Activity>>>, level: Int = 0):
             MutableList<ExpandNode<SampleItem<Activity>>>? {
         if (pid == null) {
             return null
         }
+        var level = level
         // 模板数据
         val curItems = FunItemTemplate.getInstance(activity)[pid]
         // ExpandNode
         val curExpandNodes = mutableListOf<ExpandNode<SampleItem<Activity>>>()
         curItems?.forEach { it ->
-            val node = ExpandNode(it, 0, false)
+            val node = ExpandNode(it, 0, level == 1)
             curExpandNodes.add(node)                // 父节点
             // 孩子节点
-            getData(it.id, mutableListOf())?.let {
+            getData(it.id, mutableListOf(), level++)?.let {
                 node.addChildren(it)
             }
         }
