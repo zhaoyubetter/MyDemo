@@ -1,6 +1,5 @@
 package com.better.base.model
 
-import android.app.Activity
 import android.os.Parcel
 import android.os.Parcelable
 
@@ -12,11 +11,16 @@ import android.os.Parcelable
 //@Parcelize
 data class SampleItem<T>(var id: Int?, var pid: Int = 0,
                          var clazz: Class<out T>?, var title: String?, var desc: String?) : Parcelable {
-    constructor(parcel: Parcel) : this (
-            null, 0, null, null, null) {
-    }
 
     constructor() : this(null, 0, null, null, null)
+
+    constructor(parcel: Parcel) : this(
+            parcel.readValue(Int::class.java.classLoader) as? Int,
+            parcel.readInt(),
+            null,
+            parcel.readString(),
+            parcel.readString()) {
+    }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeValue(id)
@@ -31,13 +35,15 @@ data class SampleItem<T>(var id: Int?, var pid: Int = 0,
 
     companion object CREATOR : Parcelable.Creator<SampleItem<*>> {
         override fun createFromParcel(parcel: Parcel): SampleItem<*> {
-            return SampleItem<Activity>(parcel)
+            return SampleItem<Unit>(parcel)
         }
 
         override fun newArray(size: Int): Array<SampleItem<*>?> {
             return arrayOfNulls(size)
         }
     }
+
+
 }
 
 
