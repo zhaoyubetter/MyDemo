@@ -7,9 +7,9 @@ import android.support.v4.app.FragmentActivity
 
 /**
  * Created by zhaoyu on 2018/3/11.
-
+ */
 class CommonActivityLifeCycleCallback : Application.ActivityLifecycleCallbacks {
-    private val fragmentLifeCycle = CommonFragmentLifeCycleCallBack()
+    private val fragmentLifeCycle = com.better.base.lifecycle.CommonFragmentLifeCycleCallBack()
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
         if (activity is FragmentActivity) {
@@ -35,4 +35,3 @@ class CommonActivityLifeCycleCallback : Application.ActivityLifecycleCallbacks {
     override fun onActivityStopped(activity: Activity?) {
     }
 }
- */

@@ -5,10 +5,7 @@ import android.os.Bundle
 import com.better.base.ToolbarActivity
 import com.better.base.model.SampleItem
 import com.github.android.sample.R
-import com.github.android.sample.canvas_paint.view.MyCanvas1
-import com.github.android.sample.canvas_paint.view.MyCanvas2
-import com.github.android.sample.canvas_paint.view.MyCanvas3
-import com.github.android.sample.canvas_paint.view.MyCanvas4
+import com.github.android.sample.canvas_paint.view.*
 import kotlinx.android.synthetic.main.activity_canvas.*
 
 class CanvasActivity : ToolbarActivity() {
@@ -40,6 +37,11 @@ class CanvasActivity : ToolbarActivity() {
         btn_skew.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(MyCanvas4(this))
+        }
+
+        btn_clip.setOnClickListener {
+            root_container.removeAllViews()
+            root_container.addView(MyCanvas5(this))
         }
     }
 }

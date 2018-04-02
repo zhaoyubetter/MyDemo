@@ -2,8 +2,8 @@
 apply from:'config.gradle'
 
 buildscript {
-    ext.kotlin_version = '1.2.31'
-    ext.anko_version = '0.10.4'
+    ext.kotlin_version = '1.2.31' // 1.2.31
+    ext.anko_version = '0.10.4'  // 0.10.1
     repositories {
         google()
         jcenter()

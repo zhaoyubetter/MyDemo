@@ -51,12 +51,12 @@ class AnimatorSetSampleDemoActivity : ToolbarActivity() {
             val x = -radius!! * Math.sin(radians).toFloat()
             val y = -radius!! * Math.cos(radians).toFloat()
 
-            lateinit var obj1: ObjectAnimator
-            lateinit var obj2: ObjectAnimator
-            lateinit var obj3: ObjectAnimator
-            lateinit var obj4: ObjectAnimator
-            lateinit var obj5: ObjectAnimator
-            lateinit var obj6: ObjectAnimator
+             var obj1: ObjectAnimator
+             var obj2: ObjectAnimator
+             var obj3: ObjectAnimator
+             var obj4: ObjectAnimator
+             var obj5: ObjectAnimator
+             var obj6: ObjectAnimator
 
             if (!isOpen) {
                 target.visibility = View.VISIBLE

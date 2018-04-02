@@ -17,13 +17,24 @@ class MyCanvas4(ctx: Context, attrs: AttributeSet? = null) : View(ctx, attrs) {
         val paint1 = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             strokeWidth = 2f
             style = Paint.Style.STROKE
-            color = Color.RED
+            color = Color.BLACK
         }
-        canvas.drawRect(10f, 10f, 200f, 100f, paint1)
 
-        // x倾斜60°，y不变
-        canvas.skew(1.732f, 0f)
+        canvas.drawLine(0f, height / 2.toFloat(), width.toFloat(), height / 2.toFloat(), paint1)
+        canvas.drawLine(width / 2.toFloat(), 0f, width / 2.toFloat(), height.toFloat(), paint1)
+
+        canvas.translate(width / 2.toFloat(), height / 2.toFloat())
+
+        paint1.color = Color.RED
+        canvas.drawRect(0f, 0f, 200f, 100f, paint1)
+
+        // x倾斜45，y不变
+        //canvas.skew(1f, 0f)     // x方向45度错切
+        // canvas.skew(-1f,0f)       // x方向-45度错切
+//        canvas.skew(0f,1f)  // y方向斜切45
+        canvas.skew(-1f, 1f)
+
         paint1.color = Color.GREEN
-        canvas.drawRect(10f, 10f, 200f, 100f, paint1)
+        canvas.drawRect(0f, 0f, 200f, 100f, paint1)
     }
 }

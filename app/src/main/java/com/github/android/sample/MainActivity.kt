@@ -5,11 +5,11 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v7.app.AppCompatActivity
-import kotlinx.android.extensions.CacheImplementation
-import kotlinx.android.extensions.ContainerOptions
+//import kotlinx.android.extensions.CacheImplementation
+//import kotlinx.android.extensions.ContainerOptions
 import kotlinx.android.synthetic.main.activity_main.*
 
-@ContainerOptions(cache = CacheImplementation.NO_CACHE)
+//@ContainerOptions(cache = CacheImplementation.NO_CACHE)
 class MainActivity : AppCompatActivity() {
 
     val tabTitle = listOf("基础部分", "进阶", "项目实战")
