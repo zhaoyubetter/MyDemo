@@ -43,5 +43,15 @@ class CanvasActivity : ToolbarActivity() {
             root_container.removeAllViews()
             root_container.addView(MyCanvas5(this))
         }
+
+        btn_save.setOnClickListener {
+            root_container.removeAllViews()
+            root_container.addView(MyCanvas6(this))
+        }
+
+        btn_layer.setOnClickListener {
+            root_container.removeAllViews()
+            root_container.addView(MyCanvas7Layer(this))
+        }
     }
 }

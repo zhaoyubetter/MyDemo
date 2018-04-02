@@ -55,6 +55,18 @@
             android:layout_height="wrap_content"
             android:text="裁剪(clip)"/>
 
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="保存与恢复"/>
+
+        <Button
+            android:id="@+id/btn_layer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="图层"/>
+
     </LinearLayout>
 
 </LinearLayout>
