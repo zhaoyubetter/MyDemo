@@ -34,6 +34,8 @@
         <activity android:name=".canvas_paint.PaintCanvas_Base2_Activity"/>
         <activity android:name=".canvas_paint.PaintCanvas_Region_Activity">
         </activity>
+        <activity android:name=".canvas_paint.CanvasActivity">
+        </activity>
     </application>
 
 </manifest>

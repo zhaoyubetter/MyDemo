@@ -3,7 +3,7 @@ package com.github.android.sample.canvas_paint
 import android.app.Activity
 import android.graphics.Region
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import com.better.base.ToolbarActivity
 import com.better.base.model.SampleItem
 import com.github.android.sample.R
 import com.github.android.sample.canvas_paint.view.MyRegionView1
@@ -11,7 +11,7 @@ import com.github.android.sample.canvas_paint.view.MyRegionView2
 import com.github.android.sample.canvas_paint.view.MyRegionView3
 import kotlinx.android.synthetic.main.activity_paint_canvas__region_.*
 
-class PaintCanvas_Region_Activity : AppCompatActivity() {
+class PaintCanvas_Region_Activity : ToolbarActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

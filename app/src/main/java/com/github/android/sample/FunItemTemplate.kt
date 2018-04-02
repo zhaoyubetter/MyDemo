@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import com.better.base.model.SampleItem
 import com.github.android.sample.anim.*
+import com.github.android.sample.canvas_paint.CanvasActivity
 import com.github.android.sample.canvas_paint.PaintCanvas_Base1_Activity
 import com.github.android.sample.canvas_paint.PaintCanvas_Base2_Activity
 import com.github.android.sample.canvas_paint.PaintCanvas_Region_Activity
@@ -177,6 +178,13 @@ class FunItemTemplate private constructor(ctx: Context) {
                     title = "Paint & Canvas基础3"
                     desc = "区域 Region"
                     clazz = PaintCanvas_Region_Activity::class.java
+                }
+
+                item {
+                    pid = 2
+                    title = "Paint & Canvas基础4"
+                    desc = "Canvas变换与操作"
+                    clazz = CanvasActivity::class.java
                 }
             }
         }

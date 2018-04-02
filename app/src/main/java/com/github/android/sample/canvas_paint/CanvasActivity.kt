@@ -1,0 +1,45 @@
+package com.github.android.sample.canvas_paint
+
+import android.app.Activity
+import android.os.Bundle
+import com.better.base.ToolbarActivity
+import com.better.base.model.SampleItem
+import com.github.android.sample.R
+import com.github.android.sample.canvas_paint.view.MyCanvas1
+import com.github.android.sample.canvas_paint.view.MyCanvas2
+import com.github.android.sample.canvas_paint.view.MyCanvas3
+import com.github.android.sample.canvas_paint.view.MyCanvas4
+import kotlinx.android.synthetic.main.activity_canvas.*
+
+class CanvasActivity : ToolbarActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_canvas)
+        intent.getParcelableExtra<SampleItem<Activity>>("item")?.let {
+            supportActionBar?.title = it.title
+            supportActionBar?.subtitle = it.desc
+        }
+        root_container.addView(MyCanvas1(this))
+
+        btn_translate.setOnClickListener {
+            root_container.removeAllViews()
+            root_container.addView(MyCanvas1(this))
+        }
+
+        btn_rotate.setOnClickListener {
+            root_container.removeAllViews()
+            root_container.addView(MyCanvas2(this))
+        }
+
+        btn_scale.setOnClickListener {
+            root_container.removeAllViews()
+            root_container.addView(MyCanvas3(this))
+        }
+
+        btn_skew.setOnClickListener {
+            root_container.removeAllViews()
+            root_container.addView(MyCanvas4(this))
+        }
+    }
+}
