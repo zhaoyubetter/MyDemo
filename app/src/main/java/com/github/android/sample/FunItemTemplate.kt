@@ -4,10 +4,7 @@ import android.app.Activity
 import android.content.Context
 import com.better.base.model.SampleItem
 import com.github.android.sample.anim.*
-import com.github.android.sample.canvas_paint.CanvasActivity
-import com.github.android.sample.canvas_paint.PaintCanvas_Base1_Activity
-import com.github.android.sample.canvas_paint.PaintCanvas_Base2_Activity
-import com.github.android.sample.canvas_paint.PaintCanvas_Region_Activity
+import com.github.android.sample.canvas_paint.*
 
 /**
  * Created by zhaoyu on 2018/3/11.
@@ -183,8 +180,15 @@ class FunItemTemplate private constructor(ctx: Context) {
                 item {
                     pid = 2
                     title = "Paint & Canvas基础4"
-                    desc = "Canvas变换与操作"
+                    desc = "Canvas变换、rotate、clip、图层等"
                     clazz = CanvasActivity::class.java
+                }
+
+                item {
+                    pid = 2
+                    title = "Paint & Canvas基础5"
+                    desc = "Canvas.drawText()方法"
+                    clazz = CanvasDrawTextActivity::class.java
                 }
             }
         }
