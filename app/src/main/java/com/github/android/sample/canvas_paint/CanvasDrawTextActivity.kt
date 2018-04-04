@@ -56,5 +56,15 @@ class CanvasDrawTextActivity : ToolbarActivity() {
             root_container.removeAllViews()
             root_container.addView(MyDrawText_View5(this))
         }
+
+        btn_draw_on_top.setOnClickListener {
+            root_container.removeAllViews()
+            root_container.addView(MyDrawText_View6(this))
+        }
+
+        btn_draw_on_center.setOnClickListener {
+            root_container.removeAllViews()
+            root_container.addView(MyDrawText_View7(this))
+        }
     }
 }

@@ -66,6 +66,18 @@
             android:layout_height="wrap_content"
             android:text="最小矩形" />
 
+        <Button
+            android:id="@+id/btn_draw_on_top"
+            android:layout_width="88dp"
+            android:layout_height="wrap_content"
+            android:text="指定Top" />
+
+        <Button
+            android:id="@+id/btn_draw_on_center"
+            android:layout_width="88dp"
+            android:layout_height="wrap_content"
+            android:text="指定Center" />
+
     </LinearLayout>
 
 </LinearLayout>
