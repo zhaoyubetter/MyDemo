@@ -190,6 +190,13 @@ class FunItemTemplate private constructor(ctx: Context) {
                     desc = "Canvas.drawText()方法"
                     clazz = CanvasDrawTextActivity::class.java
                 }
+
+                item {
+                    pid = 2
+                    title = "Paint & Canvas基础6"
+                    desc = "Path 与 贝塞尔曲线"
+                    clazz = CanvasPathActivity::class.java
+                }
             }
         }
     }
