@@ -166,7 +166,7 @@ class FunItemTemplate private constructor(ctx: Context) {
                 item {
                     pid = 2
                     title = "Paint & Canvas基础2"
-                    desc = "Canvas画文字"
+                    desc = "Canvas drawTextOnPath"
                     clazz = PaintCanvas_Base2_Activity::class.java
                 }
 

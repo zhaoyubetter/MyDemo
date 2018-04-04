@@ -16,7 +16,7 @@ class PaintFontView3_OnPath(ctx: Context, attr: AttributeSet? = null) : View(ctx
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            textSize = 38f
+            textSize = 64f
             color = Color.RED
             strokeWidth = 2f
             style = Paint.Style.STROKE
@@ -25,10 +25,10 @@ class PaintFontView3_OnPath(ctx: Context, attr: AttributeSet? = null) : View(ctx
         // 沿路径绘制
         val text = "风萧萧兮易水寒，壮士一去兮不复返"
         val circlePath1 = Path().apply {
-            addCircle(width / 4.toFloat(), 220f, 180f, Path.Direction.CCW)  // 逆時針
+            addCircle(width / 4.toFloat(), 220f, 180f, Path.Direction.CW)  // 逆時針
         }
         val circlePath2 = Path().apply {
-            addCircle(width / 4 * 3.toFloat(), 220f, 180f, Path.Direction.CCW)
+            addCircle(width / 4 * 3.toFloat(), 220f, 180f, Path.Direction.CW)
         }
         canvas.drawPath(circlePath1, paint)
         canvas.drawPath(circlePath2, paint)
