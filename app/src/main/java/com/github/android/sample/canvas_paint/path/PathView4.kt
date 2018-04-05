@@ -11,21 +11,29 @@ import android.view.View
 /**
  * Created by zhaoyu1 on 2018/4/4.
  */
-class PathView1(ctx: Context, attrs: AttributeSet? = null) : View(ctx, attrs) {
+class PathView4(ctx: Context, attrs: AttributeSet? = null) : View(ctx, attrs) {
+
+    val path = Path()
+
     override fun onDraw(canvas: Canvas) {
         val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             strokeWidth = 2f
             style = Paint.Style.STROKE
             color = Color.RED
         }
-        // 画曲线
-        val path = Path().apply {
-            moveTo(100f, 300f)
-            quadTo(200f, 200f, 300f, 300f)
-            quadTo(400f, 400f, 500f, 300f)
-        }
 
+
+        /*
+        path.moveTo(100,300);
+        path.quadTo(200,200,300,300);
+        path.quadTo(400,400,500,300);
+         */
+
+        path.moveTo(100f,300f)
+        path.rQuadTo(100f, -100f, 200f,0f)
+        path.rQuadTo(100f, 100f, 200f, 0f)
 
         canvas.drawPath(path, paint)
     }
+
 }

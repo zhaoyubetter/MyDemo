@@ -22,6 +22,24 @@
             android:layout_height="wrap_content"
             android:text="手势作画" />
 
+        <Button
+            android:id="@+id/btn_path_gesture_2"
+            android:layout_width="88dp"
+            android:layout_height="wrap_content"
+            android:text="手势作画2" />
+
+        <Button
+            android:id="@+id/btn_path_rquad"
+            android:layout_width="88dp"
+            android:layout_height="wrap_content"
+            android:text="r_Quad" />
+
+        <Button
+            android:id="@+id/btn_path_wave"
+            android:layout_width="88dp"
+            android:layout_height="wrap_content"
+            android:text="WAVE" />
+
     </LinearLayout>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
