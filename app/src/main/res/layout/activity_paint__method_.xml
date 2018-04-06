@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_paint_strokeCap"
+            android:layout_width="88dp"
+            android:layout_height="wrap_content"
+            android:text="Stroke_Cap"/>
+
+        <Button
+            android:id="@+id/btn_paint_strokeJoin"
+            android:layout_width="88dp"
+            android:layout_height="wrap_content"
+            android:text="Stroke_Join"/>
+
+        <Button
+            android:id="@+id/btn_paint_corner_path_effect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Corner_Path_Effect"/>
+
+    </LinearLayout>
+
+    <FrameLayout android:id="@+id/root_container"
+                 xmlns:android="http://schemas.android.com/apk/res/android"
+                 android:layout_width="match_parent"
+                 android:layout_height="0dp"
+                 android:layout_weight="1"></FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_paint_DashPathEffect"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:text="Dash_Path"/>
+        <Button
+            android:id="@+id/btn_paint_Discrete"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:text="Discrete"/>
+
+        <Button
+            android:id="@+id/btn_paint_path_dash_path"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:text="path_dash_path"/>
+
+        <Button
+            android:id="@+id/btn_paint_compose_sum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="compose_sum"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -197,6 +197,13 @@ class FunItemTemplate private constructor(ctx: Context) {
                     desc = "Path 与 贝塞尔曲线"
                     clazz = CanvasPathActivity::class.java
                 }
+
+                item {
+                    pid = 2
+                    title = "Paint & Canvas基础7"
+                    desc = "Paint 画笔相关函数"
+                    clazz = Paint_Method_Activity::class.java
+                }
             }
         }
     }
