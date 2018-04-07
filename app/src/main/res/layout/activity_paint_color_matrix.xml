@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_color_matrix_1"
+            android:layout_width="88dp"
+            android:text="颜色过滤"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btn_color_matrix_2"
+            android:layout_width="56dp"
+            android:text="图片"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btn_color_matrix_3"
+            android:layout_width="56dp"
+            android:text="饱和度"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btn_color_matrix_4"
+            android:layout_width="56dp"
+            android:text="反相"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btn_color_matrix_5"
+            android:layout_width="56dp"
+            android:text="缩放"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btn_color_matrix_6"
+            android:layout_width="56dp"
+            android:text="通道"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/root_container"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -38,6 +38,8 @@
         <activity android:name=".canvas_paint.CanvasPathActivity"/>
         <activity android:name=".canvas_paint.Paint_Method_Activity">
         </activity>
+        <activity android:name=".canvas_paint.PaintColorMatrixActivity">
+        </activity>
     </application>
 
 </manifest>

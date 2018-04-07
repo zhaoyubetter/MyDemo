@@ -204,6 +204,13 @@ class FunItemTemplate private constructor(ctx: Context) {
                     desc = "Paint 画笔相关函数"
                     clazz = Paint_Method_Activity::class.java
                 }
+
+                item {
+                    pid = 2
+                    title = "Paint & Canvas基础8"
+                    desc = "ColorMatrix与滤镜"
+                    clazz = PaintColorMatrixActivity::class.java
+                }
             }
         }
     }
