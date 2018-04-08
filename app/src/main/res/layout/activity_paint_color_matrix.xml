@@ -61,7 +61,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+        <Button
+            android:id="@+id/btn_color_matrix_7"
+            android:layout_width="66dp"
+            android:text="饱和度"
+            android:layout_height="wrap_content"/>
 
+        <Button
+            android:id="@+id/btn_color_matrix_8"
+            android:layout_width="88dp"
+            android:text="色彩缩放"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 

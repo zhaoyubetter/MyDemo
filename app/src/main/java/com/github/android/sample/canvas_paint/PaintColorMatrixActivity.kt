@@ -1,11 +1,19 @@
 package com.github.android.sample.canvas_paint
 
 import android.os.Bundle
+import android.view.ViewGroup
+import android.widget.SeekBar
 import com.better.base.ToolbarActivity
 import com.better.base.setTitleFromIntent
 import com.github.android.sample.R
 import com.github.android.sample.canvas_paint.colorMatrix.*
 import kotlinx.android.synthetic.main.activity_paint_color_matrix.*
+import org.jetbrains.anko.find
+import org.jetbrains.anko.sdk25.coroutines.onClick
+import org.jetbrains.anko.sdk25.coroutines.onSeekBarChangeListener
+import org.jetbrains.anko.seekBar
+import org.jetbrains.anko.textView
+import org.jetbrains.anko.verticalLayout
 
 class PaintColorMatrixActivity : ToolbarActivity() {
 
@@ -43,6 +51,87 @@ class PaintColorMatrixActivity : ToolbarActivity() {
         btn_color_matrix_6.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(ColorMatrix_View6(this))
+        }
+
+        btn_color_matrix_7.setOnClickListener {
+            root_container.removeAllViews()
+            val view7 = ColorMatrix_View7(root_container.context)
+            with(root_container) {
+                verticalLayout {
+                    addView(view7)
+                    seekBar {
+                        max = 20
+                        progress = 1
+                        onSeekBarChangeListener {
+                            onProgressChanged { _, progress, _ ->
+                                view7.setSaturation(progress.toFloat())
+                            }
+                        }
+                    }.lparams(width = ViewGroup.LayoutParams.MATCH_PARENT)
+                }
+            }
+        }
+
+
+        btn_color_matrix_8.onClick {
+            root_container.removeAllViews()
+            val view7 = ColorMatrix_View8(root_container.context)
+            with(root_container) {
+                verticalLayout {
+                    addView(view7)
+                    textView {
+                        text = "红色"
+                    }
+
+                    fun change() {
+                        view7.colorMatrix.setScale(
+                                find<SeekBar>(android.R.id.text1).progress * 1.0f / 10,
+                                find<SeekBar>(android.R.id.text2).progress * 1.0f / 10,
+                                find<SeekBar>(android.R.id.tabs).progress * 1.0f / 10, 1f)
+                        view7.postInvalidate()
+                    }
+
+                    seekBar {
+                        id = android.R.id.text1
+                        max = 20
+                        progress = 10
+                        onSeekBarChangeListener {
+                            onProgressChanged { _, progress, _ ->
+                                change()
+                            }
+                        }
+                    }.lparams(width = ViewGroup.LayoutParams.MATCH_PARENT)
+
+                    textView {
+                        text = "绿色"
+                    }
+                    seekBar {
+                        id = android.R.id.text2
+                        max = 20
+                        progress = 10
+                        onSeekBarChangeListener {
+                            onProgressChanged { _, progress, _ ->
+                                change()
+                            }
+                        }
+                    }.lparams(width = ViewGroup.LayoutParams.MATCH_PARENT)
+
+                    textView {
+                        text = "蓝色"
+                    }
+                    seekBar {
+                        id = android.R.id.tabs
+                        max = 20
+                        progress = 10
+                        onSeekBarChangeListener {
+                            onProgressChanged { _, progress, _ ->
+                                change()
+                            }
+                        }
+                    }.lparams(width = ViewGroup.LayoutParams.MATCH_PARENT)
+                }
+
+            }
         }
     }
 }
