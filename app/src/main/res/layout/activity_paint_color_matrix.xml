@@ -73,6 +73,12 @@
             android:text="色彩缩放"
             android:layout_height="wrap_content"/>
 
+        <Button
+            android:id="@+id/btn_color_matrix_9"
+            android:layout_width="88dp"
+            android:text="色彩旋转"
+            android:layout_height="wrap_content"/>
+
     </LinearLayout>
 
 </LinearLayout>

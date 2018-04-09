@@ -130,8 +130,62 @@ class PaintColorMatrixActivity : ToolbarActivity() {
                         }
                     }.lparams(width = ViewGroup.LayoutParams.MATCH_PARENT)
                 }
-
             }
-        }
+        } // 缩放
+
+        btn_color_matrix_9.onClick {
+            root_container.removeAllViews()
+            val view7 = ColorMatrix_View8(root_container.context)
+            with(root_container) {
+                verticalLayout {
+                    addView(view7)
+                    textView {
+                        text = "红色轴旋转"
+                    }
+
+                    seekBar {
+                        id = android.R.id.text1
+                        max = 360
+                        progress = 180
+                        onSeekBarChangeListener {
+                            onProgressChanged { _, progress, _ ->
+                                view7.colorMatrix.setRotate(0,progress-180*.10f)
+                                view7.postInvalidate()
+                            }
+                        }
+                    }.lparams(width = ViewGroup.LayoutParams.MATCH_PARENT)
+
+                    textView {
+                        text = "绿色轴旋转"
+                    }
+                    seekBar {
+                        id = android.R.id.text2
+                        max = 20
+                        progress = 10
+                        onSeekBarChangeListener {
+                            onProgressChanged { _, progress, _ ->
+                                view7.colorMatrix.setRotate(1,progress-180*.10f)
+                                view7.postInvalidate()
+                            }
+                        }
+                    }.lparams(width = ViewGroup.LayoutParams.MATCH_PARENT)
+
+                    textView {
+                        text = "蓝色轴旋转"
+                    }
+                    seekBar {
+                        id = android.R.id.tabs
+                        max = 20
+                        progress = 10
+                        onSeekBarChangeListener {
+                            onProgressChanged { _, progress, _ ->
+                                view7.colorMatrix.setRotate(2,progress-180*.10f)
+                                view7.postInvalidate()
+                            }
+                        }
+                    }.lparams(width = ViewGroup.LayoutParams.MATCH_PARENT)
+                }
+            }
+        } // rotate
     }
 }
