@@ -187,5 +187,9 @@ class PaintColorMatrixActivity : ToolbarActivity() {
                 }
             }
         } // rotate
+
+        btn_color_matrix_10.onClick {
+
+        }
     }
 }

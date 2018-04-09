@@ -79,6 +79,12 @@
             android:text="色彩旋转"
             android:layout_height="wrap_content"/>
 
+
+        <Button
+            android:id="@+id/btn_color_matrix_10"
+            android:layout_width="88dp"
+            android:text="矩阵"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 </LinearLayout>

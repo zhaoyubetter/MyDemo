@@ -40,6 +40,8 @@
         </activity>
         <activity android:name=".canvas_paint.PaintColorMatrixActivity">
         </activity>
+        <activity android:name=".canvas_paint.PaintColorFilterActivity">
+        </activity>
     </application>
 
 </manifest>
