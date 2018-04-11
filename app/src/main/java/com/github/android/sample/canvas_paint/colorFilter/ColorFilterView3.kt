@@ -6,30 +6,61 @@ import android.util.AttributeSet
 import android.view.View
 import com.github.android.sample.R
 
+
 /**
  * Created by zhaoyu on 2018/4/9.
  */
 
 class ColorFilterView3(ctx: Context, attrs: AttributeSet? = null) : View(ctx, attrs) {
 
-    private var bitmap: Bitmap
-    private var paint: Paint
+    private var mBmp: Bitmap
+    private var mPaint: Paint
     val colorMatrix = ColorMatrix()
 
     init {
-        bitmap = BitmapFactory.decodeResource(context.resources, R.mipmap.icon_map)
-        paint = Paint(Paint.ANTI_ALIAS_FLAG)
+        mBmp = BitmapFactory.decodeResource(context.resources, R.mipmap.icon_map)
+        mPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        // 绘制原始位图
-        canvas.drawBitmap(bitmap, null, Rect(0, 0, 64, 64 * bitmap.height / bitmap.width), paint)
+        val width = 64
+        val height = width * mBmp.getHeight() / mBmp.getWidth()
 
-        val paint2 = Paint(Paint.ANTI_ALIAS_FLAG)
-        canvas.translate(260f, 0f)
-        paint2.colorFilter = PorterDuffColorFilter(Color.RED, PorterDuff.Mode.MULTIPLY)     // 正片叠底
-        canvas.drawBitmap(bitmap, null, Rect(0, 0, 64, 64 * bitmap.height / bitmap.width), paint2)
+        // 原图
+        canvas.drawBitmap(mBmp, null, Rect(0, 0, width, height), mPaint)
+
+        canvas.translate(70f, 0f)
+        mPaint.setColorFilter(PorterDuffColorFilter(Color.RED, PorterDuff.Mode.SRC))
+        canvas.drawBitmap(mBmp, null, Rect(0, 0, width, height), mPaint)
+
+        canvas.translate(70f, 0f)
+        mPaint.setColorFilter(PorterDuffColorFilter(Color.GREEN, PorterDuff.Mode.SRC_ATOP))
+        canvas.drawBitmap(mBmp, null, Rect(0, 0, width, height), mPaint)
+
+        canvas.translate(70f, 0f)
+        mPaint.setColorFilter(PorterDuffColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN))
+        canvas.drawBitmap(mBmp, null, Rect(0, 0, width, height), mPaint)
+
+        canvas.translate(70f, 0f)
+        mPaint.setColorFilter(PorterDuffColorFilter(Color.GRAY, PorterDuff.Mode.SRC_OVER))
+        canvas.drawBitmap(mBmp, null, Rect(0, 0, width, height), mPaint)
+
+
+        canvas.translate(70f, 0f)
+        mPaint.setColorFilter(PorterDuffColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP))
+        canvas.drawBitmap(mBmp, null, Rect(0, 0, width, height), mPaint)
+
+        // colorMatrix 00FF00
+        canvas.translate(70f, 0f)
+        mPaint.colorFilter = ColorMatrixColorFilter(ColorMatrix(floatArrayOf(
+                0f,0f,0f,0f,0f,
+                0f,0f,0f,0f,255f,
+                0f,0f,0f,0f,0f,
+                0f,0f,0f,1f,0f
+        )))
+        canvas.drawBitmap(mBmp, null, Rect(0, 0, width, height), mPaint)
+
     }
 }

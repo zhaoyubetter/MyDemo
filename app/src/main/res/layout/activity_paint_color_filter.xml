@@ -29,6 +29,12 @@
             android:layout_height="wrap_content"
             android:text="setTint"/>
 
+        <Button
+            android:id="@+id/btn_color_filter_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="tint_porterDuff"/>
+
     </LinearLayout>
 
     <FrameLayout

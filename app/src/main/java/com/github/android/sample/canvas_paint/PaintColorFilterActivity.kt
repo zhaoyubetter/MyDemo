@@ -1,9 +1,8 @@
 package com.github.android.sample.canvas_paint
 
-import android.graphics.drawable.DrawableWrapper
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.graphics.drawable.DrawableCompat
-import android.support.v7.app.AppCompatActivity
 import android.view.ViewGroup
 import com.better.base.ToolbarActivity
 import com.better.base.setTitleFromIntent
@@ -15,8 +14,6 @@ import kotlinx.android.synthetic.main.activity_paint_color_filter.*
 import org.jetbrains.anko.imageView
 import org.jetbrains.anko.linearLayout
 import org.jetbrains.anko.sdk25.coroutines.onClick
-import org.jetbrains.anko.textView
-import org.jetbrains.anko.verticalLayout
 
 class PaintColorFilterActivity : ToolbarActivity() {
 
@@ -38,19 +35,52 @@ class PaintColorFilterActivity : ToolbarActivity() {
         btn_color_filter_3.setOnClickListener {
             root_container.removeAllViews()
             with(root_container) {
-                val drawable = resources.getDrawable(R.mipmap.icon_map)
+                val drawable = resources.getDrawable(R.mipmap.icon_map).mutate()
                 linearLayout {
                     imageView {
                         setImageDrawable(drawable)
                     }.lparams(width = ViewGroup.LayoutParams.WRAP_CONTENT)
                     imageView {
-                        resources.getDrawable(R.mipmap.icon_map).let {
-                            it.setTint(0x00ff00)
+                        resources.getDrawable(R.mipmap.icon_map).mutate().let {
+                            DrawableCompat.setTint(it, Color.RED)
+                            setImageDrawable(it)
+                        }
+                    }.lparams()
+
+                    imageView {
+                        resources.getDrawable(R.mipmap.icon_map).mutate().let {
+                            DrawableCompat.setTint(it, Color.GREEN)
+                            setImageDrawable(it)
+                        }
+                    }.lparams()
+
+                    imageView {
+                        resources.getDrawable(R.mipmap.icon_map).mutate().let {
+                            DrawableCompat.setTint(it, Color.BLACK)
+                            setImageDrawable(it)
+                        }
+                    }.lparams()
+
+                    imageView {
+                        resources.getDrawable(R.mipmap.icon_map).mutate().let {
+                            DrawableCompat.setTint(it, Color.GRAY)
+                            setImageDrawable(it)
+                        }
+                    }.lparams()
+
+                    imageView {
+                        resources.getDrawable(R.mipmap.icon_map).mutate().let {
+                            DrawableCompat.setTint(it, Color.YELLOW)
                             setImageDrawable(it)
                         }
                     }.lparams()
                 }
             }
+        }
+
+        btn_color_filter_4.onClick {
+            root_container.removeAllViews()
+            root_container.addView(ColorFilterView3(this@PaintColorFilterActivity))
         }
     }
 }
