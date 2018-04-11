@@ -218,6 +218,14 @@ class FunItemTemplate private constructor(ctx: Context) {
                     desc = "ColorFilter"
                     clazz = PaintColorFilterActivity::class.java
                 }
+
+                item {
+                    pid = 2
+                    title = "Paint & Canvas基础10"
+                    desc = "Xfermode"
+                    clazz = PaintXfermodeActivity::class.java
+                }
+
             }
         }
     }
