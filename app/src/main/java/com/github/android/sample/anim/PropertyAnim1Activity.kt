@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
+import android.view.animation.LinearInterpolator
 import android.view.animation.TranslateAnimation
 import com.better.base.ToolbarActivity
 import com.better.base.e
@@ -86,6 +87,25 @@ class PropertyAnim1Activity : ToolbarActivity() {
         }
         btn_prop.onClick {
             toast("Property Button is Clicked!")
+
+            ValueAnimator.ofFloat(0f, 1f).apply {
+                duration = 10 * 1000
+                interpolator = LinearInterpolator()
+                setEvaluator(object:TypeEvaluator<Float> {
+                    override fun evaluate(fraction: Float, startValue: Float, endValue: Float): Float {
+                        var value = startValue + (endValue - startValue) * fraction
+                        e("better ==>" + value)
+                        if(value in (0.49f..0.51f)) {
+                            value = 0.5f
+                        }
+                        return value
+                    }
+                })
+                interpolator
+                addUpdateListener { it->
+                    e("better ==> ${it.animatedFraction}, ${it.animatedValue}")
+                }
+            }.start()
         }
 
         // evaluator
@@ -102,7 +122,7 @@ class PropertyAnim1Activity : ToolbarActivity() {
         }
 
         // 自定义evaluator1
-        btn_custom_evaluator.setOnClickListener (
+        btn_custom_evaluator.setOnClickListener(
                 {
                     ValueAnimator.ofObject(CharEvaluator(), 'A', 'Z').apply {
                         duration = 5000
