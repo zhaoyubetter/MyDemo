@@ -23,79 +23,104 @@ class XfermodeView1(ctx: Context, attrs: AttributeSet? = null) : View(ctx, attrs
         paint.color = Color.GRAY
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = 2f
+        paint.textSize = 25f
         dstBmp = makeDst(wid, hei)
         srcBmp = makeSrc(wid, hei)
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        mydraw(canvas, PorterDuffXfermode(PorterDuff.Mode.SRC))
+
+        val textY = 210f
+        val translateY = 230f
 
         canvas.save()
+        mydraw(canvas, PorterDuffXfermode(PorterDuff.Mode.SRC))
+        canvas.drawText("SRC", 20f,textY,paint)
+
         canvas.translate(180f, 0f)
         mydraw(canvas, PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP))
+        canvas.drawText("SRC_ATOP", 20f,textY,paint)
 
         canvas.translate(180f, 0f)
         mydraw(canvas, PorterDuffXfermode(PorterDuff.Mode.SRC_IN))
+        canvas.drawText("SRC_IN", 20f,textY,paint)
 
         canvas.translate(180f, 0f)
         mydraw(canvas, PorterDuffXfermode(PorterDuff.Mode.SRC_OUT))
+        canvas.drawText("SRC_OUT", 20f,textY,paint)
 
         canvas.translate(180f, 0f)
         mydraw(canvas, PorterDuffXfermode(PorterDuff.Mode.SRC_OVER))
+        canvas.drawText("SRC_OVER", 20f,textY,paint)
 
         canvas.restore()
         // ==== 1 end
 
         canvas.save()
-        canvas.translate(0f, 180f)
+        canvas.translate(0f, translateY)
         mydraw(canvas, PorterDuffXfermode(PorterDuff.Mode.DST))
+        canvas.drawText("DST", 20f,textY,paint)
 
         canvas.translate(180f, 0f)
         mydraw(canvas, PorterDuffXfermode(PorterDuff.Mode.DST_ATOP))
+        canvas.drawText("DST_ATOP", 20f,textY,paint)
 
         canvas.translate(180f, 0f)
         mydraw(canvas, PorterDuffXfermode(PorterDuff.Mode.DST_IN))
+        canvas.drawText("DST_IN", 20f,textY,paint)
 
         canvas.translate(180f, 0f)
         mydraw(canvas, PorterDuffXfermode(PorterDuff.Mode.DST_OUT))
+        canvas.drawText("DST_OUT", 20f,textY,paint)
 
         canvas.translate(180f, 0f)
         mydraw(canvas, PorterDuffXfermode(PorterDuff.Mode.DST_OVER))
+        canvas.drawText("DST_OVER", 20f,textY,paint)
         canvas.restore()
         ///////=== 2 end
 
         canvas.save()
 
-        canvas.translate(0f, 180f*2)
+        canvas.translate(0f, translateY*2)
         mydraw(canvas, PorterDuffXfermode(PorterDuff.Mode.ADD))
+        canvas.drawText("ADD", 20f,textY,paint)
 
         canvas.translate(180f, 0f)
         mydraw(canvas, PorterDuffXfermode(PorterDuff.Mode.MULTIPLY))
+        canvas.drawText("MULTIPLY", 20f,textY,paint)
 
         canvas.translate(180f, 0f)
         mydraw(canvas, PorterDuffXfermode(PorterDuff.Mode.LIGHTEN))
+        canvas.drawText("LIGHTEN", 20f,textY,paint)
+
 
         canvas.translate(180f, 0f)
         mydraw(canvas, PorterDuffXfermode(PorterDuff.Mode.OVERLAY))
+        canvas.drawText("OVERLAY", 20f,textY,paint)
 
         canvas.translate(180f, 0f)
         mydraw(canvas, PorterDuffXfermode(PorterDuff.Mode.SCREEN))
+        canvas.drawText("SCREEN", 20f,textY,paint)
 
         canvas.restore()
         //////3===end
 
         canvas.save()
-        canvas.translate(0f, 180f*3)
+        canvas.translate(0f, translateY*3)
         mydraw(canvas, PorterDuffXfermode(PorterDuff.Mode.DARKEN))
+        canvas.drawText("DARKEN", 20f,textY,paint)
         canvas.restore()
 
 
         canvas.save()
-        canvas.translate(0f, 180f * 4f)
+        canvas.translate(0f, translateY * 4f)
         mydraw(canvas, PorterDuffXfermode(PorterDuff.Mode.CLEAR))
+        canvas.drawText("CLEAR", 20f,textY,paint)
+
         canvas.translate(180f, 0f)
         mydraw(canvas, PorterDuffXfermode(PorterDuff.Mode.XOR))
+        canvas.drawText("XOR", 20f,textY,paint)
 
         canvas.restore()
     }
