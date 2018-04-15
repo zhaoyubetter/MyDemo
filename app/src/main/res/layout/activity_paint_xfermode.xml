@@ -11,6 +11,29 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/btn_18_mode"
+            android:text="18种模式"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btn_light"
+            android:text="light"
+            android:layout_width="68dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btn_src"
+            android:text="圆角(SRC)"
+            android:layout_width="68dp"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btn_src_out"
+            android:text="橡皮檫(SRC_OUT)"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
     <FrameLayout
@@ -25,7 +48,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
+        <Button
+            android:id="@+id/btn_DST_IN"
+            android:text="波浪(DST_IN)"
+            android:layout_width="82dp"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </LinearLayout>
