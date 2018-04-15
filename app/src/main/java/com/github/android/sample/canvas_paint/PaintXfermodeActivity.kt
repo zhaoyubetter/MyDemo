@@ -44,5 +44,10 @@ class PaintXfermodeActivity : ToolbarActivity() {
             root_container.removeAllViews()
             root_container.addView(XfermodeView5(this@PaintXfermodeActivity))
         }
+
+        btn_DST_IN_2.onClick {
+            root_container.removeAllViews()
+            root_container.addView(XfermodeView6(this@PaintXfermodeActivity))
+        }
     }
 }

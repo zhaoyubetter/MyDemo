@@ -53,6 +53,11 @@
             android:text="波浪(DST_IN)"
             android:layout_width="82dp"
             android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btn_DST_IN_2"
+            android:text="文字(DST_IN)"
+            android:layout_width="82dp"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </LinearLayout>
