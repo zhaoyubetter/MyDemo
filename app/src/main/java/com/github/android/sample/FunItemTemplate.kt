@@ -226,6 +226,13 @@ class FunItemTemplate private constructor(ctx: Context) {
                     clazz = PaintXfermodeActivity::class.java
                 }
 
+                item {
+                    pid = 2
+                    title = "Paint & Canvas基础11"
+                    desc = "Canvas图层详解Layer"
+                    clazz = CanvasLayerActivity::class.java
+                }
+
             }
         }
     }
