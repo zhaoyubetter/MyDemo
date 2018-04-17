@@ -27,13 +27,21 @@ class LayerView1(ctx: Context, attributeSet: AttributeSet? = null) : View(ctx, a
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas.drawRect(20f,20f,200f,200f,paint)
-        val layerID = canvas.saveLayer(0f, 0f, wid * 2.toFloat(), hei * 2.toFloat(), paint)
+//        canvas.drawRect(20f,20f,200f,200f,paint)
+//        val layerID = canvas.saveLayer(0f, 0f, wid * 2.toFloat(), hei * 2.toFloat(), paint)
+//        canvas.drawBitmap(dstBmp, 0f, 0f, paint)
+//        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
+//        canvas.drawBitmap(srcBmp, wid / 2.toFloat(), hei / 2.toFloat(), paint)
+//        paint.xfermode = null
+//        canvas.restoreToCount(layerID)
+
+//        // 使用save看能否实现噢
+        val layerID = canvas.save()
         canvas.drawBitmap(dstBmp, 0f, 0f, paint)
         paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
         canvas.drawBitmap(srcBmp, wid / 2.toFloat(), hei / 2.toFloat(), paint)
-        paint.xfermode = null
         canvas.restoreToCount(layerID)
+
     }
 
 

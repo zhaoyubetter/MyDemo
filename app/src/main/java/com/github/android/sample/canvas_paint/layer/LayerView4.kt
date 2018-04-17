@@ -27,7 +27,6 @@ class LayerView4(ctx: Context, attributeSet: AttributeSet? = null) : View(ctx, a
         super.onDraw(canvas)
         canvas.drawRect(0f,0f,400f,400f, paint)
 
-
         val layerId = canvas.saveLayer(300f,300f, 800f,800f, paint)
 
         canvas.apply {
@@ -47,10 +46,9 @@ class LayerView4(ctx: Context, attributeSet: AttributeSet? = null) : View(ctx, a
 
             drawLine(450f,450f,600f,600f, paint)    // canvas受限，不能超出
             restore() // 回到400到700f
+            e("better===>saveCount ${canvas.saveCount}")
             drawLine(420f,500f,600f,680f, paint)
         }
-
-
 
         canvas.restoreToCount(layerId)
     }

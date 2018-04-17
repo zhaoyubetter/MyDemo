@@ -51,5 +51,9 @@ class LayerView5(ctx: Context, attributeSet: AttributeSet? = null) : View(ctx, a
         canvas.clipRect(300, 300, 500, 500)
         canvas.drawColor(resources.getColor(R.color.blue_27))
         e("count:" + canvas.saveCount + "  id4:" + id4)
+
+//        canvas.restoreToCount(id3)
+//        canvas.drawColor(Color.GRAY)
+//        e("count:" + canvas.saveCount)   // 3
     }
 }

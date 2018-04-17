@@ -15,7 +15,7 @@ class MyCanvas4(ctx: Context, attrs: AttributeSet? = null) : View(ctx, attrs) {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         val paint1 = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            strokeWidth = 2f
+            strokeWidth = 5f
             style = Paint.Style.STROKE
             color = Color.BLACK
         }
@@ -32,9 +32,9 @@ class MyCanvas4(ctx: Context, attrs: AttributeSet? = null) : View(ctx, attrs) {
         //canvas.skew(1f, 0f)     // x方向45度错切
         // canvas.skew(-1f,0f)       // x方向-45度错切
 //        canvas.skew(0f,1f)  // y方向斜切45
-        canvas.skew(-1f, 1f)
+        canvas.skew(Math.tan(30.toDouble()).toFloat(), 0f)
 
-        paint1.color = Color.GREEN
+        paint1.color = Color.BLACK
         canvas.drawRect(0f, 0f, 200f, 100f, paint1)
     }
 }
