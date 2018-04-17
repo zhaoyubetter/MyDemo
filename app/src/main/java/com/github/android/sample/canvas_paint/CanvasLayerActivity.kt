@@ -8,8 +8,9 @@ import android.widget.Toolbar
 import com.better.base.ToolbarActivity
 import com.better.base.setTitleFromIntent
 import com.github.android.sample.R
-import com.github.android.sample.canvas_paint.layer.LayerView1
+import com.github.android.sample.canvas_paint.layer.*
 import kotlinx.android.synthetic.main.activity_canvas_layer.*
+import org.jetbrains.anko.sdk25.coroutines.onClick
 
 class CanvasLayerActivity : ToolbarActivity() {
 
@@ -18,9 +19,35 @@ class CanvasLayerActivity : ToolbarActivity() {
         setContentView(R.layout.activity_canvas_layer)
         setTitleFromIntent(intent)
 
-        // 尝试下整个window设置成透明时的src_IN效果
+
+        btn_layer.onClick {
+            // 尝试下整个window设置成透明时的src_IN效果
 //        window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        root_container.removeAllViews()
-        root_container.addView(LayerView1(this))
+            root_container.removeAllViews()
+            root_container.addView(LayerView1(this@CanvasLayerActivity))
+        }
+
+
+        btn_save_layer_1.onClick {
+            root_container.removeAllViews()
+            root_container.addView(LayerView2(this@CanvasLayerActivity))
+        }
+
+
+        btn_save_layer_2.onClick {
+            root_container.removeAllViews()
+            root_container.addView(LayerView3(this@CanvasLayerActivity))
+        }
+
+        btn_save_layer_3.onClick {
+            root_container.removeAllViews()
+            root_container.addView(LayerView4(this@CanvasLayerActivity))
+        }
+
+        btn_save_layer_4.onClick {
+            root_container.removeAllViews()
+            root_container.addView(LayerView5(this@CanvasLayerActivity))
+        }
+
     }
 }

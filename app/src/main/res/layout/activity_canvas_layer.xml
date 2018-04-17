@@ -11,7 +11,28 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/btn_layer"
+            android:text="图层"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content" />
 
+        <Button
+            android:id="@+id/btn_save_layer_1"
+            android:text="save_Layer1"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btn_save_layer_2"
+            android:text="save_Layer_alpha"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btn_save_layer_3"
+            android:text="save_Layer_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
@@ -27,7 +48,11 @@
         android:orientation="horizontal">
 
 
-
+        <Button
+            android:id="@+id/btn_save_layer_4"
+            android:text="restore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </LinearLayout>
