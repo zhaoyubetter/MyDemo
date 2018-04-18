@@ -233,6 +233,18 @@ class FunItemTemplate private constructor(ctx: Context) {
                     clazz = CanvasLayerActivity::class.java
                 }
 
+                item {
+                    pid = 2
+                    id = 21
+                    title = "Paint & Canvas 示例"
+
+                    item {
+                        pid = 21
+                        title = "QQ红点消息拖动"
+                        desc = "仿QQ红点消息拖动"
+                        clazz = RedPointerDragActivity::class.java
+                    }
+                } // end 21
             }
         }
     }
