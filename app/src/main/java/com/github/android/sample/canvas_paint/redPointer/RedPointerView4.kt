@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
 import com.github.android.sample.R
+import org.jetbrains.anko.firstChild
 import org.jetbrains.anko.padding
 import org.jetbrains.anko.textColor
 
@@ -43,7 +44,6 @@ class RedPointerView4(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(c
 
     var isTouch = false
     var path = Path()
-    var autoBack = false
 
 
     init {
@@ -87,11 +87,11 @@ class RedPointerView4(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(c
                 }
             }
 
+
             // 添加过度动画
             AnimatorSet().apply {
                 play(anim3).with(anim4)
             }.start()
-
 
 //            tipText.x = startPoint.x.toFloat() - tipText.width / 2
 //            tipText.y = startPoint.y.toFloat() - tipText.height / 2
@@ -165,9 +165,13 @@ class RedPointerView4(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(c
             MotionEvent.ACTION_UP -> isTouch = false
         }
 
-        endPoint.x = event.x.toInt()
-        endPoint.y = event.y.toInt()
-        postInvalidate()
+        // down的时候，不更新view
+        if (event.action != MotionEvent.ACTION_DOWN) {
+            endPoint.x = event.x.toInt()
+            endPoint.y = event.y.toInt()
+            postInvalidate()
+        }
+
         return super.onTouchEvent(event)
     }
 }
