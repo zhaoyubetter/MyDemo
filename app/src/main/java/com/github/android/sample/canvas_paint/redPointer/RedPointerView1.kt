@@ -49,6 +49,9 @@ class RedPointerView1(ctx: Context, attrs: AttributeSet? = null) : FrameLayout(c
         }
     }
 
+    /**
+     * path计算的方法
+     */
     private fun calculatePath() {
         // ==== 曲线涉及到5个点（2个红点取中间为控制点，4个切点为曲线的起点与终点）
 
