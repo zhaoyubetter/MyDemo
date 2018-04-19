@@ -41,7 +41,8 @@
         <activity android:name=".canvas_paint.PaintColorFilterActivity" />
         <activity android:name=".canvas_paint.PaintXfermodeActivity" />
         <activity android:name=".canvas_paint.CanvasLayerActivity" />
-        <activity android:name=".canvas_paint.RedPointerDragActivity"></activity>
+        <activity android:name=".canvas_paint.RedPointerDragActivity" />
+        <activity android:name=".canvas_paint.PaintShadowLayerActivity"></activity>
     </application>
 
 </manifest>

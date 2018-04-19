@@ -235,6 +235,13 @@ class FunItemTemplate private constructor(ctx: Context) {
 
                 item {
                     pid = 2
+                    title = "Paint & Canvas基础12"
+                    desc = "ShadowLayer 阴影与 MaskFilter 发光效果"
+                    clazz = PaintShadowLayerActivity::class.java
+                }
+
+                item {
+                    pid = 2
                     id = 21
                     title = "Paint & Canvas 示例"
 

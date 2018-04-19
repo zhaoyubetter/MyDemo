@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toolbar
 import com.better.base.ToolbarActivity
+import com.better.base.setTitleFromIntent
 import com.github.android.sample.R
 import com.github.android.sample.canvas_paint.redPointer.RedPointerView1
 import com.github.android.sample.canvas_paint.redPointer.RedPointerView2
@@ -17,6 +18,7 @@ class RedPointerDragActivity : ToolbarActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_red_pointer_drag)
+        setTitleFromIntent(intent)
 
 
         root_container.removeAllViews()
