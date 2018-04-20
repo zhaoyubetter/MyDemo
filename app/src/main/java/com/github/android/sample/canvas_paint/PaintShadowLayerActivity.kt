@@ -10,6 +10,7 @@ import com.better.base.setTitleFromIntent
 import com.github.android.sample.R
 import com.github.android.sample.canvas_paint.shadow.ShadowView1
 import com.github.android.sample.canvas_paint.shadow.ShadowView2
+import com.github.android.sample.canvas_paint.shadow.ShadowView3
 import kotlinx.android.synthetic.main.activity_paint_shadow_layer.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.sdk25.coroutines.onSeekBarChangeListener
@@ -86,6 +87,11 @@ class PaintShadowLayerActivity : ToolbarActivity() {
         btn_mask_filter.onClick {
             root_container.removeAllViews()
             root_container.addView(ShadowView2(this@PaintShadowLayerActivity))
+        }
+
+        btn_bitmap.onClick {
+            root_container.removeAllViews()
+            root_container.addView(ShadowView3(this@PaintShadowLayerActivity))
         }
     }
 }

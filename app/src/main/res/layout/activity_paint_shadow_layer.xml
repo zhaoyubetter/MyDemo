@@ -29,6 +29,12 @@
             android:layout_height="wrap_content"
             android:text="mask_filter" />
 
+        <Button
+            android:id="@+id/btn_bitmap"
+            android:layout_width="96dp"
+            android:layout_height="wrap_content"
+            android:text="extract_Alpha" />
+
     </LinearLayout>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
