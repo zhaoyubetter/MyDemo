@@ -47,7 +47,34 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+        <Button
+            android:id="@+id/btn_shader5"
+            android:layout_width="88dp"
+            android:layout_height="wrap_content"
+            android:text="LinearGradient" />
+        <Button
+            android:id="@+id/btn_shader6"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="填充模式" />
 
+        <Button
+            android:id="@+id/btn_shader7"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="填充方式" />
+
+        <Button
+            android:id="@+id/btn_shader8"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="文字渐变" />
+
+        <Button
+            android:id="@+id/btn_shader9"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="文字动画" />
     </LinearLayout>
 
 </LinearLayout>
