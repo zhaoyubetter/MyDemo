@@ -242,6 +242,13 @@ class FunItemTemplate private constructor(ctx: Context) {
 
                 item {
                     pid = 2
+                    title = "Paint & Canvas基础13"
+                    desc = "Paint' Shader着色器"
+                    clazz = PaintShaderActivity::class.java
+                }
+
+                item {
+                    pid = 2
                     id = 21
                     title = "Paint & Canvas 示例"
 
