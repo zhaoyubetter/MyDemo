@@ -107,5 +107,20 @@ class PaintShaderActivity : ToolbarActivity() {
                 textSize = 40f
             })
         }
+
+        btn_shader10.onClick {
+            root_container.removeAllViews()
+            root_container.addView(ShaderView10(this@PaintShaderActivity))
+        }
+
+        btn_shader11.onClick {
+            root_container.removeAllViews()
+            root_container.addView(ShaderView11(this@PaintShaderActivity))
+        }
+
+        btn_shader12.onClick {
+            root_container.removeAllViews()
+            root_container.addView(ShaderView12(this@PaintShaderActivity))
+        }
     }
 }

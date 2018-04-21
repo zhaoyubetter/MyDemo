@@ -77,4 +77,27 @@
             android:text="文字动画" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btn_shader10"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:text="Gradial" />
+
+        <Button
+            android:id="@+id/btn_shader11"
+            android:layout_width="82dp"
+            android:layout_height="wrap_content"
+            android:text="Gradial\n填充方式" />
+
+        <Button
+            android:id="@+id/btn_shader12"
+            android:layout_width="82dp"
+            android:layout_height="wrap_content"
+            android:text="水波纹" />
+    </LinearLayout>
+
 </LinearLayout>
