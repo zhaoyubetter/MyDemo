@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v7.app.AppCompatActivity
+import com.github.android.sample.widget.WidgetContentFragment
 //import kotlinx.android.extensions.CacheImplementation
 //import kotlinx.android.extensions.ContainerOptions
 import kotlinx.android.synthetic.main.activity_main.*
@@ -25,8 +26,8 @@ class MainActivity : AppCompatActivity() {
         tabLayout.setupWithViewPager(viewPager)
         // setting content
         val base = BasicContentFragment()
-        val improve = TabContentFragment()
-        val project = TabContentFragment()
+        val improve = WidgetContentFragment()
+        val project = WidgetContentFragment()
         val fragments = listOf(base, improve, project)
         val adapter = TabContentAdapter(supportFragmentManager, fragments, tabTitle)
         viewPager.adapter = adapter

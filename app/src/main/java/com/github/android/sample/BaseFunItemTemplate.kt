@@ -9,17 +9,17 @@ import com.github.android.sample.canvas_paint.*
 /**
  * Created by zhaoyu on 2018/3/11.
  */
-class FunItemTemplate private constructor(ctx: Context) {
+class BaseFunItemTemplate private constructor(ctx: Context) {
 
     // 伴生对象
     companion object {
-        private var instance: FunItemTemplate? = null
+        private var instance: BaseFunItemTemplate? = null
         private val items = mutableListOf<SampleItem<Activity>>()
         private val groupsItems = mutableMapOf<Int, List<SampleItem<Activity>>>()
 
-        fun getInstance(context: Context): FunItemTemplate {
+        fun getInstance(context: Context): BaseFunItemTemplate {
             if (instance == null)
-                instance = FunItemTemplate(context)
+                instance = BaseFunItemTemplate(context)
             return instance!!
         }
 

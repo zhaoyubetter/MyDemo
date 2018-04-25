@@ -33,7 +33,7 @@ class BasicContentFragment : Fragment() {
         }
         var level = level
         // 模板数据
-        val curItems = FunItemTemplate.getInstance(activity)[pid]
+        val curItems = BaseFunItemTemplate.getInstance(activity)[pid]
         // ExpandNode
         val curExpandNodes = mutableListOf<ExpandNode<SampleItem<Activity>>>()
         curItems?.forEach { it ->
