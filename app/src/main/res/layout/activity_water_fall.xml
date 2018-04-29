@@ -20,6 +20,8 @@
 
 
         <com.github.widget.better.WaterFallLayout
+            android:paddingLeft="20dp"
+            android:paddingRight="16dp"
             android:id="@+id/waterfallLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

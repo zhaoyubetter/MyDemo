@@ -31,8 +31,9 @@ class WaterFallActivity : ToolbarActivity() {
     }
 
     private fun addItem() {
-        val layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+        val layoutParams = ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT)
+        layoutParams.topMargin = 30     // TODO: 奇怪设置 topMargin 没有效果
         waterfallLayout.addView(ImageView(this).apply {
             val key = Random().nextInt(6)
             e("$key")
@@ -42,7 +43,9 @@ class WaterFallActivity : ToolbarActivity() {
                 2 -> setImageResource(R.mipmap.img_7654)
                 3 -> setImageResource(R.mipmap.img_7692)
                 4 -> setImageResource(R.mipmap.img_7708)
-                else -> setImageResource(R.mipmap.juntuan)
+                else -> {
+                    setImageResource(R.mipmap.juntuan)
+                }
             }
             scaleType = ImageView.ScaleType.CENTER_CROP
         }, layoutParams)

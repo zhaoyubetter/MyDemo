@@ -84,7 +84,7 @@ class WaterFallLayout(ctx: Context, attrs: AttributeSet? = null) : ViewGroup(ctx
 
             // 设置布局信息
             layoutParams.left = paddingLeft + column * (childWidth + hSpace)
-            layoutParams.top = paddingTop + top[column]
+            layoutParams.top = paddingTop + top[column] + layoutParams.topMargin
             layoutParams.right = layoutParams.left + childWidth
             layoutParams.bottom = layoutParams.top + childHeight
 
