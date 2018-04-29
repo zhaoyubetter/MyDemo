@@ -44,7 +44,8 @@
         <activity android:name=".canvas_paint.RedPointerDragActivity" />
         <activity android:name=".canvas_paint.PaintShadowLayerActivity" />
         <activity android:name=".canvas_paint.PaintShaderActivity" />
-        <activity android:name=".widget.viewgroup.FlowLayoutActivity"></activity>
+        <activity android:name=".widget.viewgroup.FlowLayoutActivity" />
+        <activity android:name=".widget.viewgroup.WaterFallActivity"></activity>
     </application>
 
 </manifest>

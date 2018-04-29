@@ -7,6 +7,7 @@ import com.github.android.sample.BaseFunItemTemplate
 import com.github.android.sample.anim.*
 import com.github.android.sample.canvas_paint.*
 import com.github.android.sample.widget.viewgroup.FlowLayoutActivity
+import com.github.android.sample.widget.viewgroup.WaterFallActivity
 
 /**
  * Created by zhaoyu on 2018/3/11.
@@ -54,8 +55,15 @@ class WidgetFunItemTemplate private constructor(ctx: Context) {
                     title = "FlowLayout - 流布局"
                     desc = "FlowLayout"
                     clazz = FlowLayoutActivity::class.java
+                }
 
-                } // end 13
+                item {
+                    pid = 1
+                    id = 12
+                    title = "WaterFallLayout - 瀑布流"
+                    desc = "WaterFallLayout-简单示例"
+                    clazz = WaterFallActivity::class.java
+                }
             }
         }
     }
