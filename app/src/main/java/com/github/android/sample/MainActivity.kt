@@ -31,6 +31,8 @@ class MainActivity : AppCompatActivity() {
         val fragments = listOf(base, improve, project)
         val adapter = TabContentAdapter(supportFragmentManager, fragments, tabTitle)
         viewPager.adapter = adapter
+
+        IntRange
     }
 
     class TabContentAdapter(pm: FragmentManager, val fragments: List<Fragment>, val tabIndicators: List<String>) :

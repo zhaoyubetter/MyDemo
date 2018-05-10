@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.better.base.model.SampleItem
+import com.github.android.sample.MainActivity
 import com.github.android.sample.R
 import com.github.better.recycler.ExpandNode
 import com.github.better.recycler.ExpandRecyclerViewHelper
@@ -28,6 +29,7 @@ class Type1Holder(helper: ExpandRecyclerViewHelper<SampleItem<Activity>>, itemVi
 
         itemView.find<ImageView>(R.id.image).visibility = if (node.hasChildren()) View.VISIBLE else View.INVISIBLE
         itemView.find<View>(android.R.id.text2).visibility = if (node.hasChildren()) View.GONE else View.VISIBLE
+
     }
 
     override fun getOnExpandItemClickListener(): OnExtendedItemClickListener? {
@@ -39,6 +41,7 @@ class Type1Holder(helper: ExpandRecyclerViewHelper<SampleItem<Activity>>, itemVi
                 itemView.context.startActivity(Intent(itemView.context, node.data.clazz).apply {
                     putExtra("item", node.data)
                 })
+
             }
 
             override fun onFoldClick() {

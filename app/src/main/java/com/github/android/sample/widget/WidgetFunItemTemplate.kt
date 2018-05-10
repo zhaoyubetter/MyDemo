@@ -6,6 +6,7 @@ import com.better.base.model.SampleItem
 import com.github.android.sample.BaseFunItemTemplate
 import com.github.android.sample.anim.*
 import com.github.android.sample.canvas_paint.*
+import com.github.android.sample.solution.JSBrigeActivity
 import com.github.android.sample.widget.viewgroup.FlowLayoutActivity
 import com.github.android.sample.widget.viewgroup.WaterFallActivity
 
@@ -64,6 +65,14 @@ class WidgetFunItemTemplate private constructor(ctx: Context) {
                     desc = "WaterFallLayout-简单示例"
                     clazz = WaterFallActivity::class.java
                 }
+            }
+
+            item {
+                pid = 0
+                id = 2
+                title = "JSBrige"
+                desc = "native h5 双向通信方案"
+                clazz = JSBrigeActivity::class.java
             }
         }
     }
