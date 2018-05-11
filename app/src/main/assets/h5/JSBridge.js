@@ -1,3 +1,6 @@
+// 1.需要h5，提供原生调用的API；可参考：https://www.cnblogs.com/dailc/p/5931324.html#hybrid_3_2
+
+
 (function (win) {
     var hasOwnProperty = Object.prototype.hasOwnProperty;
     var JSBridge = win.JSBridge || (win.JSBridge = {});
