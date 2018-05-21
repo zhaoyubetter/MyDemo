@@ -20,6 +20,7 @@
 <ul class="list">
     <li>
         <div>
+            <!-- JSBridge.call( {type: "", data: {} , callback() ) -->
             <button onclick="JSBridge.call('bridge','showToast',{'msg':'Hello JSBridge'},function(res){alert(JSON.stringify(res))})">
                 测试showToast
             </button>
@@ -31,6 +32,15 @@
         <div>
             <button onclick="JSBridge.call('bridge','showDialog',{'msg':'你好，better'}, null)">
                 显示原生Dialog
+            </button>
+        </div>
+    </li>
+    <br/>
+
+    <li>
+        <div>
+            <button onclick="JSBridge.callNew( {'type':'toast','attach':{'msg':'你好，better'}}, function(res){alert('ok');})">
+                显示原生Dialog_New
             </button>
         </div>
     </li>

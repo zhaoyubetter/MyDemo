@@ -3,8 +3,9 @@
 
 (function (win) {
     var hasOwnProperty = Object.prototype.hasOwnProperty;
-    var JSBridge = win.JSBridge || (win.JSBridge = {});
-    var JSBRIDGE_PROTOCOL = 'JSBridge';
+    var JSBridge = win.JSBridge || (win.JSBridge = {}); // var JSBridge = win.JSBridge || (win.JSBridge = {});
+    var JSBRIDGE_PROTOCOL = 'me';   // JSBridge
+    var JSBRIDGE_HOST = 'jsbridge';   // host
     var Inner = {
         callbacks: {},
         call: function (obj, method, params, callback) {
@@ -21,9 +22,21 @@
         // 根据port值从callbacks中得到原始的callback函数，执行callback函数，之后从callbacks中删除
         onFinish: function (port, jsonObj){
             var callback = this.callbacks[port];
-            callback && callback(jsonObj);
+            var backString = callback && callback(jsonObj);
             delete this.callbacks[port];
+            return backString;
         },
+
+        // better ==> 新方式
+        callNew: function (params, callback) {   // params: {} json参数, callback：回调地址
+            console.log(" "+params+" "+callback);
+            var port = Util.getPort();
+            console.log(port);
+            this.callbacks[port] = callback;
+            var uri=Util.getUriNew(params,port);
+            console.log("after encode: " + uri);
+            window.prompt(uri, "");  // window.prompt(uri, “”)将uri传递到native层
+        }
     };
     var Util = {
         getPort: function () {
@@ -40,7 +53,15 @@
             } else {
                 return obj || '';
             }
-        }
+        },
+
+        // better-->new
+        getUriNew:function(params, port){
+            params = this.getParam(params);
+            console.log("before: encode: " + JSBRIDGE_PROTOCOL + '://' + JSBRIDGE_HOST + '?data=' + params + '&callback=' + port);
+            var uri = JSBRIDGE_PROTOCOL + '://' + JSBRIDGE_HOST + '?data=' + encodeURIComponent(params) + '&callback=' + encodeURIComponent(port);
+            return uri;
+        },
     };
     for (var key in Inner) {
         if (!hasOwnProperty.call(JSBridge, key)) {

@@ -32,7 +32,9 @@ class MainActivity : AppCompatActivity() {
         val adapter = TabContentAdapter(supportFragmentManager, fragments, tabTitle)
         viewPager.adapter = adapter
 
-        IntRange
+        with(viewPager) {
+            (0..2).filter { it -> it % 2 ==0 }
+        }
     }
 
     class TabContentAdapter(pm: FragmentManager, val fragments: List<Fragment>, val tabIndicators: List<String>) :
@@ -46,6 +48,12 @@ class MainActivity : AppCompatActivity() {
         override fun getItem(position: Int) = fragments[position]
         override fun getCount() = fragments.size
         override fun getPageTitle(position: Int) = tabIndicators[position]
+
+        val abc = buildString {
+            for (alpha in 'A'..'Z') {
+                append(alpha)
+            }
+        }
 
     }
 }
