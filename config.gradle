@@ -3,7 +3,7 @@
 // android
 ext.android_support_version = '26.1.0'
 // kotlin
-ext.kotlin_version = '1.1.2-4'
+ext.kotlin_version = '1.2.40'
 ext.anko_version = '0.10.1'
 
 ext.build_tool_version = '26.0.2'

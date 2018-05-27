@@ -48,10 +48,12 @@ dependencies {
     implementation "org.jetbrains.anko:anko-appcompat-v7-coroutines:$anko_version"
 // ============= anko layout end
 
-
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    // 监视器fragment
+    implementation 'com.github.zhaoyubetter:kotlin-monitorfragment:v1.0.0'
 
     implementation project(":widget")
 
