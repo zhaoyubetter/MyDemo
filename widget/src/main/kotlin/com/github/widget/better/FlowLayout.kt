@@ -50,6 +50,8 @@ class FlowLayout(ctx: Context, attrs: AttributeSet? = null) : ViewGroup(ctx, att
 
         child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
     }
+
+    measureChildWithMargins 区别：多了个：(lp.leftMargin + lp.rightMargin + widthUsed)
      */
 
     /**

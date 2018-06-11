@@ -7,6 +7,7 @@ import com.github.android.sample.BaseFunItemTemplate
 import com.github.android.sample.anim.*
 import com.github.android.sample.canvas_paint.*
 import com.github.android.sample.solution.JSBrigeActivity
+import com.github.android.sample.widget.recyler.LayoutManager1Activity
 import com.github.android.sample.widget.viewgroup.FlowLayoutActivity
 import com.github.android.sample.widget.viewgroup.WaterFallActivity
 
@@ -43,7 +44,6 @@ class WidgetFunItemTemplate private constructor(ctx: Context) {
 
     init {
         group {
-            // 第一部分 动画
             item {
                 pid = 0
                 id = 1
@@ -67,9 +67,25 @@ class WidgetFunItemTemplate private constructor(ctx: Context) {
                 }
             }
 
+            // recyclerView
             item {
                 pid = 0
                 id = 2
+                title = "RecyclerView 相关"
+                desc = "RecyclerView - LayoutManager等"
+
+                item {
+                    pid = 2
+                    id = 21
+                    title = "LayoutManager - 流式布局"
+                    desc = "LayoutManager - 流式布局"
+                    clazz = LayoutManager1Activity::class.java
+                }
+            }
+
+            item {
+                pid = 0
+                id = 3
                 title = "JSBrige"
                 desc = "native h5 双向通信方案"
                 clazz = JSBrigeActivity::class.java

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="language">
+        <item>Java</item>
+        <item>JavaScript</item>
+        <item>Kotlin</item>
+        <item>Python</item>
+        <item>Groovy</item>
+        <item>C#</item>
+        <item>C</item>
+        <item>C++</item>
+        <item>VB</item>
+        <item>ASP</item>
+        <item>Kotlin</item>
+        <item>Gradle</item>
+        <item>Maven</item>
+        <item>Junit</item>
+        <item>Go</item>
+        <item>PHP</item>
+        <item>Apache</item>
+        <item>Github</item>
+        <item>MicroSoft</item>
+        <item>Facebook</item>
+        <item>Google</item>
+    </string-array>
+</resources>
