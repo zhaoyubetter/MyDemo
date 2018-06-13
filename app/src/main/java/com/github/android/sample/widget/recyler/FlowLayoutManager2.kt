@@ -14,6 +14,7 @@ import kotlin.math.min
 
 
 /**
+ * https://blog.csdn.net/zxt0601/article/details/52956504
  * 上滑正，下滑负 dy
  * 第二版，实现基本的 flowLayout，可以滑动了
  */
@@ -38,6 +39,8 @@ internal class FlowLayoutManager2 : RecyclerView.LayoutManager() {
             detachAndScrapAttachedViews(recycler) // //detach轻量回收所有View
             return
         }
+
+        // getChildCount(),大于0说明是DataChanged()操作 或者（初始化的第二次也会childCount>0）
         if (childCount == 0 && state?.isPreLayout != false) {
             return
         }
