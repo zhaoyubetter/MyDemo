@@ -23,7 +23,8 @@ class LayoutManager1Activity : ToolbarActivity() {
 
         recyclerView.apply {
             // layoutManager = LinearLayoutManager(this@LayoutManager1Activity)
-            layoutManager = FlowLayoutManager1()
+//            layoutManager = FlowLayoutManager1()
+            layoutManager = FlowLayoutManager2()
             adapter = Adapter(resources.getStringArray(R.array.language).toList())
         }
     }
@@ -39,6 +40,7 @@ class LayoutManager1Activity : ToolbarActivity() {
                         id = android.R.id.text1
                         textSize = 18f
                     }.lparams(width = ViewGroup.LayoutParams.MATCH_PARENT, height = dip(56))
+
                 }
             }
             return object : RecyclerView.ViewHolder(view) {}

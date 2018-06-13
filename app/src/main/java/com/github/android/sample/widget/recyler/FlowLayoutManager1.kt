@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 
 /**
- * 第一版，实现基本的 flowLayout
+ * 第一版，实现基本的 flowLayout，可以展示，但不能滑动
  */
 internal class FlowLayoutManager1 : RecyclerView.LayoutManager() {
 

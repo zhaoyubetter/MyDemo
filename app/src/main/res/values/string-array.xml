@@ -22,5 +22,10 @@
         <item>MicroSoft</item>
         <item>Facebook</item>
         <item>Google</item>
+        <item>Alibaba</item>
+        <item>meituan</item>
+        <item>didi</item>
+        <item>huawei</item>
+        <item>中兴</item>
     </string-array>
 </resources>
