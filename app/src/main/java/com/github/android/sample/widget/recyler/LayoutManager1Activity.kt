@@ -1,14 +1,13 @@
 package com.github.android.sample.widget.recyler
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.better.base.ToolbarActivity
 import com.better.base.setTitleFromIntent
 import com.github.android.sample.R
+import com.github.android.sample.widget.recyler.layoutman.FlowLayoutManager2
 import org.jetbrains.anko.*
 
 class LayoutManager1Activity : ToolbarActivity() {

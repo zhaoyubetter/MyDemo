@@ -47,7 +47,8 @@
         <activity android:name=".widget.viewgroup.FlowLayoutActivity" />
         <activity android:name=".widget.viewgroup.WaterFallActivity" />
         <activity android:name=".solution.JSBrigeActivity" />
-        <activity android:name=".widget.recyler.LayoutManager1Activity"></activity>
+        <activity android:name=".widget.recyler.LayoutManager1Activity" />
+        <activity android:name=".widget.recyler.RecyclerViewBaseUseActivity"></activity>
     </application>
 
 </manifest>

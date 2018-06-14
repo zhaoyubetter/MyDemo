@@ -8,6 +8,7 @@ import com.github.android.sample.anim.*
 import com.github.android.sample.canvas_paint.*
 import com.github.android.sample.solution.JSBrigeActivity
 import com.github.android.sample.widget.recyler.LayoutManager1Activity
+import com.github.android.sample.widget.recyler.RecyclerViewBaseUseActivity
 import com.github.android.sample.widget.viewgroup.FlowLayoutActivity
 import com.github.android.sample.widget.viewgroup.WaterFallActivity
 
@@ -71,17 +72,39 @@ class WidgetFunItemTemplate private constructor(ctx: Context) {
             item {
                 pid = 0
                 id = 2
-                title = "RecyclerView 相关"
-                desc = "RecyclerView - LayoutManager等"
+                title = "RecyclerView"
+                desc = "RecyclerView"
 
                 item {
                     pid = 2
-                    id = 21
-                    title = "LayoutManager - 流式布局"
-                    desc = "LayoutManager - 流式布局"
-                    clazz = LayoutManager1Activity::class.java
+                    id = 20
+                    title = "RecyclerView 基本使用"
+                    desc = "RecyclerView 基本使用例子"
+
+                    item {
+                        pid = 20
+                        id = 30
+                        title = "RecyclerView 基本使用"
+                        desc = "RecyclerView 基本使用"
+                        clazz = RecyclerViewBaseUseActivity::class.java
+                    }
                 }
-            }
+
+                item {
+                    pid = 2
+                    id = 22
+                    title = "RecyclerView LayoutManager"
+                    desc = "RecyclerView - LayoutManager"
+
+                    item {
+                        pid = 22
+                        id = 30
+                        title = "LayoutManager - 流式布局"
+                        desc = "LayoutManager - 流式布局"
+                        clazz = LayoutManager1Activity::class.java
+                    }
+                }
+            } // id 2
 
             item {
                 pid = 0

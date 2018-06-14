@@ -7,6 +7,7 @@ import android.support.annotation.StringRes
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Gravity
+import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
@@ -113,5 +114,6 @@ open class ToolbarActivity : AppCompatActivity() {
     fun showIndeterminate(showIndeterminate: Boolean) {
         indeterminate.visibility = if (showIndeterminate) View.VISIBLE else View.GONE
     }
+
 
 }
