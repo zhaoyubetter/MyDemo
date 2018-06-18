@@ -61,6 +61,10 @@ open class ToolbarActivity : AppCompatActivity() {
         toolbar.setNavigationOnClickListener { finish() }
     }
 
+    fun setNavigationOnClickListener(listener: View.OnClickListener) {
+        toolbar.setNavigationOnClickListener(listener)
+    }
+
     /**
      * 设置toolbar悬浮,必须在setContentView方法之前回调生效
      * @param overFlow
@@ -101,10 +105,6 @@ open class ToolbarActivity : AppCompatActivity() {
 
     fun setNavigationIcon(drawable: Drawable) {
         toolbar.navigationIcon = drawable
-    }
-
-    fun setNavigationOnClickListener(listener: View.OnClickListener) {
-        toolbar.setNavigationOnClickListener(listener)
     }
 
     /**

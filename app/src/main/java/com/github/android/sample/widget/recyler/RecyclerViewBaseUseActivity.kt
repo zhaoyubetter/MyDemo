@@ -3,13 +3,11 @@ package com.github.android.sample.widget.recyler
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.better.base.ToolbarActivity
 import com.better.base.setTitleFromIntent
 import com.github.android.sample.R
-import com.github.android.sample.widget.recyler.fragment.HorizontalFragment
-import com.github.android.sample.widget.recyler.fragment.NavigationDrawerFragment
-import com.github.android.sample.widget.recyler.fragment.VerticalFragment
-import com.github.android.sample.widget.recyler.fragment.VerticalGridFragment
+import com.github.android.sample.widget.recyler.fragment.*
 import org.jetbrains.anko.find
 
 
@@ -23,9 +21,10 @@ class RecyclerViewBaseUseActivity : ToolbarActivity(), NavigationDrawerFragment.
         setContentView(R.layout.activity_recycler_view1)
         setTitleFromIntent(intent)
 
-        oldTitle = ""+supportActionBar?.title
+        oldTitle = "" + supportActionBar?.title
         navigationDrawerFragment = supportFragmentManager.findFragmentById(R.id.navigation_drawer) as NavigationDrawerFragment
         navigationDrawerFragment.setUp(R.id.navigation_drawer, find(R.id.drawer_layout))
+
     }
 
     override fun onNavigationDrawerItemSelected(position: Int) {
@@ -36,8 +35,8 @@ class RecyclerViewBaseUseActivity : ToolbarActivity(), NavigationDrawerFragment.
             0 -> ft.replace(R.id.container, VerticalFragment.newInstance())
             1 -> ft.replace(R.id.container, HorizontalFragment.newInstance())
             2 -> ft.replace(R.id.container, VerticalGridFragment.newInstance())
-//            3 -> ft.replace(R.id.container, VerticalStaggeredGridFragment.newInstance())
-//            4 -> ft.replace(R.id.container, FixedTwoWayFragment.newInstance())
+            3 -> ft.replace(R.id.container, VerticalStaggeredGridFragment.newInstance())
+            4 -> ft.replace(R.id.container, FixedTwoWayFragment.newInstance())
             else -> {
             }
         }//Do nothing
@@ -53,6 +52,7 @@ class RecyclerViewBaseUseActivity : ToolbarActivity(), NavigationDrawerFragment.
             setHomeButtonEnabled(true)
         }
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         if (!navigationDrawerFragment.isDrawerOpen()) {

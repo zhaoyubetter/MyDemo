@@ -13,4 +13,16 @@
     平移动画
         a.fromXDelta: 起始点X轴坐标，可以是数值、百分数、百分数p 三种样式, scale 中描述过了
         b.toXDelta: 结束点X轴坐标，0 为原始位置
+
+android:fromXDelta  动画开始时X坐标
+android:fromYDelta  动画开始时Y坐标
+android:toXDelta    动画结束时X坐标
+android:toYDelta    动画结束时Y坐标
+android:duration    动画持续时间
+
+ from表示从哪里开始移动
+to表示移动到那里
+100%表示移动到自己的右下角
+100%p表示移动到屏幕右下角
+
     -->
