@@ -16,4 +16,9 @@
     <string name="action_large">Large Grid</string>
     <string name="action_scroll_zero">Scroll Home</string>
     <string name="action_smooth_zero">Smooth Scroll Home</string>
+    <string name="title_activity_drawer_layout">DrawerLayoutActivity</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
 </resources>

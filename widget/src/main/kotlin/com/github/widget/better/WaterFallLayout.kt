@@ -31,7 +31,7 @@ class WaterFallLayout(ctx: Context, attrs: AttributeSet? = null) : ViewGroup(ctx
     /**
      * 每列的高度累加
      */
-    lateinit var top: IntArray
+     var top: IntArray
 
     var columns = 3
         set(value) {

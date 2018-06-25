@@ -54,6 +54,7 @@ dependencies {
 
     // 监视器fragment
     implementation 'com.github.zhaoyubetter:kotlin-monitorfragment:v1.0.0'
+    implementation 'com.github.liyuzero:maeLog:1.0.0'
 
     implementation project(":widget")
 

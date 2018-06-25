@@ -5,6 +5,7 @@ import android.content.Context
 import com.better.base.model.SampleItem
 import com.github.android.sample.anim.*
 import com.github.android.sample.canvas_paint.*
+import com.github.android.sample.md.DrawerLayoutActivity
 
 /**
  * Created by zhaoyu on 2018/3/11.
@@ -259,6 +260,20 @@ class BaseFunItemTemplate private constructor(ctx: Context) {
                         clazz = RedPointerDragActivity::class.java
                     }
                 } // end 21
+            }
+
+            // 第三部分 materials design
+            item {
+                pid = 0
+                id = 3
+                title = "Materials Design 设计"
+                desc = "Materials Design 设计"
+                item {
+                    pid = 3
+                    title = "DrawerLayout 抽屉示例"
+                    desc = "DrawerLayout 抽屉示例"
+                    clazz = DrawerLayoutActivity::class.java
+                }
             }
         }
     }
