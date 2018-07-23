@@ -6,6 +6,7 @@ import com.better.base.model.SampleItem
 import com.github.android.sample.BaseFunItemTemplate
 import com.github.android.sample.anim.*
 import com.github.android.sample.canvas_paint.*
+import com.github.android.sample.ipc.messenger.Messenger2Activity
 import com.github.android.sample.ipc.messenger.MessengerActivity
 import com.github.android.sample.solution.JSBrigeActivity
 import com.github.android.sample.widget.recyler.LayoutManager1Activity
@@ -115,9 +116,16 @@ class WidgetFunItemTemplate private constructor(ctx: Context) {
 
                 item {
                     pid = 3
-                    title = "Messenger信息"
-                    desc = "轻量级同步处理"
+                    title = "Messenger消息"
+                    desc = "发送消息"
                     clazz = MessengerActivity::class.java
+                }
+
+                item {
+                    pid = 3
+                    title = "Messenger消息"
+                    desc = "相互通信"
+                    clazz = Messenger2Activity::class.java
                 }
 
                 item {

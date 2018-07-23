@@ -22,7 +22,7 @@ inline fun <reified T> T.e(e: Exception) = Log.e(T::class.java.name, null, e)
 
 inline fun <reified T> T.e2(tag: String = T::class.java.name, log: String) = Log.e(tag, log)
 
-inline fun <reified T> T.isNotNull() = this != null
+inline fun <reified T> T.isNotNull() = null != this
 
 inline fun <reified T> T.isNull() = !isNotNull()
 

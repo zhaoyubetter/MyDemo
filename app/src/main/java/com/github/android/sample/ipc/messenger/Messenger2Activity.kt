@@ -1,60 +1,70 @@
 package com.github.android.sample.ipc.messenger
 
-import android.app.Service
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
-import android.os.IBinder
-import android.os.Message
-import android.os.Messenger
-import com.better.base.*
+import android.os.*
+import com.better.base.ToolbarActivity
+import com.better.base.e
+import com.better.base.isNotNull
+import com.better.base.setTitleFromIntent
 import com.github.android.sample.R
-import kotlinx.android.synthetic.main.activity_messenger.*
+import kotlinx.android.synthetic.main.activity_messenger2.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
-class MessengerActivity : ToolbarActivity() {
+class Messenger2Activity : ToolbarActivity() {
 
-    private val TAG = "MessengerActivity"
-
+    // 2个messenger对象
+    private val getReplyMessenger: Messenger = Messenger(MessengerHandler())
     private var messenger: Messenger? = null
+
+
+    // ==== 接收服务端响应消息
+    private class MessengerHandler : Handler() {
+        override fun handleMessage(msg: Message) {
+            super.handleMessage(msg)
+            when (msg.what) {
+                MSG_FROM_SERVICE -> {
+                    e("msg from service: ${msg.data.getString("reply")}")
+                }
+            }
+        }
+    }
 
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             if (service.isNotNull()) {
-                e("onServiceConnected $name")
                 messenger = Messenger(service)
             }
         }
 
-        // 调用时机：当service被外界销毁是调用，比如：内存资料不足的时候
         override fun onServiceDisconnected(name: ComponentName?) {
-            e("onServiceDisconnected called ----> $name")
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_messenger)
+        setContentView(R.layout.activity_messenger2)
         setTitleFromIntent(intent)
 
-        //  bind service
+        // bind service
         btn_bind.onClick {
-            Intent(this@MessengerActivity, MessengerService::class.java).apply {
+            Intent(this@Messenger2Activity, MessengerService2::class.java).apply {
                 bindService(this, connection, Context.BIND_AUTO_CREATE)
             }
         }
 
-        // 发送消
+        // send msg
         btn_send_msg.onClick {
             val msg = Message.obtain(null, MSG_FROM_CLIENT).apply {
                 data = Bundle().apply {
-                    putString("msg", "this message is from better client")
+                    putString("msg", "this msg is from client")
                 }
+                // === 接收服务端回复的messenger
+                replyTo = getReplyMessenger
             }
-            messenger?.send(msg)    // 发送消息
+            messenger?.send(msg)
         }
     }
 

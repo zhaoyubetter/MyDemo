@@ -6,23 +6,31 @@ import android.os.*
 import com.better.base.e
 
 
-internal const val MSG_FROM_CLIENT = 2
-internal const val MSG_FROM_SERVICE = 3
 
 /**
  * Service
  */
-class MessengerService : Service() {
+class MessengerService2 : Service() {
 
     // 将客户端发来的消息交由 MessengerHandler 处理
     private val messenger: Messenger = Messenger(MessengerHandler())
 
-    class MessengerHandler : Handler() {
+    private class MessengerHandler : Handler() {
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
             when (msg.what) {
                 MSG_FROM_CLIENT -> {
                     e("msg from client: ${msg.data}")
+
+                    // ====  响应客户端
+                    msg.replyTo?.apply {
+                        val msg = Message.obtain(null, MSG_FROM_SERVICE).apply {
+                            data = Bundle().apply {
+                                putString("reply", "收到消息，马上回应你！！！！")
+                            }
+                        }
+                        send(msg)      // 响应客户端
+                    }
                 }
             }
         }
