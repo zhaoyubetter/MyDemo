@@ -6,6 +6,7 @@ import com.better.base.model.SampleItem
 import com.github.android.sample.BaseFunItemTemplate
 import com.github.android.sample.anim.*
 import com.github.android.sample.canvas_paint.*
+import com.github.android.sample.ipc.messenger.MessengerActivity
 import com.github.android.sample.solution.JSBrigeActivity
 import com.github.android.sample.widget.recyler.LayoutManager1Activity
 import com.github.android.sample.widget.recyler.RecyclerViewBaseUseActivity
@@ -109,10 +110,32 @@ class WidgetFunItemTemplate private constructor(ctx: Context) {
             item {
                 pid = 0
                 id = 3
+                title = "IPC机制"
+                desc = "IPC机制"
+
+                item {
+                    pid = 3
+                    title = "Messenger信息"
+                    desc = "轻量级同步处理"
+                    clazz = MessengerActivity::class.java
+                }
+
+                item {
+                    pid = 3
+                    title = "AIDL-简单入门"
+                    desc = "AIDL-简单入门"
+
+                }
+            } // id 3
+
+            item {
+                pid = 0
+                id = 4
                 title = "JSBrige"
                 desc = "native h5 双向通信方案"
                 clazz = JSBrigeActivity::class.java
             }
+
         }
     }
 }

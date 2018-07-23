@@ -52,7 +52,14 @@
         <activity
             android:name=".md.DrawerLayoutActivity"
             android:label="@string/title_activity_drawer_layout"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+
+        <!-- IPC Start -->
+        <service
+            android:name=".ipc.messenger.MessengerService"
+            android:process=":remote" />
+        <!-- IPC End -->
+        <activity android:name=".ipc.messenger.MessengerActivity"></activity>
     </application>
 
 </manifest>
