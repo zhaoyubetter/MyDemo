@@ -117,14 +117,14 @@ class WidgetFunItemTemplate private constructor(ctx: Context) {
                 item {
                     pid = 3
                     title = "Messenger消息"
-                    desc = "发送消息"
+                    desc = "基于消息的进程间通信 - 发送消息"
                     clazz = MessengerActivity::class.java
                 }
 
                 item {
                     pid = 3
                     title = "Messenger消息"
-                    desc = "相互通信"
+                    desc = "基于消息的进程间通信 - 相互通信"
                     clazz = Messenger2Activity::class.java
                 }
 

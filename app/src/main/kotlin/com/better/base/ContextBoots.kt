@@ -30,6 +30,9 @@ inline fun <reified T> T.isNull() = !isNotNull()
 inline fun Context.toast(msg: CharSequence, duration: Int = Toast.LENGTH_SHORT) =
         Toast.makeText(this, msg, duration).show()
 
+// ==== Activity
+inline fun Activity.isValid() = null != this && !this.isFinishing
+
 /* ====== 项目中使用 ==========*/
 // === for toolbarActivity
 inline fun ToolbarActivity.setTitleFromIntent(intent: Intent) {

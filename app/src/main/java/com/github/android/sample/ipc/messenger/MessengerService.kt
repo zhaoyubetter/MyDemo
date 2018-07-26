@@ -8,6 +8,10 @@ import com.better.base.e
 
 internal const val MSG_FROM_CLIENT = 2
 internal const val MSG_FROM_SERVICE = 3
+internal const val MSG_GET_DENSITY_FROM_CLIENT = 4
+internal const val MSG_RESP_DENSITY = 5
+internal const val MSG_REQ_CAL = 6
+internal const val MSG_RESP_CAL = 7
 
 /**
  * Service
