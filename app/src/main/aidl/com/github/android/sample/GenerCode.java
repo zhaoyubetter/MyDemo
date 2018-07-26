@@ -2,6 +2,8 @@ package com.github.android.sample;
 
 /**
  * 生成的代码
+ * AIDL支持的数据类型：
+ *
  */
 public class GenerCode {
 

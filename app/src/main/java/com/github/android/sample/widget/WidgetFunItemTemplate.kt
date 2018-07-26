@@ -6,6 +6,7 @@ import com.better.base.model.SampleItem
 import com.github.android.sample.BaseFunItemTemplate
 import com.github.android.sample.anim.*
 import com.github.android.sample.canvas_paint.*
+import com.github.android.sample.ipc.aidl.BookManagerActivity
 import com.github.android.sample.ipc.messenger.Messenger2Activity
 import com.github.android.sample.ipc.messenger.MessengerActivity
 import com.github.android.sample.solution.JSBrigeActivity
@@ -132,7 +133,7 @@ class WidgetFunItemTemplate private constructor(ctx: Context) {
                     pid = 3
                     title = "AIDL-简单入门"
                     desc = "AIDL-简单入门"
-
+                    clazz = BookManagerActivity::class.java
                 }
             } // id 3
 
