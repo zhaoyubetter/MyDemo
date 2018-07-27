@@ -11,14 +11,21 @@ import com.better.base.e
 import com.better.base.setTitleFromIntent
 import com.github.android.sample.Book
 import com.github.android.sample.IBookManager
+import com.github.android.sample.INewBookAddListener
 import com.github.android.sample.R
-import kotlinx.android.synthetic.main.activity_book_manager.*
+import kotlinx.android.synthetic.main.activity_book_manager2.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
-class BookManagerActivity : ToolbarActivity() {
+class BookManager2Activity : ToolbarActivity() {
 
     private var isConnected = false
     private var bookManager: IBookManager? = null
+
+    private val newBookAddListener = object: INewBookAddListener.Stub() {
+        override fun onNewBookAdd(book: Book?) {
+
+        }
+    }
 
     private val serviceConn = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName, service: IBinder) {
@@ -28,32 +35,36 @@ class BookManagerActivity : ToolbarActivity() {
 
         override fun onServiceDisconnected(name: ComponentName?) {
             isConnected = false
+            bookManager = null
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_book_manager)
+        setContentView(R.layout.activity_book_manager2)
         setTitleFromIntent(intent)
 
         btn_bind.onClick {
-            //            bindService(Intent(baseContext, BookManagerService::class.java), serviceConn, Context.BIND_AUTO_CREATE)
-            bindService(Intent("com.github.android.sample.ipc.aidl.bookService")    // 通过yion'shi
-                    .setPackage(this@BookManagerActivity.packageName),
-                    serviceConn, Context.BIND_AUTO_CREATE)
+            bindService(Intent(baseContext, BookManagerService2::class.java), serviceConn, Context.BIND_AUTO_CREATE)
         }
 
         // 获取所有书
         btn_getAll.onClick {
-            val allBook = this@BookManagerActivity.getAllBook()
+            val allBook = this@BookManager2Activity.getAllBook()
             e(allBook?.javaClass?.canonicalName ?: "")
             allBook?.let {
                 allBook.forEach { e(it.toString()) }
             }
         }
 
+        // 添加书
         btn_add.onClick {
             bookManager?.addBook(Book(5, "Atomic Kotlin"))
+        }
+
+        // 添加监听器
+        btn_addListener.onClick {
+            bookManager?.registerBookAddListener(newBookAddListener)
         }
     }
 

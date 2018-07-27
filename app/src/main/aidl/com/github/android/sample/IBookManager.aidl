@@ -14,8 +14,12 @@ package com.github.android.sample;
 
 // 必要的导入，AIDL中同一个包下也需要导入
 import com.github.android.sample.Book;
+import com.github.android.sample.INewBookAddListener;
 
 interface IBookManager {
     List<Book> getBookList();   // 从远程获取
     void addBook(in Book book);
+
+    void registerBookAddListener(INewBookAddListener listener);
+    void unregisterBookAddListener(INewBookAddListener listener);
 }

@@ -66,13 +66,16 @@
             android:process=":remote">
             <intent-filter>
                 <action android:name="com.github.android.sample.ipc.aidl.bookService" />
-                <category android:name="android.intent.category.DEFAULT"/>
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
+        <service android:name=".ipc.aidl.BookManagerService2"/>
         <!-- IPC End -->
         <activity android:name=".ipc.messenger.MessengerActivity" />
         <activity android:name=".ipc.messenger.Messenger2Activity" />
-        <activity android:name=".ipc.aidl.BookManagerActivity"></activity>
+        <activity android:name=".ipc.aidl.BookManagerActivity" />
+        <activity android:name=".ipc.aidl.BookManager2Activity"></activity>
     </application>
 
 </manifest>
