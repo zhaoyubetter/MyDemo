@@ -1,5 +1,7 @@
 package com.github.android.sample;
 
+import android.os.RemoteException;
+
 /**
  * 生成的代码
  * AIDL支持的数据类型：
@@ -161,6 +163,16 @@ public class GenerCode {
                         _reply.recycle();
                         _data.recycle();
                     }
+                }
+
+                @Override
+                public void registerBookAddListener(INewBookAddListener listener) throws RemoteException {
+
+                }
+
+                @Override
+                public void unregisterBookAddListener(INewBookAddListener listener) throws RemoteException {
+
                 }
             }
 

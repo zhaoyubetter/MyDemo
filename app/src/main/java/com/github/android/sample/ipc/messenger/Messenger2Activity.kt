@@ -4,10 +4,10 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import com.github.android.sample.R
 import android.os.*
 import android.widget.TextView
 import com.better.base.*
-import com.github.android.sample.R
 import kotlinx.android.synthetic.main.activity_keyframe.view.*
 import kotlinx.android.synthetic.main.activity_messenger2.*
 import org.jetbrains.anko.find
@@ -60,7 +60,7 @@ class Messenger2Activity : ToolbarActivity() {
         }
         override fun onServiceDisconnected(name: ComponentName?) {
             messenger = null
-            isConnected = false;
+            isConnected = false
         }
     }
 
@@ -121,6 +121,12 @@ class Messenger2Activity : ToolbarActivity() {
                 }
                 messenger?.send(msg)
             }
+        }
+
+        //
+        btn_test.onClick {
+            // 在handle中执行
+            getReplyMessenger.send(Message.obtain().apply { what = 100 })
         }
     }
 
