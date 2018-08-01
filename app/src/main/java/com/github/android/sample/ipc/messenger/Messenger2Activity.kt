@@ -123,7 +123,6 @@ class Messenger2Activity : ToolbarActivity() {
             }
         }
 
-        //
         btn_test.onClick {
             // 在handle中执行
             getReplyMessenger.send(Message.obtain().apply { what = 100 })
