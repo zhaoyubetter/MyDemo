@@ -12,6 +12,7 @@ import com.github.android.sample.ipc.messenger.MessengerActivity
 import com.github.android.sample.solution.JSBrigeActivity
 import com.github.android.sample.widget.recyler.LayoutManager1Activity
 import com.github.android.sample.widget.recyler.RecyclerViewBaseUseActivity
+import com.github.android.sample.widget.room.Room1Activity
 import com.github.android.sample.widget.viewgroup.FlowLayoutActivity
 import com.github.android.sample.widget.viewgroup.WaterFallActivity
 
@@ -136,6 +137,19 @@ class WidgetFunItemTemplate private constructor(ctx: Context) {
                     clazz = BookManagerActivity::class.java
                 }
             } // id 3
+
+            item {
+                pid = 0
+                id = 4
+                title = "Room数据库操作"
+
+                item {
+                    pid = 4
+                    title = "Room的基本使用"
+                    desc = "Room的基本使用"
+                    clazz = Room1Activity::class.java
+                }
+            } // id 4
 
             item {
                 pid = 0

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import com.better.base.model.SampleItem
+import com.yu.bundles.log.MaeLog
 import java.lang.Exception
 
 /**
@@ -17,7 +18,7 @@ inline fun <reified T> T.v(log: String) = Log.v(T::class.java.name, log)
 inline fun <reified T> T.i(log: String) = Log.i(T::class.java.name, log)
 inline fun <reified T> T.d(log: String) = Log.d(T::class.java.name, log)
 inline fun <reified T> T.w(log: String) = Log.w(T::class.java.name, log)
-inline fun <reified T> T.e(log: String) = Log.e(T::class.java.name, log)
+inline fun <reified T> T.e(log: String) = MaeLog.e(T::class.java.name, log)
 inline fun <reified T> T.e(e: Exception) = Log.e(T::class.java.name, null, e)
 
 inline fun <reified T> T.e2(tag: String = T::class.java.name, log: String) = Log.e(tag, log)
