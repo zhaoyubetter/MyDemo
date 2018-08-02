@@ -16,14 +16,22 @@ import com.github.android.sample.R
 import kotlinx.android.synthetic.main.activity_book_manager2.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
+/**
+ * 监听
+ */
 class BookManager2Activity : ToolbarActivity() {
 
     private var isConnected = false
     private var bookManager: IBookManager? = null
 
-    private val newBookAddListener = object: INewBookAddListener.Stub() {
-        override fun onNewBookAdd(book: Book?) {
-
+    // binder中调用就是 binder线程池
+    /**
+     * 客户端调用，就是主进程的main
+     * @see BookManager2Activity#onCreate
+     */
+    private val newBookAddListener = object : INewBookAddListener.Stub() {
+        override fun onNewBookAdd(book: Book) {
+            e("${book} is add! threadName: ${Thread.currentThread().name}")
         }
     }
 
@@ -59,12 +67,14 @@ class BookManager2Activity : ToolbarActivity() {
 
         // 添加书
         btn_add.onClick {
+            // 这里调用 newBookAddListener 打印的为是主线程
             bookManager?.addBook(Book(5, "Atomic Kotlin"))
         }
 
         // 添加监听器
         btn_addListener.onClick {
             bookManager?.registerBookAddListener(newBookAddListener)
+            e("registerListener $newBookAddListener")
         }
     }
 
@@ -75,6 +85,14 @@ class BookManager2Activity : ToolbarActivity() {
             unbindService(serviceConn)
             isConnected = false
         }
+
+        // 解除注册
+        if(bookManager != null && bookManager?.asBinder()?.isBinderAlive == true) {
+            // 解绑不成功 newBookAddListener 会在 远程进程 中被重新反序列化；
+            // 怎么办，使用 RemoteCallbackList
+            bookManager?.unregisterBookAddListener(newBookAddListener)
+        }
+
         super.onDestroy()
     }
 }

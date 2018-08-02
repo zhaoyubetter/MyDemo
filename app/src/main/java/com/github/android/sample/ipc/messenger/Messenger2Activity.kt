@@ -96,8 +96,6 @@ class Messenger2Activity : ToolbarActivity() {
             messenger?.send(msg)
         }
 
-
-
         // btn_cal
         var widgetId = 1
         btn_cal.onClick {

@@ -34,6 +34,7 @@ class MessengerService2 : Service() {
                         send(msg)      // 响应客户端
                     }
                 }
+
             // 获取屏幕密度
                 MSG_GET_DENSITY_FROM_CLIENT -> {
                     msg.replyTo?.apply {
