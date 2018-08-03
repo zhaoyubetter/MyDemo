@@ -66,6 +66,7 @@ class BookManagerService2 : Service() {
 
         // ==2.也是binder线程中
 //        android.os.Handler().postDelayed({
+//            e("thread : ${Thread.currentThread().name}")       // main
 //            onBookAdd(Book(dataList.size + 1, "IPC进阶。。。"))
 //        }, 5000)
     }
