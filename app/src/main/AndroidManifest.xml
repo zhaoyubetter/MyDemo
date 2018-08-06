@@ -73,12 +73,16 @@
         <service
             android:name=".ipc.aidl.BookManagerService2"
             android:process=":remote" />
+        <service
+            android:name=".ipc.aidl.BookManagerService3"
+            android:process=":remote" />
         <!-- IPC End -->
         <activity android:name=".ipc.messenger.MessengerActivity" />
         <activity android:name=".ipc.messenger.Messenger2Activity" />
         <activity android:name=".ipc.aidl.BookManagerActivity" />
         <activity android:name=".ipc.aidl.BookManager2Activity" />
-        <activity android:name=".widget.room.Room1Activity"></activity>
+        <activity android:name=".widget.room.Room1Activity" />
+        <activity android:name=".ipc.aidl.BookManager3Activity"></activity>
     </application>
 
 </manifest>

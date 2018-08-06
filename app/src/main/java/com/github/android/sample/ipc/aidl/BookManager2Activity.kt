@@ -26,7 +26,7 @@ class BookManager2Activity : ToolbarActivity() {
 
     // binder中调用就是 binder线程池
     /**
-     * 客户端调用，就是主进程的main
+     * 不涉及多进程时，客户端调用，就是主进程的main
      * @see BookManager2Activity#onCreate
      */
     private val newBookAddListener = object : INewBookAddListener.Stub() {

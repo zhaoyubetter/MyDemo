@@ -2,6 +2,7 @@ package com.github.android.sample.ipc.aidl
 
 import android.app.Service
 import android.content.Intent
+import android.os.RemoteCallbackList
 import com.better.base.e
 import com.github.android.sample.Book
 import com.github.android.sample.IBookManager
@@ -10,20 +11,13 @@ import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
- * 问题：
- * 1. 没法移除 listener，这是因为 listener注册到远程，是反序列化重新生成的对象，
- *    与客户端注册的 listener是完全不同的2个对象，所有不能移除
- *    也就是 unregisterBookAddListener() 方法失效；
- *
- *     如何解决呢，我们需要使用 RemoteCallbackList
- *
- * @see BookManagerService3
+ * RemoteCallbackList 使用
  */
-class BookManagerService2 : Service() {
+class BookManagerService3 : Service() {
 
     // AIDL中方法是运行在Binder线程中的，所以采用支持并发读写的 CopyOnWriteArrayList
     private val dataList = CopyOnWriteArrayList<Book>()
-    private val listenerList = CopyOnWriteArrayList<INewBookAddListener>()
+    private val listenerList = RemoteCallbackList<INewBookAddListener>()
     private val isServiceDestroy: AtomicBoolean = AtomicBoolean(false)
 
     // 继承AIDL中的接口
@@ -32,24 +26,22 @@ class BookManagerService2 : Service() {
         override fun addBook(book: Book?) {
             if (book != null) {
                 dataList.add(book)
-                listenerList.forEach { it ->
-                    it.onNewBookAdd(book)
+
+                val size = listenerList.beginBroadcast()
+                (0 until size).map { listenerList.getBroadcastItem(it) }.forEach {
+                    it?.onNewBookAdd(book)
                 }
+                listenerList.finishBroadcast()
             }
         }
 
         override fun registerBookAddListener(listener: INewBookAddListener) {
-            listenerList.add(listener)
-            // 与服务器是2个不同的listener对象
-            e("registerListener ---> $listener,  currentSize: ${listenerList.size}")
+            listenerList.register(listener)
         }
 
         override fun unregisterBookAddListener(listener: INewBookAddListener) {
-            if(listenerList.contains(listener)) {
-                listenerList.remove(listener)
-            } else {
-                e("not found listener ---> $listener")
-            }
+            e("unregisterBookAddListener")       // main
+            listenerList.unregister(listener)
         }
     }
 
@@ -66,18 +58,20 @@ class BookManagerService2 : Service() {
             }
         }).start()
 
-        // ==2. remote主动触发，客户端打印的是binder线程
+        // ==2.客户端打印的是binder线程
 //        android.os.Handler().postDelayed({
-//            e("thread : ${Thread.currentThread().name}")       // main
+//            e("-=======》thread : ${Thread.currentThread().name}")       // main
 //            onBookAdd(Book(dataList.size + 1, "IPC进阶。。。"))
 //        }, 5000)
     }
 
-    private fun onBookAdd(book:Book) {
+    private fun onBookAdd(book: Book) {
         dataList.add(book)
-        listenerList.forEach { it ->
-            it.onNewBookAdd(book)
+        val size = listenerList.beginBroadcast()
+        (0 until size).map { listenerList.getBroadcastItem(it) }.forEach {
+            it?.onNewBookAdd(book)
         }
+        listenerList.finishBroadcast()
     }
 
     override fun onDestroy() {

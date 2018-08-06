@@ -7,6 +7,7 @@ import com.github.android.sample.BaseFunItemTemplate
 import com.github.android.sample.anim.*
 import com.github.android.sample.canvas_paint.*
 import com.github.android.sample.ipc.aidl.BookManager2Activity
+import com.github.android.sample.ipc.aidl.BookManager3Activity
 import com.github.android.sample.ipc.aidl.BookManagerActivity
 import com.github.android.sample.ipc.messenger.Messenger2Activity
 import com.github.android.sample.ipc.messenger.MessengerActivity
@@ -142,6 +143,13 @@ class WidgetFunItemTemplate private constructor(ctx: Context) {
                     title = "AIDL-监听"
                     desc = "AIDL-监听"
                     clazz = BookManager2Activity::class.java
+                }
+
+                item {
+                    pid = 3
+                    title = "AIDL-删除监听"
+                    desc = "AIDL-删除监听-RemoteCallbackList"
+                    clazz = BookManager3Activity::class.java
                 }
             } // id 3
 
