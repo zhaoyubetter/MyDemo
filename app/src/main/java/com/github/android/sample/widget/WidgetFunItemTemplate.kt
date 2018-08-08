@@ -9,6 +9,7 @@ import com.github.android.sample.canvas_paint.*
 import com.github.android.sample.ipc.aidl.BookManager2Activity
 import com.github.android.sample.ipc.aidl.BookManager3Activity
 import com.github.android.sample.ipc.aidl.BookManagerActivity
+import com.github.android.sample.ipc.forecast.ForecaseActivity
 import com.github.android.sample.ipc.messenger.Messenger2Activity
 import com.github.android.sample.ipc.messenger.MessengerActivity
 import com.github.android.sample.solution.JSBrigeActivity
@@ -150,6 +151,13 @@ class WidgetFunItemTemplate private constructor(ctx: Context) {
                     title = "AIDL-删除监听"
                     desc = "AIDL-删除监听-RemoteCallbackList"
                     clazz = BookManager3Activity::class.java
+                }
+
+                item {
+                    pid = 3
+                    title = "AIDL-天气预报例子"
+                    desc = "模拟耗时操作"
+                    clazz = ForecaseActivity::class.java
                 }
             } // id 3
 

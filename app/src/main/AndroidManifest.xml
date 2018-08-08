@@ -76,13 +76,22 @@
         <service
             android:name=".ipc.aidl.BookManagerService3"
             android:process=":remote" />
+        <service
+            android:name=".ipc.forecast.ForecaseService"
+            android:process=":remote">
+            <intent-filter>
+                <action android:name="com.github.android.sample.ipc.forecast.ForecaseService" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
         <!-- IPC End -->
         <activity android:name=".ipc.messenger.MessengerActivity" />
         <activity android:name=".ipc.messenger.Messenger2Activity" />
         <activity android:name=".ipc.aidl.BookManagerActivity" />
         <activity android:name=".ipc.aidl.BookManager2Activity" />
         <activity android:name=".widget.room.Room1Activity" />
-        <activity android:name=".ipc.aidl.BookManager3Activity"></activity>
+        <activity android:name=".ipc.aidl.BookManager3Activity" />
+        <activity android:name=".ipc.forecast.ForecaseActivity"></activity>
     </application>
 
 </manifest>

@@ -28,8 +28,8 @@ inline fun <reified T> T.isNotNull() = null != this
 inline fun <reified T> T.isNull() = !isNotNull()
 
 // ==== toast
-inline fun Context.toast(msg: CharSequence, duration: Int = Toast.LENGTH_SHORT) =
-        Toast.makeText(this, msg, duration).show()
+inline fun <T : Any> Context.toast(msg: T?, duration: Int = Toast.LENGTH_SHORT) =
+        Toast.makeText(this, msg?.toString(), duration).show()
 
 // ==== Activity
 inline fun Activity.isValid() = null != this && !this.isFinishing
