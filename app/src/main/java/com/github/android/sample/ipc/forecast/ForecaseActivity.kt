@@ -22,7 +22,7 @@ import org.jetbrains.anko.sdk25.coroutines.onClick
  *   所以要避免在UI线程中，调用远程方法；
  *
  * 2.服务端要调用客户端回调接口得方法，被调用的方法也是运行在客户端的binder线程中，调用时服务端挂起，等待客户端返回，所以
- *   在服务端调用客户端也需要注意方法是否耗时；
+ *   在服务端调用客户端也需要注意方法是否耗时，否则导致服务端 anr；
  */
 class ForecaseActivity : ToolbarActivity() {
 
