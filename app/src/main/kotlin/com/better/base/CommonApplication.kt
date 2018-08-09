@@ -26,8 +26,9 @@ class CommonApplication : Application() {
         for (appProcessInfo in am.runningAppProcesses) {
             if (appProcessInfo.pid == pid) {
                 e2("app", appProcessInfo.processName)
-                break;
+                break
             }
         }
+
     }
 }

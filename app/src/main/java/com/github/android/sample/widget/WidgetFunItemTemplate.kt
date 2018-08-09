@@ -12,6 +12,7 @@ import com.github.android.sample.ipc.aidl.BookManagerActivity
 import com.github.android.sample.ipc.forecast.ForecaseActivity
 import com.github.android.sample.ipc.messenger.Messenger2Activity
 import com.github.android.sample.ipc.messenger.MessengerActivity
+import com.github.android.sample.ipc.sample.AlbumIPCActivity
 import com.github.android.sample.solution.JSBrigeActivity
 import com.github.android.sample.widget.recyler.LayoutManager1Activity
 import com.github.android.sample.widget.recyler.RecyclerViewBaseUseActivity
@@ -158,6 +159,13 @@ class WidgetFunItemTemplate private constructor(ctx: Context) {
                     title = "AIDL-天气预报例子"
                     desc = "模拟耗时操作"
                     clazz = ForecaseActivity::class.java
+                }
+
+                item {
+                    pid = 3
+                    title = "跨进程 Activity 通信"
+                    desc = "跨进程 Activity 通信 - 相册选择"
+                    clazz = AlbumIPCActivity::class.java
                 }
             } // id 3
 

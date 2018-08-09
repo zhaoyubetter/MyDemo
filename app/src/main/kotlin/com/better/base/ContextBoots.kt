@@ -1,8 +1,10 @@
 package com.better.base
 
 import android.app.Activity
+import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
+import android.os.Process
 import android.util.Log
 import android.widget.Toast
 import com.better.base.model.SampleItem
@@ -33,6 +35,18 @@ inline fun <T : Any> Context.toast(msg: T?, duration: Int = Toast.LENGTH_SHORT) 
 
 // ==== Activity
 inline fun Activity.isValid() = null != this && !this.isFinishing
+
+// == 获取进程名
+inline fun Context.getProcessName():String {
+    val pid = Process.myPid()
+    val am = this.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+    for (appProcessInfo in am.runningAppProcesses) {
+        if (appProcessInfo.pid == pid) {
+            return appProcessInfo.processName
+        }
+    }
+    return ""
+}
 
 /* ====== 项目中使用 ==========*/
 // === for toolbarActivity
