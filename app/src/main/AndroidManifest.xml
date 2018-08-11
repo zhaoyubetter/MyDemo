@@ -4,11 +4,14 @@
 
     <!-- 自定义权限 start -->
     <!-- 天气预报查询权限 -->
-    <permission android:name="com.github.android.sample.permission.FORECAST_SERVICE"
-        android:protectionLevel="normal"/>
+    <permission
+        android:name="com.github.android.sample.permission.FORECAST_SERVICE"
+        android:protectionLevel="normal" />
     <!-- 自定义权限 end -->
 
-    <uses-permission android:name="com.github.android.sample.permission.FORECAST_SERVICE"/>
+    <uses-permission android:name="com.github.android.sample.permission.FORECAST_SERVICE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name="com.better.base.CommonApplication"
@@ -105,7 +108,14 @@
         <activity
             android:name=".ipc.sample.IPCTest1Activity"
             android:process=":remote" />
+        <service
+            android:process=":remote"
+            android:name=".ipc.socket.TcpSocketService"
+            android:enabled="true"
+            android:exported="true" />
         <!-- IPC End -->
+
+        <activity android:name=".ipc.socket.TcpSocketClientActivity"></activity>
     </application>
 
 </manifest>

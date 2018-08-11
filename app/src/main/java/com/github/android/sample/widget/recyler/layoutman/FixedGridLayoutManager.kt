@@ -574,10 +574,10 @@ class FixedGridLayoutManager : RecyclerView.LayoutManager() {
             var nextPosition = positionOfIndex(i)
 
             /*
-             * When a removal happens out of bounds, the pre-layout positions of items
+             * When a removal happens myOUt of bounds, the pre-layout positions of items
              * after the removal are shifted to their final positions ahead of schedule.
              * We have to track off-screen removals and shift those positions back
-             * so we can properly lay out all current (and appearing) views in their
+             * so we can properly lay myOUt all current (and appearing) views in their
              * initial locations.
              */
             var offsetPositionDelta = 0

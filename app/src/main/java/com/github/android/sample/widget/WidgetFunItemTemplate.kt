@@ -13,6 +13,7 @@ import com.github.android.sample.ipc.forecast.ForecaseActivity
 import com.github.android.sample.ipc.messenger.Messenger2Activity
 import com.github.android.sample.ipc.messenger.MessengerActivity
 import com.github.android.sample.ipc.sample.AlbumIPCActivity
+import com.github.android.sample.ipc.socket.TcpSocketClientActivity
 import com.github.android.sample.solution.JSBrigeActivity
 import com.github.android.sample.widget.recyler.LayoutManager1Activity
 import com.github.android.sample.widget.recyler.RecyclerViewBaseUseActivity
@@ -166,6 +167,13 @@ class WidgetFunItemTemplate private constructor(ctx: Context) {
                     title = "跨进程 Activity 通信"
                     desc = "最好通过json来交换数据"
                     clazz = AlbumIPCActivity::class.java
+                }
+
+                item {
+                    pid = 3
+                    title = "跨进程 Socket"
+                    desc = "Socket 交互数据"
+                    clazz = TcpSocketClientActivity::class.java
                 }
             } // id 3
 
