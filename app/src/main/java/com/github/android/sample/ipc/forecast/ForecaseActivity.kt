@@ -21,6 +21,9 @@ import org.jetbrains.anko.sdk25.coroutines.onClick
  *
  * 2.服务端要调用客户端回调接口得方法，被调用的方法也是运行在客户端的binder线程中，调用时服务端挂起，等待客户端返回，所以
  *   在服务端调用客户端也需要注意方法是否耗时，否则导致服务端 anr；
+ *
+ * 3.ServiceConnection的回调方法运行在主线程；
+ * 4.DeathRecipient 兼容回调接口运行在子线程；
  */
 class ForecaseActivity : ToolbarActivity() {
 
@@ -37,17 +40,19 @@ class ForecaseActivity : ToolbarActivity() {
                 runOnUiThread {
                     toast("服务被杀死了。。。")
                 }
-
                 // 重新启动服务
             }
         }
     }
 
+    // 这里的2个回调方法，运行在主线程；
     val serviceConn = object : ServiceConnection {
-        override fun onServiceConnected(name: ComponentName, service: IBinder) {
-            isConnection = true
-            foreInterface = IForecaseAidlInterface.Stub.asInterface(service)
-            service.linkToDeath(deathRecipient, 0)      // 设置死亡代理
+        override fun onServiceConnected(name: ComponentName, service: IBinder?) {
+            if(service.isNotNull()) {
+                isConnection = true
+                foreInterface = IForecaseAidlInterface.Stub.asInterface(service)
+                service?.linkToDeath(deathRecipient, 0)      // 设置死亡代理
+            }
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
@@ -83,7 +88,9 @@ class ForecaseActivity : ToolbarActivity() {
             // 虽然服务器是运行在binder线程中，但客户端会挂起，等待响应，所以通过子线程来
             Thread {
                 et_cityCode.text?.apply {
-                    foreInterface?.getForecase(toString(), forecastListener)
+                    foreInterface?.getForecase(toString(), forecastListener) ?: runOnUiThread {
+                        toast("please check permission 'com.github.android.sample.permission.FORECAST_SERVICE' ")
+                    }
                 }
             }.start()
         }

@@ -157,7 +157,7 @@ class WidgetFunItemTemplate private constructor(ctx: Context) {
                 item {
                     pid = 3
                     title = "AIDL-天气预报例子"
-                    desc = "模拟耗时操作"
+                    desc = "模拟耗时操作，死亡监听，权限验证"
                     clazz = ForecaseActivity::class.java
                 }
 

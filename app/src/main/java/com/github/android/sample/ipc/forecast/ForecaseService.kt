@@ -2,6 +2,7 @@ package com.github.android.sample.ipc.forecast
 
 import android.app.Service
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.IBinder
 import com.better.base.e
 import com.github.android.sample.ForecaseEntity
@@ -42,7 +43,13 @@ class ForecaseService : Service() {
         }
     }
 
-    override fun onBind(intent: Intent?): IBinder? = binder
+    override fun onBind(intent: Intent?): IBinder? {
+        val checkCallingOrSelfPermission = this.checkCallingOrSelfPermission("com.github.android.sample.permission.FORECAST_SERVICE")
+        if (checkCallingOrSelfPermission == PackageManager.PERMISSION_DENIED) {
+            return null
+        }
+        return binder
+    }
 
     override fun onDestroy() {
         super.onDestroy()

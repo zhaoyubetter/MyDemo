@@ -2,6 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.github.android.sample">
 
+    <!-- 自定义权限 start -->
+    <!-- 天气预报查询权限 -->
+    <permission android:name="com.github.android.sample.permission.FORECAST_SERVICE"
+        android:protectionLevel="normal"/>
+    <!-- 自定义权限 end -->
+
+    <uses-permission android:name="com.github.android.sample.permission.FORECAST_SERVICE"/>
+
     <application
         android:name="com.better.base.CommonApplication"
         android:allowBackup="true"
