@@ -1,15 +1,13 @@
 package com.github.android.sample.ipc.forecast
 
+import android.app.ActivityManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
-import com.better.base.ToolbarActivity
-import com.better.base.e
-import com.better.base.setTitleFromIntent
-import com.better.base.toast
+import com.better.base.*
 import com.github.android.sample.ForecaseEntity
 import com.github.android.sample.IForecaseAidlInterface
 import com.github.android.sample.IForecaseAidlListener
@@ -29,14 +27,33 @@ class ForecaseActivity : ToolbarActivity() {
     var isConnection = false
     var foreInterface: IForecaseAidlInterface? = null
 
+    // 监听服务dead
+    val deathRecipient = object: IBinder.DeathRecipient {
+        override fun binderDied() {
+            e("binder dead, thread is : ${Thread.currentThread().name}")
+            if(foreInterface.isNotNull()) {
+                foreInterface?.asBinder()?.unlinkToDeath(this, 0)
+                // 可以在这里设置重新绑定
+                runOnUiThread {
+                    toast("服务被杀死了。。。")
+                }
+
+                // 重新启动服务
+            }
+        }
+    }
+
     val serviceConn = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName, service: IBinder) {
             isConnection = true
             foreInterface = IForecaseAidlInterface.Stub.asInterface(service)
+            service.linkToDeath(deathRecipient, 0)      // 设置死亡代理
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
             isConnection = false
+            // main thread
+            e("onServiceDisconnected, thread is : ${Thread.currentThread().name}")
         }
     }
 
@@ -44,12 +61,13 @@ class ForecaseActivity : ToolbarActivity() {
     val forecastListener = object : IForecaseAidlListener.Stub() {
         override fun onResult(entity: ForecaseEntity?) {
             e("${Thread.currentThread().name}")
-            Thread.sleep(3000)      // server 调用 client 模拟耗时
+//            Thread.sleep(3000)      // server 调用 client 模拟耗时
             runOnUiThread {
                 toast("$entity, ${Thread.currentThread().name}")
             }
         }
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +86,17 @@ class ForecaseActivity : ToolbarActivity() {
                     foreInterface?.getForecase(toString(), forecastListener)
                 }
             }.start()
+        }
+
+        // 模拟服务被kill
+        btn_kill.onClick {
+            val am = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+            for (appProcessInfo in am.runningAppProcesses) {
+                if("com.github.android.sample:remote" == appProcessInfo.processName) {
+                    android.os.Process.killProcess(appProcessInfo.pid)
+                    break
+                }
+            }
         }
     }
 

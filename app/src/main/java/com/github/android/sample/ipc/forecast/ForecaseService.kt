@@ -3,6 +3,7 @@ package com.github.android.sample.ipc.forecast
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
+import com.better.base.e
 import com.github.android.sample.ForecaseEntity
 import com.github.android.sample.IForecaseAidlInterface
 import com.github.android.sample.IForecaseAidlListener
@@ -32,7 +33,7 @@ class ForecaseService : Service() {
          */
         override fun getForecase(cityCode: String?, listener: IForecaseAidlListener?) {
             // 模拟耗时
-            Thread.sleep(3000)
+//            Thread.sleep(3000)
             val entity = cityCode?.let { datas.takeWhile { it.cityCode == cityCode }?.get(0) }
             listener?.let {
                 it.onResult(entity)     // 挂起
@@ -42,4 +43,14 @@ class ForecaseService : Service() {
     }
 
     override fun onBind(intent: Intent?): IBinder? = binder
+
+    override fun onDestroy() {
+        super.onDestroy()
+        e("onDestroy")
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        e("onCreate")
+    }
 }

@@ -164,7 +164,7 @@ class WidgetFunItemTemplate private constructor(ctx: Context) {
                 item {
                     pid = 3
                     title = "跨进程 Activity 通信"
-                    desc = "跨进程 Activity 通信 - 相册选择"
+                    desc = "最好通过json来交换数据"
                     clazz = AlbumIPCActivity::class.java
                 }
             } // id 3
