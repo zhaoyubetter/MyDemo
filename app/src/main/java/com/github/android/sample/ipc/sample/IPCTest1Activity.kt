@@ -39,10 +39,14 @@ class IPCTest1Activity : AppCompatActivity() {
 
         txt_result.text = "我运行在：${getProcessName()}"
 
-
+        // use json transform
         btn_close.onClick {
-            setResult(Activity.RESULT_OK, Intent().putExtra("data", "ok"))
+            setResult(Activity.RESULT_OK, Intent().putExtra("data",MyData("better", 30).toString()))
             finish()
         }
+    }
+
+    private data class MyData(val name: String, val age: Int) {
+        override fun toString() = """{"name":"$name","age":"$age"}"""
     }
 }

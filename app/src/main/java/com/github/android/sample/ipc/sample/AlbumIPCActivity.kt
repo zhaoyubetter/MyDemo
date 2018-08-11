@@ -1,8 +1,12 @@
 package com.github.android.sample.ipc.sample
 
+import android.app.Activity
+import android.content.ComponentName
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
 import com.better.base.ToolbarActivity
 import com.better.base.setTitleFromIntent
 import com.github.android.sample.R
@@ -14,6 +18,7 @@ import android.widget.Toast
 import com.better.base.toast
 import com.yu.bundles.album.AlbumListener
 import com.yu.bundles.album.ConfigBuilder
+import org.json.JSONObject
 
 
 /**
@@ -47,7 +52,6 @@ class AlbumIPCActivity : ToolbarActivity() {
 
         // onActivityResult回调
         btn_openActivity.onClick {
-//            IPCTest1Activity.data = "from other activity"
             startActivityForResult(Intent(this@AlbumIPCActivity, IPCTest1Activity::class.java).apply {
                 putExtra("setData", "from other activity")
             }, 12)
@@ -56,7 +60,9 @@ class AlbumIPCActivity : ToolbarActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        toast("result: " + data?.getStringExtra("data"))
+        val str = data?.getStringExtra("data")
+        val json = JSONObject(str)
+        toast(json)
     }
 
     private fun showResult(list: List<String>) {
