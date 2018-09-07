@@ -108,14 +108,16 @@
         <activity
             android:name=".ipc.sample.IPCTest1Activity"
             android:process=":remote" />
+
         <service
-            android:process=":remote"
             android:name=".ipc.socket.TcpSocketService"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true"
+            android:process=":remote" />
         <!-- IPC End -->
 
-        <activity android:name=".ipc.socket.TcpSocketClientActivity"></activity>
+        <activity android:name=".ipc.socket.TcpSocketClientActivity" />
+        <activity android:name=".annotationProcesser.AnnotationProcesserTestActivity"></activity>
     </application>
 
 </manifest>

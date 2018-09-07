@@ -30,6 +30,11 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_7
+        targetCompatibility = JavaVersion.VERSION_1_7
+    }
+
     // 实验性阶段(暂时先去掉)
 //    androidExtensions {
 //        experimental = true
@@ -74,6 +79,11 @@ dependencies {
     // album
     implementation('com.github.liyuzero:MaeBundlesAlbum:1.1.8')  // 非扩进程
     implementation "com.github.bumptech.glide:glide:3.7.0"
+
+    // annotationProcessor
+    implementation project(':app.annotation')
+    implementation project(':app.annotation.api')
+    annotationProcessor project(':app.annotation.compiler')
 
 }
 repositories {

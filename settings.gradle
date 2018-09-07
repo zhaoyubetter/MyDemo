@@ -1,4 +1,4 @@
-include ':app', ':widget', ':app.annotation', ':app.annotation.api'
+include ':app', ':widget', ':app.annotation', ':app.annotation.api', ':app.annotation.compiler'
 
 //
 //project(':app.annotation').projectDir     = new File("MyDemo/annotationProcesser/app.annotation")

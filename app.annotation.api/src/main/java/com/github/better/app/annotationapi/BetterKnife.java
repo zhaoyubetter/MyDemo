@@ -48,6 +48,7 @@ public final class BetterKnife {
                 binder.bindView(host, object, finder);
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

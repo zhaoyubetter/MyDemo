@@ -1,7 +1,7 @@
 package com.github.better.app.annotationapi.api;
 
 /**
- * UI绑定解绑接口
+ * UI绑定解绑接口，自动生成的代码实现这个接口
  */
 public interface ViewBinder<T> {
     /**
