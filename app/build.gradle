@@ -83,7 +83,8 @@ dependencies {
     // annotationProcessor
     implementation project(':app.annotation')
     implementation project(':app.annotation.api')
-    annotationProcessor project(':app.annotation.compiler')
+    // 如果工程中，引入了kt，需要将  annotationProcessor 修改成 kapt
+    kapt project(':app.annotation.compiler')    // annotationProcessor project(':app.annotation.compiler')
 
 }
 repositories {

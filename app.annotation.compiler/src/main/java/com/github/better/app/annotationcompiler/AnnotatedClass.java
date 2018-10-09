@@ -48,7 +48,7 @@ class AnnotatedClass {
 
         /* $L (原样输出),$S("字符串"),$T(类型) $N(使用代码中定义的方法) */
         for (BindViewField field : mFields) {     // findView, host.field = (field.type) finder.findView(R.id.XXX);
-            method_bindView_builder.addStatement("host.$N = ($T)(finder.findView($L));",
+            method_bindView_builder.addStatement("host.$N = ($T)(finder.findView(source, $L));",
                     field.getFieldName(), ClassName.get(field.getFieldType()), field.getResId());
         }
 
