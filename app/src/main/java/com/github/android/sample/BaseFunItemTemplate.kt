@@ -6,6 +6,7 @@ import com.better.base.model.SampleItem
 import com.github.android.sample.anim.*
 import com.github.android.sample.canvas_paint.*
 import com.github.android.sample.md.DrawerLayoutActivity
+import com.github.android.sample.svg.SVG1Activity
 
 /**
  * Created by zhaoyu on 2018/3/11.
@@ -273,6 +274,20 @@ class BaseFunItemTemplate private constructor(ctx: Context) {
                     title = "DrawerLayout 抽屉示例"
                     desc = "DrawerLayout 抽屉示例"
                     clazz = DrawerLayoutActivity::class.java
+                }
+            }
+
+            // 第4部分 svg
+            item {
+                pid = 0
+                id = 4
+                title = "SVG学习与应用"
+                desc = "SVG学习与应用"
+                item {
+                    pid = 4
+                    title = "SVG基本使用"
+                    desc = "SVG基本使用"
+                    clazz = SVG1Activity::class.java
                 }
             }
         }

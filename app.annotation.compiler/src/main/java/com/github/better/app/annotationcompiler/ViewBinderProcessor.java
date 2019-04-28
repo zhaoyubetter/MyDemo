@@ -23,6 +23,9 @@ import javax.tools.Diagnostic;
 
 /**
  * reference: https://www.cnblogs.com/whoislcj/p/6168641.html
+ * elements详解
+ * https://www.jianshu.com/p/899063e8452e
+ * https://blog.csdn.net/wzgiceman/article/details/54580745
  */
 public class ViewBinderProcessor extends AbstractProcessor {
 
@@ -52,6 +55,7 @@ public class ViewBinderProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnv) {
         annotatedClassMap.clear();
+        // 扫描整个工程   找出含有BindView注解的元素
         final Set<? extends Element> elementsAnnotatedWith = roundEnv.getElementsAnnotatedWith(BindView.class);
         if (elementsAnnotatedWith == null || elementsAnnotatedWith.isEmpty()) {
             return true;
@@ -95,12 +99,17 @@ public class ViewBinderProcessor extends AbstractProcessor {
         return SourceVersion.latestSupported();
     }
 
-
+    /**
+     * 处理 bindView
+     * element是代表程序的一个元素，这个元素可以是：包、类/接口、属性变量、方法/方法形参、泛型参数
+     * @param elementsAnnotatedWith
+     */
     private void processBindView(Set<? extends Element> elementsAnnotatedWith) {
         for (Element element : elementsAnnotatedWith) {
             // 1. AnnotatedClass
             final TypeElement typeElement = (TypeElement) element.getEnclosingElement();
             final String fullName = typeElement.getQualifiedName().toString();
+            error("---> " + fullName);
             AnnotatedClass annotatedClass = annotatedClassMap.get(fullName);
             if (annotatedClass == null) {
                 annotatedClass = new AnnotatedClass(typeElement, elementUtils);

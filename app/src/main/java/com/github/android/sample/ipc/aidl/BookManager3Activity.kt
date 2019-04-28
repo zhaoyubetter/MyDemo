@@ -61,8 +61,15 @@ class BookManager3Activity : ToolbarActivity() {
 
         // 添加书
         btn_add.onClick {
-            // 客户端调用打印的主进程
-            bookManager?.addBook(Book(5, "Atomic Kotlin"))
+            // 客户端主动调用，此时回调打印的主进程
+            /** @see BookManager3Activity.newBookAddListener */
+            //bookManager?.addBook(Book(5, "Atomic Kotlin"))
+
+            // new thread to add a book, 那么回调也是在子线程。注意：这是是线程；那么回调此进程对应的子线程中。
+            Thread {
+                e("====>>thread add book, " + Thread.currentThread().name)
+                bookManager?.addBook(Book(5, "Atomic Kotlin"))
+            }.start()
         }
 
         // btn_remove，移除监听

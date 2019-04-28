@@ -50,19 +50,22 @@ class BookManagerService3 : Service() {
     override fun onCreate() {
         super.onCreate()
 
+        /** 服务端触发添加，是在binder线程池中。。。
+         * @see BookManager3Activity.newBookAddListener */
+
         // ==1. binder线程
-        Thread(Runnable {
-            while (!isServiceDestroy.get()) {
-                Thread.sleep(3000)
-                onBookAdd(Book(dataList.size + 1, "IPC进阶。。。"))
-            }
-        }).start()
+//        Thread(Runnable {
+//            while (!isServiceDestroy.get()) {
+//                Thread.sleep(3000)
+//                onBookAdd(Book(dataList.size + 1, "IPC进阶, Use Thread。。。"))
+//            }
+//        }).start()
 
         // ==2.客户端打印的是binder线程
-//        android.os.Handler().postDelayed({
-//            e("-=======》thread : ${Thread.currentThread().name}")       // main
-//            onBookAdd(Book(dataList.size + 1, "IPC进阶。。。"))
-//        }, 5000)
+        android.os.Handler().postDelayed({
+            e("-=======》thread : ${Thread.currentThread().name}")       // main
+            onBookAdd(Book(dataList.size + 1, "IPC进阶 use Hander() 。。。"))
+        }, 5000)
     }
 
     private fun onBookAdd(book: Book) {

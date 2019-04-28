@@ -11,14 +11,14 @@ import com.github.better.app.annotationapi.BetterKnife;
 
 public class AnnotationProcesserTestActivity extends AppCompatActivity {
 
-    @BindView(R.id.btn1)
-    private Button btn1;
-    @BindView(R.id.btn2)
-    private Button btn2;
-    @BindView(R.id.txt1)
-    private TextView txt1;
-    @BindView(R.id.txt2)
-    private TextView txt2;
+//    @BindView(R.id.btn1)
+    Button btn1;
+//    @BindView(R.id.btn2)
+    Button btn2;
+//    @BindView(R.id.txt1)
+    TextView txt1;
+//    @BindView(R.id.txt2)
+    TextView txt2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

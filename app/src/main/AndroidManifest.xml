@@ -114,10 +114,17 @@
             android:enabled="true"
             android:exported="true"
             android:process=":remote" />
+
+        <activity android:name=".ipc.subthread.SubThreadHandleActivity" />
         <!-- IPC End -->
 
         <activity android:name=".ipc.socket.TcpSocketClientActivity" />
-        <activity android:name=".annotationProcesser.AnnotationProcesserTestActivity"></activity>
+        <activity android:name=".annotationProcesser.AnnotationProcesserTestActivity" />
+        <activity android:name=".svg.SVG1Activity" />
+        <activity
+            android:name=".ipc.subthread.SubThreadResultActivity"
+            android:label="@string/title_activity_sub_thread_result"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
