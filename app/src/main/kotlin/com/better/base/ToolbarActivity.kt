@@ -53,6 +53,7 @@ open class ToolbarActivity : AppCompatActivity() {
         layout.addView(toolbar)
         initToolbar()
         setContentView(layout)
+        setTitleFromIntent(intent)
     }
 
     private inline fun initToolbar() {

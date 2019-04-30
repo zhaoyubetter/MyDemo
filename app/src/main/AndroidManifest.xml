@@ -124,7 +124,8 @@
         <activity
             android:name=".ipc.subthread.SubThreadResultActivity"
             android:label="@string/title_activity_sub_thread_result"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".problem.webview.WebViewSwipeConflictActivity"></activity>
     </application>
 
 </manifest>
