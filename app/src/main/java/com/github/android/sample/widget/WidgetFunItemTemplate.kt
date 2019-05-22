@@ -12,6 +12,7 @@ import com.github.android.sample.ipc.aidl.BookManagerActivity
 import com.github.android.sample.ipc.forecast.ForecaseActivity
 import com.github.android.sample.ipc.messenger.Messenger2Activity
 import com.github.android.sample.ipc.messenger.MessengerActivity
+import com.github.android.sample.ipc.resultreceiver.ResultReceiverTest1Activity
 import com.github.android.sample.ipc.sample.AlbumIPCActivity
 import com.github.android.sample.ipc.socket.TcpSocketClientActivity
 import com.github.android.sample.ipc.subthread.SubThreadHandleActivity
@@ -169,6 +170,15 @@ class WidgetFunItemTemplate private constructor(ctx: Context) {
                     desc = "最好通过json来交换数据"
                     clazz = AlbumIPCActivity::class.java
                 }
+
+                item {
+                    pid = 3
+                    title="ResultReceiver"
+                    desc="ResultReceiver 结合 IntentService"
+                    clazz = ResultReceiverTest1Activity::class.java
+                }
+
+                // 一下有问题
 
                 item {  // 有问题的
                     pid = 3

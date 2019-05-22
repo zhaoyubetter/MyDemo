@@ -96,6 +96,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
+        <service
+            android:name=".ipc.resultreceiver.BankService" />
 
         <activity android:name=".ipc.messenger.MessengerActivity" />
         <activity android:name=".ipc.messenger.Messenger2Activity" />
@@ -125,7 +127,8 @@
             android:name=".ipc.subthread.SubThreadResultActivity"
             android:label="@string/title_activity_sub_thread_result"
             android:theme="@style/AppTheme" />
-        <activity android:name=".problem.webview.WebViewSwipeConflictActivity"></activity>
+        <activity android:name=".problem.webview.WebViewSwipeConflictActivity" />
+        <activity android:name=".ipc.resultreceiver.ResultReceiverTest1Activity"></activity>
     </application>
 
 </manifest>
