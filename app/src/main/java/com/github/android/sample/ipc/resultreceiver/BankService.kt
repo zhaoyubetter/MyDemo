@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.SystemClock
 import android.util.Log
+import com.github.android.sample.Book
 
 
 /**
@@ -55,7 +56,7 @@ class BankService : IntentService("bankService") {
 
             context.startService(Intent(context, BankService::class.java).apply {
                 action = Actions.WITHDRAW.name
-                putExtra(PARAM.AMOUNT.name, 100)
+                putExtra(PARAM.AMOUNT.name, amount)
                 putExtra(PARAM.RESULT_RECEIVER.name, resultReceiver)
             })
         }
@@ -99,6 +100,11 @@ class BankService : IntentService("bankService") {
             code = BankResultReceiver.RESULT_CODE_OK
             balance -= amount
             bundle.putBoolean(BankResultReceiver.PARAM_RESULT, true)
+            // 测试传递ArrayList
+            bundle.putParcelableArrayList(BankResultReceiver.PARAM_LIST, ArrayList<Book>().apply {
+                this.add(Book(1, "Kotlin实战经典"))
+                this.add(Book(2, "TypeScript实战啦啦啦"))
+            })
         }
         resultReceiver.send(code, bundle)
     }

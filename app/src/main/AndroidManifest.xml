@@ -97,6 +97,7 @@
             </intent-filter>
         </service>
         <service
+            android:process=":remote2"
             android:name=".ipc.resultreceiver.BankService" />
 
         <activity android:name=".ipc.messenger.MessengerActivity" />

@@ -29,7 +29,7 @@ class ResultReceiverTest1Activity : ToolbarActivity() {
     }
 
     private fun getMoney() {
-        startServiceToWithdraw(this, 100, object : ResultReceiverCallback<Any> {
+        startServiceToWithdraw(this, 10, object : ResultReceiverCallback<Any> {
             override fun onSuccess(data: Any) {
                 toast("取好了")
                 txt.text = null
