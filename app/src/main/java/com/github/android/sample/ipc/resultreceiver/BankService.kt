@@ -10,7 +10,6 @@ import android.os.SystemClock
 import android.util.Log
 import com.github.android.sample.Book
 
-
 /**
  * @author zhaoyu1  2019/5/22
  **/
@@ -20,7 +19,7 @@ class BankService : IntentService("bankService") {
         var balance = 10
 
         /**
-         * 获取余额
+         * 获取余额，此方法运行在不同的进程
          */
         fun startServiceForBalance(context: Context, callback: BankResultReceiver.ResultReceiverCallback<Any>) {
             val resultReceiver = BankResultReceiver(Handler())
@@ -34,7 +33,7 @@ class BankService : IntentService("bankService") {
         }
 
         /**
-         * 存
+         * 存，此方法运行在不同的进程
          */
         fun startServiceToDeposit(context: Context, amount: Int, callback: BankResultReceiver.ResultReceiverCallback<Any>) {
             val resultReceiver = BankResultReceiver(Handler())
@@ -48,7 +47,7 @@ class BankService : IntentService("bankService") {
         }
 
         /**
-         * 取，重复代码有点多
+         * 取，重复代码有点多，此方法运行在不同的进程
          */
         fun startServiceToWithdraw(context: Context, amount: Int, callback: BankResultReceiver.ResultReceiverCallback<Any>) {
             val resultReceiver = BankResultReceiver(Handler())
@@ -71,6 +70,9 @@ class BankService : IntentService("bankService") {
     }
 
 
+    /**
+     * 运行在service 对应的进程
+     */
     override fun onHandleIntent(intent: Intent) {
         // 子线程
         Log.e("better", "thread name : ${Thread.currentThread().name}")
@@ -127,6 +129,9 @@ class BankService : IntentService("bankService") {
         resultReceiver.send(code, bundle)
     }
 
+    /**
+     * 运行在service 对应的进程
+     */
     private fun handleRetreiveBalance(resultReceiver: ResultReceiver) {
         val bundle = Bundle()
         val code = BankResultReceiver.RESULT_CODE_OK
@@ -137,3 +142,4 @@ class BankService : IntentService("bankService") {
     }
 
 }
+

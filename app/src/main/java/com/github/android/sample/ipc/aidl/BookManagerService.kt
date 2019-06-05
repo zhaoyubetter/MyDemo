@@ -2,6 +2,7 @@ package com.github.android.sample.ipc.aidl
 
 import android.app.Service
 import android.content.Intent
+import android.os.Parcel
 import com.github.android.sample.Book
 import com.github.android.sample.IBookManager
 import com.github.android.sample.INewBookAddListener
