@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent">
 
 
@@ -13,4 +14,10 @@
         android:text="子线程启动Activity"
         tools:layout_editor_absoluteX="32dp"
         tools:layout_editor_absoluteY="25dp" />
+
+    <Button
+        android:id="@+id/btn_send"
+        android:text="发送广播（接收着在其他进程）"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </LinearLayout>

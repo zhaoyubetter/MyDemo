@@ -42,10 +42,10 @@ abstract class RecyclerViewFragment : Fragment(), AdapterView.OnItemClickListene
             recyclerView.layoutManager = getLayoutManager()
             recyclerView.addItemDecoration(getItemDecoration())
 
-            recyclerView.itemAnimator.addDuration = 1000
-            recyclerView.itemAnimator.changeDuration = 1000
-            recyclerView.itemAnimator.moveDuration = 1000
-            recyclerView.itemAnimator.removeDuration = 1000
+            recyclerView.itemAnimator?.addDuration = 1000
+            recyclerView.itemAnimator?.changeDuration = 1000
+            recyclerView.itemAnimator?.moveDuration = 1000
+            recyclerView.itemAnimator?.removeDuration = 1000
 
             simpleAdapter = getAdapter()
             simpleAdapter.itemCount = getDefaultItemCount()

@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.better.base.ToolbarActivity
 import com.better.base.setTitleFromIntent
 import com.github.android.sample.R
+import com.github.android.sample.ipc.broadcast.ProcessBroadCast
 import kotlinx.android.synthetic.main.activity_ipc_thread_.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import kotlin.concurrent.thread
@@ -13,7 +14,7 @@ import kotlin.concurrent.thread
  * 子线程启动Activity
  * @author zhaoyu1  2019/4/28
  **/
-class SubThreadHandleActivity: ToolbarActivity() {
+class SubThreadHandleActivity : ToolbarActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +27,12 @@ class SubThreadHandleActivity: ToolbarActivity() {
                     putExtra("mydata", "better")
                 })
             }
+        }
+
+        btn_send.setOnClickListener {
+            sendBroadcast(Intent().apply {
+                setClass(applicationContext, ProcessBroadCast::class.java)
+            })
         }
     }
 }

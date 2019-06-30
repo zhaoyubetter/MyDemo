@@ -97,8 +97,8 @@
             </intent-filter>
         </service>
         <service
-            android:process=":remote2"
-            android:name=".ipc.resultreceiver.BankService" />
+            android:name=".ipc.resultreceiver.BankService"
+            android:process=":remote2" />
 
         <activity android:name=".ipc.messenger.MessengerActivity" />
         <activity android:name=".ipc.messenger.Messenger2Activity" />
@@ -119,6 +119,8 @@
             android:process=":remote" />
 
         <activity android:name=".ipc.subthread.SubThreadHandleActivity" />
+        <receiver android:name=".ipc.broadcast.ProcessBroadCast"
+            android:process=":better"/>
         <!-- IPC End -->
 
         <activity android:name=".ipc.socket.TcpSocketClientActivity" />

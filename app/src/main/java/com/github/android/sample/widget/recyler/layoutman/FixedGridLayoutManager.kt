@@ -81,7 +81,9 @@ class FixedGridLayoutManager : RecyclerView.LayoutManager() {
      * This method is still called if the views removed were visible, but it will
      * happen AFTER pre-layout.
      */
-    override fun onItemsRemoved(recyclerView: RecyclerView?, positionStart: Int, itemCount: Int) {
+
+    override fun onItemsRemoved(recyclerView: RecyclerView, positionStart: Int, itemCount: Int) {
+        super.onItemsRemoved(recyclerView, positionStart, itemCount)
         mFirstChangedPosition = positionStart
         mChangedPositionCount = itemCount
     }
@@ -166,9 +168,9 @@ class FixedGridLayoutManager : RecyclerView.LayoutManager() {
         }
 
         //Take leftmost measurements from the top-left child
-        val topView = getChildAt(0)
+        val topView = getChildAt(0)!!
         //Take rightmost measurements from the top-right child
-        val bottomView = getChildAt(mVisibleColumnCount - 1)
+        val bottomView = getChildAt(mVisibleColumnCount - 1)!!
 
         //Optimize the case where the entire data set is too small to scroll
         val viewSpan = getDecoratedRight(bottomView) - getDecoratedLeft(topView)
@@ -245,9 +247,9 @@ class FixedGridLayoutManager : RecyclerView.LayoutManager() {
         }
 
         //Take top measurements from the top-left child
-        val topView = getChildAt(0)
+        val topView = getChildAt(0)!!
         //Take bottom measurements from the bottom-right child.
-        val bottomView = getChildAt(childCount - 1)
+        val bottomView = getChildAt(childCount - 1)!!
 
         //Optimize the case where the entire data set is too small to scroll
         val viewSpan = getDecoratedBottom(bottomView) - getDecoratedTop(topView)
@@ -386,7 +388,7 @@ class FixedGridLayoutManager : RecyclerView.LayoutManager() {
             removedCache = SparseIntArray(childCount)  // childCount 不等于 itemCount
             for (i in 0 until childCount) {
                 val view = getChildAt(i)
-                val lp = view.layoutParams as LayoutParams
+                val lp = view?.layoutParams as LayoutParams
 
                 if (lp.isItemRemoved) {
                     // Track these view removals as visible
@@ -420,7 +422,7 @@ class FixedGridLayoutManager : RecyclerView.LayoutManager() {
             * Keep the existing initial position, and save off
             * the current scrolled offset.
             */
-            val topChild = getChildAt(0)
+            val topChild = getChildAt(0)!!
             childLeft = getDecoratedLeft(topChild)
             childTop = getDecoratedTop(topChild)
 
@@ -526,7 +528,7 @@ class FixedGridLayoutManager : RecyclerView.LayoutManager() {
         var startLeftOffset = emptyLeft
         var startTopOffset = emptyTop
         if (childCount != 0) {
-            val topView = getChildAt(0)
+            val topView = getChildAt(0)!!
             startLeftOffset = getDecoratedLeft(topView)
             startTopOffset = getDecoratedTop(topView)
             when (direction) {

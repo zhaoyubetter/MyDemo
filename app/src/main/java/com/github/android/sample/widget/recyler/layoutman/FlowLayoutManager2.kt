@@ -30,7 +30,7 @@ internal class FlowLayoutManager2 : RecyclerView.LayoutManager() {
         return RecyclerView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 
-    override fun onLayoutChildren(recycler: RecyclerView.Recycler?, state: RecyclerView.State?) {
+    override fun onLayoutChildren(recycler: RecyclerView.Recycler, state: RecyclerView.State?) {
         if (itemCount == 0) {                      // 界面没有元素
             detachAndScrapAttachedViews(recycler) // //detach轻量回收所有View
             return
@@ -69,15 +69,15 @@ internal class FlowLayoutManager2 : RecyclerView.LayoutManager() {
             // 倒着来
             (childCount - 1 downTo 0).map { getChildAt(it) }.forEach continuing@{ child ->
                 if (dy > 0) { // 上滑，那么是顺序填充,需要回收当前屏幕，上越界的View
-                    if (getDecoratedBottom(child) - dy < topOffset) {
-                        removeAndRecycleView(child, recycler)      // 回收
+                    if (getDecoratedBottom(child!!) - dy < topOffset) {
+                        removeAndRecycleView(child!!, recycler)      // 回收
                         mFirstVisiPos++
                         // e(""+(getChildAt(0) as? LinearLayout)?.find<TextView>(android.R.id.text1)?.text)
                         // e("上越界回收....dy ，bottom:${getDecoratedBottom(getChildAt(0))}, dy:$dy" )
                         return@continuing   // continue
                     }
                 } else if (dy < 0) { //回收当前屏幕，下越界的View
-                    if (getDecoratedTop(child) - dy > height - paddingBottom) {
+                    if (getDecoratedTop(child!!) - dy > height - paddingBottom) {
                         removeAndRecycleView(child, recycler)       // 回收
                         mLastVisiPos--
                         return@continuing   // continue
@@ -92,7 +92,7 @@ internal class FlowLayoutManager2 : RecyclerView.LayoutManager() {
             mLastVisiPos = itemCount - 1
 
             if (childCount > 0) {  // 偏移量设置为最后一个view的信息
-                val lastView = getChildAt(childCount - 1)
+                val lastView = getChildAt(childCount - 1)!!
                 minPos = getPosition(lastView) + 1
                 topOffset = getDecoratedTop(lastView)
                 leftOffset = getDecoratedRight(lastView)
@@ -141,7 +141,7 @@ internal class FlowLayoutManager2 : RecyclerView.LayoutManager() {
 
 
             //添加完后，判断是否已经没有更多的ItemView，并且此时屏幕仍有空白，则需要修正dy
-            val lastChild = getChildAt(childCount - 1)
+            val lastChild = getChildAt(childCount - 1)!!
             if (getPosition(lastChild) == itemCount - 1) {
                 val gap = height - paddingBottom - getDecoratedBottom(lastChild)
                 if (gap > 0) {
@@ -156,7 +156,7 @@ internal class FlowLayoutManager2 : RecyclerView.LayoutManager() {
             var maxPos = itemCount - 1
             mFirstVisiPos = 0
             if (childCount > 0) {
-                maxPos = getPosition(getChildAt(0)) - 1
+                maxPos = getPosition(getChildAt(0)!!) - 1
             }
 
             e2("better", "maxPos: $maxPos, itemCount:$itemCount, firstViewPos: $mFirstVisiPos")

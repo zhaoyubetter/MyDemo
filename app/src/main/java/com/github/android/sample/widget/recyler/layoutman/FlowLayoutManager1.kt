@@ -21,7 +21,7 @@ internal class FlowLayoutManager1 : RecyclerView.LayoutManager() {
         super.onLayoutChildren(recycler, state)
 
         if (itemCount == 0) {                      // 界面没有元素
-            detachAndScrapAttachedViews(recycler) // //detach轻量回收所有View
+            detachAndScrapAttachedViews(recycler!!) // //detach轻量回收所有View
             return
         }
 
@@ -30,7 +30,7 @@ internal class FlowLayoutManager1 : RecyclerView.LayoutManager() {
         }
 
         // onLayoutChildren方法在RecyclerView 初始化时 会执行两遍
-        detachAndScrapAttachedViews(recycler)
+        detachAndScrapAttachedViews(recycler!!)
         //初始化
         mVerticalOffset = 0
         mFirstVisiPos = 0
