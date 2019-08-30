@@ -41,14 +41,14 @@ class MessengerActivity : ToolbarActivity() {
         setTitleFromIntent(intent)
 
         //  bind service
-        btn_bind.onClick {
+        btn_bind.setOnClickListener {
             Intent(this@MessengerActivity, MessengerService::class.java).apply {
                 bindService(this, connection, Context.BIND_AUTO_CREATE)
             }
         }
 
         // 发送消
-        btn_send_msg.onClick {
+        btn_send_msg.setOnClickListener {
             val msg = Message.obtain(null, MSG_FROM_CLIENT).apply {
                 data = Bundle().apply {
                     putString("msg", "this message is from better client")

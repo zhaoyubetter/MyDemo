@@ -40,7 +40,7 @@ class IPCTest1Activity : AppCompatActivity() {
         txt_result.text = "我运行在：${getProcessName()}"
 
         // use json transform
-        btn_close.onClick {
+        btn_close.setOnClickListener {
             setResult(Activity.RESULT_OK, Intent().putExtra("data",MyData("better", 30).toString()))
             finish()
         }

@@ -70,14 +70,14 @@ class Messenger2Activity : ToolbarActivity() {
         setTitleFromIntent(intent)
 
         // bind service
-        btn_bind.onClick {
+        btn_bind.setOnClickListener {
             Intent(this@Messenger2Activity, MessengerService2::class.java).apply {
                 bindService(this, connection, Context.BIND_AUTO_CREATE)
             }
         }
 
         // send msg
-        btn_send_msg.onClick {
+        btn_send_msg.setOnClickListener {
             val msg = Message.obtain(null, MSG_FROM_CLIENT).apply {
                 data = Bundle().apply {
                     putString("msg", "this msg is from client")
@@ -89,7 +89,7 @@ class Messenger2Activity : ToolbarActivity() {
         }
 
         // 获取设备密度
-        btn_density.onClick {
+        btn_density.setOnClickListener {
             val msg = Message.obtain(null, MSG_GET_DENSITY_FROM_CLIENT).apply {
                 replyTo = getReplyMessenger
             }
@@ -98,7 +98,7 @@ class Messenger2Activity : ToolbarActivity() {
 
         // btn_cal
         var widgetId = 1
-        btn_cal.onClick {
+        btn_cal.setOnClickListener {
             if(isConnected) {
                 val a = 88
                 val b = Random().nextInt(100)
@@ -121,7 +121,7 @@ class Messenger2Activity : ToolbarActivity() {
             }
         }
 
-        btn_test.onClick {
+        btn_test.setOnClickListener {
             // 在handle中执行
             getReplyMessenger.send(Message.obtain().apply { what = 100 })
         }

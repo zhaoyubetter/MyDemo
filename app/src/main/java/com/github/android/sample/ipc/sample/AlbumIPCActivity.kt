@@ -33,7 +33,7 @@ class AlbumIPCActivity : ToolbarActivity() {
         setTitleFromIntent(intent)
 
         // 相册
-        btn_open.onClick {
+        btn_open.setOnClickListener {
             MaeAlbum.setImageEngine(GlideEngine())
             MaeAlbum.from(this@AlbumIPCActivity)
                     .maxSize(8)
@@ -51,7 +51,7 @@ class AlbumIPCActivity : ToolbarActivity() {
         }
 
         // onActivityResult回调
-        btn_openActivity.onClick {
+        btn_openActivity.setOnClickListener {
             startActivityForResult(Intent(this@AlbumIPCActivity, IPCTest1Activity::class.java).apply {
                 putExtra("setData", "from other activity")
             }, 12)

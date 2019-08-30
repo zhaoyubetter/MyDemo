@@ -7,6 +7,7 @@ import android.content.ServiceConnection
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.IBinder
+import android.util.Log
 import com.better.base.ToolbarActivity
 import com.better.base.e
 import com.better.base.setTitleFromIntent
@@ -54,26 +55,26 @@ class BookManager3Activity : ToolbarActivity() {
         setTitleFromIntent(intent)
 
         // bind service
-        btn_bind.onClick {
+        btn_bind.setOnClickListener {
             bindService(Intent(this@BookManager3Activity, BookManagerService3::class.java),
                     serviceConnection, Context.BIND_AUTO_CREATE)
         }
 
         // 添加书
-        btn_add.onClick {
+        btn_add.setOnClickListener {
             // 客户端主动调用，此时回调打印的主进程
             /** @see BookManager3Activity.newBookAddListener */
             //bookManager?.addBook(Book(5, "Atomic Kotlin"))
 
             // new thread to add a book, 那么回调也是在子线程。注意：这是是线程；那么回调此进程对应的子线程中。
             Thread {
-                e("====>>thread add book, " + Thread.currentThread().name)
+                Log.e("BookManager3Activity", "====>>thread add book, " + Thread.currentThread().name)
                 bookManager?.addBook(Book(5, "Atomic Kotlin"))
             }.start()
         }
 
         // btn_remove，移除监听
-        btn_remove.onClick {
+        btn_remove.setOnClickListener {
             bookManager?.unregisterBookAddListener(newBookAddListener)
         }
     }

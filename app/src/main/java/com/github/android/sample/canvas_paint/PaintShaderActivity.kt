@@ -29,7 +29,7 @@ class PaintShaderActivity : ToolbarActivity() {
         root_container.removeAllViews()
         root_container.addView(ShaderView1(this))
 
-        btn_shader1.onClick {
+        btn_shader1.setOnClickListener {
             root_container.removeAllViews()
             val shaderView = ShaderView1(this@PaintShaderActivity)
             with(root_container) {
@@ -64,42 +64,42 @@ class PaintShaderActivity : ToolbarActivity() {
         }
 
 
-        btn_shader2.onClick {
+        btn_shader2.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(ShaderView2(this@PaintShaderActivity))
         }
 
-        btn_shader3.onClick {
+        btn_shader3.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(ShaderView3(this@PaintShaderActivity))
         }
 
-        btn_shader4.onClick {
+        btn_shader4.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(ShaderView4(this@PaintShaderActivity))
         }
 
-        btn_shader5.onClick {
+        btn_shader5.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(ShaderView5(this@PaintShaderActivity))
         }
 
-        btn_shader6.onClick {
+        btn_shader6.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(ShaderView6(this@PaintShaderActivity))
         }
 
-        btn_shader7.onClick {
+        btn_shader7.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(ShaderView7(this@PaintShaderActivity))
         }
 
-        btn_shader8.onClick {
+        btn_shader8.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(ShaderView8(this@PaintShaderActivity))
         }
 
-        btn_shader9.onClick {
+        btn_shader9.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(ShaderView9(this@PaintShaderActivity).apply {
                 text = "Thanks 启舰的自定义控件系列教程！！！"
@@ -108,17 +108,17 @@ class PaintShaderActivity : ToolbarActivity() {
             })
         }
 
-        btn_shader10.onClick {
+        btn_shader10.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(ShaderView10(this@PaintShaderActivity))
         }
 
-        btn_shader11.onClick {
+        btn_shader11.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(ShaderView11(this@PaintShaderActivity))
         }
 
-        btn_shader12.onClick {
+        btn_shader12.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(ShaderView12(this@PaintShaderActivity))
         }

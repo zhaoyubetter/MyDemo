@@ -24,22 +24,22 @@ class RedPointerDragActivity : ToolbarActivity() {
         root_container.removeAllViews()
         root_container.addView(RedPointerView1(this@RedPointerDragActivity))
 
-        btn_base.onClick {
+        btn_base.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(RedPointerView1(this@RedPointerDragActivity))
         }
 
-        btn_base_2.onClick {
+        btn_base_2.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(RedPointerView2(this@RedPointerDragActivity))
         }
 
-        btn_base_3.onClick {
+        btn_base_3.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(RedPointerView3(this@RedPointerDragActivity))
         }
 
-        btn_base_4.onClick {
+        btn_base_4.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(RedPointerView4(this@RedPointerDragActivity))
         }

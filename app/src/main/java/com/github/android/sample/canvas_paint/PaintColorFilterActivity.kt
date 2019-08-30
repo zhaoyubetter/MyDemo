@@ -22,12 +22,12 @@ class PaintColorFilterActivity : ToolbarActivity() {
         setContentView(R.layout.activity_paint_color_filter)
         setTitleFromIntent(intent)
 
-        btn_color_filter_1.onClick {
+        btn_color_filter_1.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(ColorFilterView1(this@PaintColorFilterActivity))
         }
 
-        btn_color_filter_2.onClick {
+        btn_color_filter_2.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(ColorFilterView2(this@PaintColorFilterActivity))
         }
@@ -78,7 +78,7 @@ class PaintColorFilterActivity : ToolbarActivity() {
             }
         }
 
-        btn_color_filter_4.onClick {
+        btn_color_filter_4.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(ColorFilterView3(this@PaintColorFilterActivity))
         }

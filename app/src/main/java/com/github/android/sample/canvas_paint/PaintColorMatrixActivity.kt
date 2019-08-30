@@ -62,18 +62,24 @@ class PaintColorMatrixActivity : ToolbarActivity() {
                     seekBar {
                         max = 20
                         progress = 1
-                        onSeekBarChangeListener {
-                            onProgressChanged { _, progress, _ ->
+                        this.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                            }
+
+                            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                            }
+
+                            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                                 view7.setSaturation(progress.toFloat())
                             }
-                        }
+                        })
                     }.lparams(width = ViewGroup.LayoutParams.MATCH_PARENT)
                 }
             }
         }
 
 
-        btn_color_matrix_8.onClick {
+        btn_color_matrix_8.setOnClickListener {
             root_container.removeAllViews()
             val view7 = ColorMatrix_View8(root_container.context)
             with(root_container) {
@@ -95,11 +101,15 @@ class PaintColorMatrixActivity : ToolbarActivity() {
                         id = android.R.id.text1
                         max = 20
                         progress = 10
-                        onSeekBarChangeListener {
-                            onProgressChanged { _, progress, _ ->
+                        this.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                            }
+                            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                            }
+                            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                                 change()
                             }
-                        }
+                        })
                     }.lparams(width = ViewGroup.LayoutParams.MATCH_PARENT)
 
                     textView {
@@ -109,11 +119,15 @@ class PaintColorMatrixActivity : ToolbarActivity() {
                         id = android.R.id.text2
                         max = 20
                         progress = 10
-                        onSeekBarChangeListener {
-                            onProgressChanged { _, progress, _ ->
+                        this.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                            }
+                            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                            }
+                            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                                 change()
                             }
-                        }
+                        })
                     }.lparams(width = ViewGroup.LayoutParams.MATCH_PARENT)
 
                     textView {
@@ -123,17 +137,21 @@ class PaintColorMatrixActivity : ToolbarActivity() {
                         id = android.R.id.tabs
                         max = 20
                         progress = 10
-                        onSeekBarChangeListener {
-                            onProgressChanged { _, progress, _ ->
+                        this.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                            }
+                            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                            }
+                            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                                 change()
                             }
-                        }
+                        })
                     }.lparams(width = ViewGroup.LayoutParams.MATCH_PARENT)
                 }
             }
         } // 缩放
 
-        btn_color_matrix_9.onClick {
+        btn_color_matrix_9.setOnClickListener {
             root_container.removeAllViews()
             val view7 = ColorMatrix_View8(root_container.context)
             with(root_container) {
@@ -147,12 +165,16 @@ class PaintColorMatrixActivity : ToolbarActivity() {
                         id = android.R.id.text1
                         max = 360
                         progress = 180
-                        onSeekBarChangeListener {
-                            onProgressChanged { _, progress, _ ->
-                                view7.colorMatrix.setRotate(0,progress-180*.10f)
+                        this.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                            }
+                            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                            }
+                            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                                view7.colorMatrix.setRotate(0, progress - 180 * .10f)
                                 view7.postInvalidate()
                             }
-                        }
+                        })
                     }.lparams(width = ViewGroup.LayoutParams.MATCH_PARENT)
 
                     textView {
@@ -162,12 +184,16 @@ class PaintColorMatrixActivity : ToolbarActivity() {
                         id = android.R.id.text2
                         max = 20
                         progress = 10
-                        onSeekBarChangeListener {
-                            onProgressChanged { _, progress, _ ->
-                                view7.colorMatrix.setRotate(1,progress-180*.10f)
+                        this.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                            }
+                            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                            }
+                            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                                view7.colorMatrix.setRotate(0, progress - 180 * .10f)
                                 view7.postInvalidate()
                             }
-                        }
+                        })
                     }.lparams(width = ViewGroup.LayoutParams.MATCH_PARENT)
 
                     textView {
@@ -177,18 +203,22 @@ class PaintColorMatrixActivity : ToolbarActivity() {
                         id = android.R.id.tabs
                         max = 20
                         progress = 10
-                        onSeekBarChangeListener {
-                            onProgressChanged { _, progress, _ ->
-                                view7.colorMatrix.setRotate(2,progress-180*.10f)
+                        this.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                            }
+                            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                            }
+                            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                                view7.colorMatrix.setRotate(0, progress - 180 * .10f)
                                 view7.postInvalidate()
                             }
-                        }
+                        })
                     }.lparams(width = ViewGroup.LayoutParams.MATCH_PARENT)
                 }
             }
         } // rotate
 
-        btn_color_matrix_10.onClick {
+        btn_color_matrix_10.setOnClickListener {
 
         }
     }

@@ -26,12 +26,12 @@ class TcpSocketClientActivity : AppCompatActivity() {
         startService(Intent(this, TcpSocketService::class.java))
 
         // try to connect server
-        btn_connect.onClick {
+        btn_connect.setOnClickListener {
             connectServer()
         }
 
         // btn_send
-        btn_send.onClick {
+        btn_send.setOnClickListener {
             myOUt?.write("Hi, I am a client, name is ${getProcessName()}")
         }
     }

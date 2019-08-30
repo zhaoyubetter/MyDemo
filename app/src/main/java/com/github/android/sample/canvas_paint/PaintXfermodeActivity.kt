@@ -19,33 +19,33 @@ class PaintXfermodeActivity : ToolbarActivity() {
 
 
         root_container.addView(XfermodeView1(this))
-        btn_18_mode.onClick {
+        btn_18_mode.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(XfermodeView1(this@PaintXfermodeActivity))
         }
 
-        btn_light.onClick {
+        btn_light.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(XfermodeView2(this@PaintXfermodeActivity))
         }
 
-        btn_src.onClick {
+        btn_src.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(XfermodeView3(this@PaintXfermodeActivity))
         }
 
-        btn_src_out.onClick {
+        btn_src_out.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(XfermodeView4(this@PaintXfermodeActivity))
         }
 
         // dst
-        btn_DST_IN.onClick {
+        btn_DST_IN.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(XfermodeView5(this@PaintXfermodeActivity))
         }
 
-        btn_DST_IN_2.onClick {
+        btn_DST_IN_2.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(XfermodeView6(this@PaintXfermodeActivity))
         }

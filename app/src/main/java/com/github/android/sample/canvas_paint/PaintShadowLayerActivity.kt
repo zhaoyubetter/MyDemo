@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ViewGroup
+import android.widget.SeekBar
 import android.widget.TextView
 import com.better.base.ToolbarActivity
 import com.better.base.setTitleFromIntent
@@ -26,7 +27,7 @@ class PaintShadowLayerActivity : ToolbarActivity() {
         setContentView(R.layout.activity_paint_shadow_layer)
         setTitleFromIntent(intent)
 
-        btn_layer_list.onClick {
+        btn_layer_list.setOnClickListener {
             root_container.removeAllViews()
             val view = ShadowView1(this@PaintShadowLayerActivity)
             with(root_container) {
@@ -38,11 +39,15 @@ class PaintShadowLayerActivity : ToolbarActivity() {
                     seekBar {
                         max = 100
                         progress = 10
-                        onSeekBarChangeListener {
-                            onProgressChanged { _, progress, _ ->
+                        this.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                            }
+                            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                            }
+                            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                                 view.radius = progress.toFloat()
                             }
-                        }
+                        })
                     }.lparams(width = ViewGroup.LayoutParams.MATCH_PARENT)
 
                     textView {
@@ -51,11 +56,15 @@ class PaintShadowLayerActivity : ToolbarActivity() {
                     seekBar {
                         max = 100
                         progress = 60
-                        onSeekBarChangeListener {
-                            onProgressChanged { _, progress, _ ->
+                        this.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                            }
+                            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                            }
+                            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                                 view.dx = progress.toFloat() - 50
                             }
-                        }
+                        })
                     }.lparams(width = ViewGroup.LayoutParams.MATCH_PARENT)
 
                     textView {
@@ -64,17 +73,21 @@ class PaintShadowLayerActivity : ToolbarActivity() {
                     seekBar {
                         max = 100
                         progress = 60
-                        onSeekBarChangeListener {
-                            onProgressChanged { _, progress, _ ->
+                        this.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                            }
+                            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                            }
+                            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                                 view.dy = progress.toFloat() - 50
                             }
-                        }
+                        })
                     }.lparams(width = ViewGroup.LayoutParams.MATCH_PARENT)
                 }
             }
         }
 
-        btn_text_layer.onClick {
+        btn_text_layer.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(TextView(this@PaintShadowLayerActivity).apply {
                 setShadowLayer(10f, 10f, 10f, Color.GRAY)
@@ -84,12 +97,12 @@ class PaintShadowLayerActivity : ToolbarActivity() {
             })
         }
 
-        btn_mask_filter.onClick {
+        btn_mask_filter.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(ShadowView2(this@PaintShadowLayerActivity))
         }
 
-        btn_bitmap.onClick {
+        btn_bitmap.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(ShadowView3(this@PaintShadowLayerActivity))
         }

@@ -84,7 +84,7 @@ class ForecaseActivity : ToolbarActivity() {
                 .setPackage(this@ForecaseActivity.packageName), serviceConn, Context.BIND_AUTO_CREATE)
 
         // search
-        btn_search.onClick {
+        btn_search.setOnClickListener {
             // 虽然服务器是运行在binder线程中，但客户端会挂起，等待响应，所以通过子线程来
             Thread {
                 et_cityCode.text?.apply {
@@ -96,7 +96,7 @@ class ForecaseActivity : ToolbarActivity() {
         }
 
         // 模拟服务被kill
-        btn_kill.onClick {
+        btn_kill.setOnClickListener {
             val am = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
             for (appProcessInfo in am.runningAppProcesses) {
                 if("com.github.android.sample:remote" == appProcessInfo.processName) {

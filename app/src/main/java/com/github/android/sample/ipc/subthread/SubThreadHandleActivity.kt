@@ -20,7 +20,7 @@ class SubThreadHandleActivity: ToolbarActivity() {
         setTitleFromIntent(intent)
         setContentView(R.layout.activity_ipc_thread_)
 
-        btn_test.onClick {
+        btn_test.setOnClickListener {
             thread {
                 startActivity(Intent(applicationContext, SubThreadResultActivity::class.java).apply {
                     putExtra("mydata", "better")

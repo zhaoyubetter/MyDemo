@@ -32,17 +32,17 @@ class Room1Activity : ToolbarActivity() {
         db.isOpen
 
         // init db
-        btn_init.onClick {
+        btn_init.setOnClickListener {
             e("" + db.isOpen)
         }
 
         // add
-        btn_add.onClick {
+        btn_add.setOnClickListener {
             addPhone()
         }
 
         // getAll
-        btn_getAll.onClick {
+        btn_getAll.setOnClickListener {
             val list = mobilePhoneDao.getAll()
             list?.forEach {
                 e(it.toString())
@@ -50,7 +50,7 @@ class Room1Activity : ToolbarActivity() {
         }
 
         // search
-        btn_search.onClick {
+        btn_search.setOnClickListener {
             search()
         }
     }

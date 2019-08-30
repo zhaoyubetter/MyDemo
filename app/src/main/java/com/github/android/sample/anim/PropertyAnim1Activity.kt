@@ -31,7 +31,7 @@ class PropertyAnim1Activity : ToolbarActivity() {
         }
 
         // start anim
-        btn_tween_start.onClick {
+        btn_tween_start.setOnClickListener {
             val anim = TranslateAnimation(0f, 200f, 0f, 400f).apply {
                 duration = 2000
                 fillAfter = true
@@ -41,7 +41,7 @@ class PropertyAnim1Activity : ToolbarActivity() {
 
 
         // start property anim
-        btn_prop_start.onClick {
+        btn_prop_start.setOnClickListener {
             val oldLeft = btn_prop.left
             val oldTop = btn_prop.top
             valueAnim = ValueAnimator.ofInt(0, 200, 0).apply {
@@ -82,10 +82,10 @@ class PropertyAnim1Activity : ToolbarActivity() {
         }
 
         // tween click event
-        btn_tween.onClick {
+        btn_tween.setOnClickListener {
             toast("Tween Button is Clicked!")
         }
-        btn_prop.onClick {
+        btn_prop.setOnClickListener {
             toast("Property Button is Clicked!")
 
             ValueAnimator.ofFloat(0f, 1f).apply {
@@ -109,7 +109,7 @@ class PropertyAnim1Activity : ToolbarActivity() {
         }
 
         // evaluator
-        btn_evaluator.onClick {
+        btn_evaluator.setOnClickListener {
             val animator = ValueAnimator.ofInt(-0x100, -0xffff01)
             animator.setEvaluator(ArgbEvaluator())
             animator.duration = 3000

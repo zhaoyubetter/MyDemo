@@ -20,7 +20,7 @@ class CanvasLayerActivity : ToolbarActivity() {
         setTitleFromIntent(intent)
 
 
-        btn_layer.onClick {
+        btn_layer.setOnClickListener {
             // 尝试下整个window设置成透明时的src_IN效果
 //        window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             root_container.removeAllViews()
@@ -28,23 +28,23 @@ class CanvasLayerActivity : ToolbarActivity() {
         }
 
 
-        btn_save_layer_1.onClick {
+        btn_save_layer_1.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(LayerView2(this@CanvasLayerActivity))
         }
 
 
-        btn_save_layer_2.onClick {
+        btn_save_layer_2.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(LayerView3(this@CanvasLayerActivity))
         }
 
-        btn_save_layer_3.onClick {
+        btn_save_layer_3.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(LayerView4(this@CanvasLayerActivity))
         }
 
-        btn_save_layer_4.onClick {
+        btn_save_layer_4.setOnClickListener {
             root_container.removeAllViews()
             root_container.addView(LayerView5(this@CanvasLayerActivity))
         }

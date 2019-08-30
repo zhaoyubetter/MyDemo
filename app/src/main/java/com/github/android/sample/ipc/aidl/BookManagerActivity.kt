@@ -36,7 +36,7 @@ class BookManagerActivity : ToolbarActivity() {
         setContentView(R.layout.activity_book_manager)
         setTitleFromIntent(intent)
 
-        btn_bind.onClick {
+        btn_bind.setOnClickListener {
             //            bindService(Intent(baseContext, BookManagerService::class.java), serviceConn, Context.BIND_AUTO_CREATE)
             bindService(Intent("com.github.android.sample.ipc.aidl.bookService")    // 通过yion'shi
                     .setPackage(this@BookManagerActivity.packageName),
@@ -44,7 +44,7 @@ class BookManagerActivity : ToolbarActivity() {
         }
 
         // 获取所有书
-        btn_getAll.onClick {
+        btn_getAll.setOnClickListener {
             val allBook = this@BookManagerActivity.getAllBook()
             e(allBook?.javaClass?.canonicalName ?: "")
             allBook?.let {
@@ -52,7 +52,7 @@ class BookManagerActivity : ToolbarActivity() {
             }
         }
 
-        btn_add.onClick {
+        btn_add.setOnClickListener {
             bookManager?.addBook(Book(5, "Atomic Kotlin"))
         }
     }

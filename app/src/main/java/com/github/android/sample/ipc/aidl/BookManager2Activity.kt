@@ -52,12 +52,12 @@ class BookManager2Activity : ToolbarActivity() {
         setContentView(R.layout.activity_book_manager2)
         setTitleFromIntent(intent)
 
-        btn_bind.onClick {
+        btn_bind.setOnClickListener {
             bindService(Intent(baseContext, BookManagerService2::class.java), serviceConn, Context.BIND_AUTO_CREATE)
         }
 
         // 获取所有书
-        btn_getAll.onClick {
+        btn_getAll.setOnClickListener {
             val allBook = this@BookManager2Activity.getAllBook()
             e(allBook?.javaClass?.canonicalName ?: "")
             allBook?.let {
@@ -66,13 +66,13 @@ class BookManager2Activity : ToolbarActivity() {
         }
 
         // 添加书
-        btn_add.onClick {
+        btn_add.setOnClickListener {
             // 这里调用 newBookAddListener 打印的为是主线程
             bookManager?.addBook(Book(5, "Atomic Kotlin"))
         }
 
         // 添加监听器
-        btn_addListener.onClick {
+        btn_addListener.setOnClickListener {
             bookManager?.registerBookAddListener(newBookAddListener)
             e("registerListener $newBookAddListener")
         }
