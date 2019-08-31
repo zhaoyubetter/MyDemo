@@ -3,6 +3,7 @@ package com.github.android.sample
 import android.app.Activity
 import android.content.Context
 import com.better.base.model.SampleItem
+import com.github.android.sample.activity_base.singleTask.SingleTaskMainTestActivity
 import com.github.android.sample.anim.*
 import com.github.android.sample.canvas_paint.*
 import com.github.android.sample.md.DrawerLayoutActivity
@@ -288,6 +289,20 @@ class BaseFunItemTemplate private constructor(ctx: Context) {
                     title = "SVG基本使用"
                     desc = "SVG基本使用"
                     clazz = SVG1Activity::class.java
+                }
+            }
+
+            // activity 知识复习
+            item {
+                pid = 0
+                id = 5
+                title = "Activity 相关"
+                desc = "Activity 相关"
+                item {
+                    pid = 5
+                    title = "singleTask 任务栈"
+                    desc = "singleTask 任务栈"
+                    clazz = SingleTaskMainTestActivity::class.java
                 }
             }
         }
