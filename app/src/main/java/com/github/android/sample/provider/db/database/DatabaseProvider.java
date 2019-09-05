@@ -28,8 +28,11 @@ public class DatabaseProvider extends ContentProvider {
      */
     private static final Object LOCK = new Object();
     private static final String HOST_CLASS = "/class:";
+    // 用于在 ContentProvider 中注册URI, 根据 URI 匹配 ContentProvider 中对应的数据表
     private static final UriMatcher matcher;
+    // 下标对应数据库表名
     private static final SparseArray<String> matchIds;
+    // 下标（即表）对应数据库表的列
     private static final SparseArray<LinkedHashMap<String, String>> selectionMaps;
     public static SQLiteOpenHelper myDatabase;// 数据库操作对象
 
@@ -64,11 +67,11 @@ public class DatabaseProvider extends ContentProvider {
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        Uri newUri = ensureUri(uri);
-        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
-        int matchId = matcher.match(newUri);
-        String tableName = matchIds.get(matchId);
-        HashMap<String, String> map = selectionMaps.get(matchId);
+        final Uri newUri = ensureUri(uri);
+        final SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+        final int matchId = matcher.match(newUri);
+        final String tableName = matchIds.get(matchId);
+        final HashMap<String, String> map = selectionMaps.get(matchId);
         Cursor cursor = null;
         if (!TextUtils.isEmpty(tableName) && null != map) {
             builder.setTables(tableName);
@@ -85,9 +88,9 @@ public class DatabaseProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        Uri newUri = ensureUri(uri);
-        int matchId = matcher.match(newUri);
-        String tableName = matchIds.get(matchId);
+        final Uri newUri = ensureUri(uri);
+        final int matchId = matcher.match(newUri);
+        final String tableName = matchIds.get(matchId);
         Uri notifyUri = null;
         if (!TextUtils.isEmpty(tableName)) {
             SQLiteDatabase writableDatabase = getWritableDatabase();
@@ -102,9 +105,9 @@ public class DatabaseProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        Uri newUri = ensureUri(uri);
-        int matchId = matcher.match(newUri);
-        String tableName = matchIds.get(matchId);
+        final Uri newUri = ensureUri(uri);
+        final int matchId = matcher.match(newUri);
+        final String tableName = matchIds.get(matchId);
         int rows = -1;
         if (!TextUtils.isEmpty(tableName)) {
             SQLiteDatabase writableDatabase = getWritableDatabase();
@@ -119,9 +122,9 @@ public class DatabaseProvider extends ContentProvider {
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        Uri newUri = ensureUri(uri);
-        int matchId = matcher.match(newUri);
-        String tableName = matchIds.get(matchId);
+        final Uri newUri = ensureUri(uri);
+        final int matchId = matcher.match(newUri);
+        final String tableName = matchIds.get(matchId);
         int rows = -1;
         if (!TextUtils.isEmpty(tableName)) {
             SQLiteDatabase writableDatabase = getWritableDatabase();
@@ -136,9 +139,9 @@ public class DatabaseProvider extends ContentProvider {
 
     @Override
     public int bulkInsert(Uri uri, ContentValues[] values) {
-        Uri newUri = ensureUri(uri);
-        int matchId = matcher.match(newUri);
-        String tableName = matchIds.get(matchId);
+        final Uri newUri = ensureUri(uri);
+        final int matchId = matcher.match(newUri);
+        final String tableName = matchIds.get(matchId);
         long lastId = -1;
         if (!TextUtils.isEmpty(tableName)) {
             SQLiteDatabase writableDatabase = getWritableDatabase();
@@ -213,7 +216,7 @@ public class DatabaseProvider extends ContentProvider {
      * @param tableName
      * @return
      */
-    private boolean tableExist(String tableName) {
+    private final boolean tableExist(String tableName) {
         boolean result = false;
         if (!TextUtils.isEmpty(tableName)) {
             String sql = "select * from sqlite_master where name=" + "'" + tableName + "'";
@@ -238,10 +241,10 @@ public class DatabaseProvider extends ContentProvider {
      *
      * @param clazz
      */
-    private void createTable(Class<?> clazz) {
-        Field[] fields = clazz.getDeclaredFields();
-        List<Pair<String, Boolean>> primaryKeys = new ArrayList<>();
-        HashMap<String, String> fieldItems = new HashMap<>();
+    private final void createTable(Class<?> clazz) {
+        final Field[] fields = clazz.getDeclaredFields();
+        final List<Pair<String, Boolean>> primaryKeys = new ArrayList<>();
+        final HashMap<String, String> fieldItems = new HashMap<>();
         for (int i = 0; i < fields.length; i++) {
             Class<?> type = fields[i].getType();
             String fieldType;
@@ -309,11 +312,10 @@ public class DatabaseProvider extends ContentProvider {
     }
 
     private void addTable(Class<?> clazz) {
-        //创建表
-        Context context = getContext();
-        String tableName = DatabaseHelper.getTable(clazz);
-        String authority = DatabaseHelper.getAuthority(context);
-        int index = matchIds.size();
+        final Context context = getContext();
+        final String tableName = DatabaseHelper.getTable(clazz);
+        final String authority = DatabaseHelper.getAuthority(context);
+        final int index = matchIds.size();
         //添加匹配uri
         matcher.addURI(authority, tableName, index + 1);
         //添加匹配表名

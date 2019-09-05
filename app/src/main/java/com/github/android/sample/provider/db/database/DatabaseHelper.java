@@ -95,9 +95,9 @@ public class DatabaseHelper {
     public final int bulkInsert(final List items) {
         int code = -1;
         if (null != items && !items.isEmpty()) {
-            Object obj = items.get(0);
-            Uri uri = getObjectUri(obj.getClass());
-            ContentValues[] values = new ContentValues[items.size()];
+            final Object obj = items.get(0);
+            final Uri uri = getObjectUri(obj.getClass());
+            final ContentValues[] values = new ContentValues[items.size()];
             for (int i = 0; i < items.size(); i++) {
                 values[i] = DatabaseHelper.getContentValue(items.get(i));
             }
@@ -212,7 +212,7 @@ public class DatabaseHelper {
      */
     public final <E> E query(Class<E> clazz, String where, String[] whereArgs, String order) {
         E item = null;
-        Uri uri = getObjectUri(clazz);
+        final Uri uri = getObjectUri(clazz);
         if (null != appContext && null != uri) {
             ContentResolver resolver = appContext.getContentResolver();
             Cursor cursor = null;
@@ -439,9 +439,9 @@ public class DatabaseHelper {
      * @return
      */
     public static ContentValues getContentValue(Object item) {
-        Class<?> clazz = item.getClass();
-        ContentValues values = new ContentValues();
-        Field[] fields = clazz.getDeclaredFields();
+        final Class<?> clazz = item.getClass();
+        final ContentValues values = new ContentValues();
+        final Field[] fields = clazz.getDeclaredFields();
         for (int i = 0; i < fields.length; i++) {
             Field field = fields[i];
             field.setAccessible(true);
@@ -516,8 +516,8 @@ public class DatabaseHelper {
      * @param <E>
      */
     public static <E> E getItemByCursor(Class<E> clazz, Cursor cursor) throws InstantiationException, IllegalAccessException {
-        E item = clazz.newInstance();
-        Field[] fields = clazz.getDeclaredFields();
+        final E item = clazz.newInstance();
+        final Field[] fields = clazz.getDeclaredFields();
         for (int i = 0; i < fields.length; i++) {
             Field field = fields[i];
             field.setAccessible(true);
