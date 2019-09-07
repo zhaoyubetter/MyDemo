@@ -18,11 +18,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <provider
+            android:name="com.github.android.sample.provider.db.database.DatabaseProvider"
+            android:authorities="${applicationId}"
+            android:exported="true" />
+
+        <activity android:name=".provider.db.DBActivity1"></activity>
         <activity
             android:name=".activity_base.singleTask.SingleInstanceActivity"
-            android:launchMode="singleInstance"></activity>
-        <activity android:name=".activity_base.singleTask.OtherActivity"
-             />
+            android:launchMode="singleInstance" />
+        <activity android:name=".activity_base.singleTask.OtherActivity" />
         <activity
             android:name=".activity_base.singleTask.SingleTaskActivity"
             android:launchMode="singleTask"
@@ -124,10 +130,10 @@
             android:process=":remote" />
 
         <activity android:name=".ipc.subthread.SubThreadHandleActivity" />
-        <receiver android:name=".ipc.broadcast.ProcessBroadCast"
-            android:process=":better"/>
-        <!-- IPC End -->
 
+        <receiver
+            android:name=".ipc.broadcast.ProcessBroadCast"
+            android:process=":better" /> <!-- IPC End -->
         <receiver
             android:name=".ipc.broadcast.ProcessBroadCast"
             android:process=":better" /> <!-- IPC End -->

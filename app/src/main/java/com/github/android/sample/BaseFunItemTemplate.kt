@@ -7,6 +7,7 @@ import com.github.android.sample.activity_base.singleTask.SingleTaskMainTestActi
 import com.github.android.sample.anim.*
 import com.github.android.sample.canvas_paint.*
 import com.github.android.sample.md.DrawerLayoutActivity
+import com.github.android.sample.provider.db.DBActivity1
 import com.github.android.sample.svg.SVG1Activity
 
 /**
@@ -303,6 +304,20 @@ class BaseFunItemTemplate private constructor(ctx: Context) {
                     title = "singleTask 任务栈"
                     desc = "singleTask 任务栈"
                     clazz = SingleTaskMainTestActivity::class.java
+                }
+            }
+
+            // 内容提供者
+            item {
+                pid = 0
+                id = 6
+                title = "内容提供者"
+                desc = "内容提供者"
+                item {
+                    pid = 6
+                    title = "provider 数据库"
+                    desc = "provider 数据库"
+                    clazz = DBActivity1::class.java
                 }
             }
         }

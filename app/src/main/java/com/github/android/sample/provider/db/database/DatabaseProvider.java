@@ -52,7 +52,7 @@ public class DatabaseProvider extends ContentProvider {
      * @return
      */
     public SQLiteOpenHelper getSQLiteOpenHelper(Context context) {
-        return new MyDatabase(context, context.getPackageName());
+        return new MyDatabase(context, "mydb.db");
     }
 
     @Override
@@ -290,7 +290,7 @@ public class DatabaseProvider extends ContentProvider {
         int size = primaryKeys.size();
         if (1 == size) {
             Pair<String, Boolean> primaryPair = primaryKeys.get(0);
-            sql += (primaryPair.first + " " + fieldItems.get(primaryPair.first) + " PRIMARY KEY " + (primaryPair.second ? "AUTOINCREMENT" : "") + ",");
+            sql += (primaryPair.first + (primaryPair.second ? " INTEGER" : "") + " PRIMARY KEY " + (primaryPair.second ? "AUTOINCREMENT" : "") + ",");
         }
         int index = 0;
         for (Map.Entry<String, String> entry : fieldItems.entrySet()) {

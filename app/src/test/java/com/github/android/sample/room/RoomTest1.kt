@@ -36,6 +36,6 @@ class RoomTest1 {
     @Test
     fun getAll() {
         val list = mobilePhoneDao.getAll()
-        println(list.size)
+        println(list?.size)
     }
 }
