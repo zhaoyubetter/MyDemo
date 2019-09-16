@@ -25,6 +25,7 @@ class BookManagerService3 : Service() {
         override fun getBookList(): MutableList<Book> = dataList
         override fun addBook(book: Book?) {
             if (book != null) {
+                book.bookId = book.bookId + 55
                 dataList.add(book)
 
                 val size = listenerList.beginBroadcast()

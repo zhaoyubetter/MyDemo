@@ -69,7 +69,9 @@ class BookManager3Activity : ToolbarActivity() {
             // new thread to add a book, 那么回调也是在子线程。注意：这是是线程；那么回调此进程对应的子线程中。
             Thread {
                 Log.e("BookManager3Activity", "====>>thread add book, " + Thread.currentThread().name)
-                bookManager?.addBook(Book(5, "Atomic Kotlin"))
+                val book = Book(5, "Atomic Kotlin")
+                bookManager?.addBook(book)  // 然后我会让后端修改一下这个 book 对象
+                Log.e("BookManager3Activity", "${book.bookId}")  // id 被服务端修改了
             }.start()
         }
 

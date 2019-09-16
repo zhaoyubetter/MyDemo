@@ -45,6 +45,10 @@ class BookManagerActivity : ToolbarActivity() {
 
         // 获取所有书
         btn_getAll.setOnClickListener {
+            // 服务端不返回，将挂起，所以服务端的主进程不能执行耗时方法
+            /**
+             * @see com.github.android.sample.ipc.aidl.BookManagerService.binder#getBookList
+             */
             val allBook = this@BookManagerActivity.getAllBook()
             e(allBook?.javaClass?.canonicalName ?: "")
             allBook?.let {
