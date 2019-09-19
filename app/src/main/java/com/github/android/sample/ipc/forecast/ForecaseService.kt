@@ -3,8 +3,10 @@ package com.github.android.sample.ipc.forecast
 import android.app.Service
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Bundle
 import android.os.IBinder
 import com.better.base.e
+import com.github.android.sample.Book
 import com.github.android.sample.ForecaseEntity
 import com.github.android.sample.IForecaseAidlInterface
 import com.github.android.sample.IForecaseAidlListener
@@ -22,6 +24,18 @@ class ForecaseService : Service() {
     )
 
     private val binder = object : IForecaseAidlInterface.Stub() {
+        override fun transactObj(book: Book) {
+            // 直接对象操作
+            book.bookName = book.bookName + "better"
+            book.bookId = book.bookId + 550   // 这里修改，客户端不会生效的；
+        }
+
+        override fun transactSync(bundle: Bundle) {
+            bundle.classLoader = ForecaseService::class.java.classLoader
+            val book = bundle.getParcelable<Book>("book")
+            book.bookId = 555
+            book.bookName = book.bookName + "better"
+        }
 //        // 运行在 binder 线程中，模拟耗时操作
 //        override fun getForecase(cityCode: String?): ForecaseEntity? {
 //            // Thread.sleep(3000)

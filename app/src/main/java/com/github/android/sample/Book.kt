@@ -9,7 +9,7 @@ import android.widget.PopupWindow
  * 放入package包中
  * 来自任玉刚，开发艺术探索
  */
-data class Book(var bookId: Int, val bookName: String) : Parcelable {
+data class Book(var bookId: Int, var bookName: String) : Parcelable {
 
     constructor(parcel: Parcel) : this(
             parcel.readInt(),

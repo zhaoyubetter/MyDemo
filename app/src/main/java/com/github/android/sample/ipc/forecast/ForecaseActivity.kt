@@ -8,10 +8,7 @@ import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
 import com.better.base.*
-import com.github.android.sample.ForecaseEntity
-import com.github.android.sample.IForecaseAidlInterface
-import com.github.android.sample.IForecaseAidlListener
-import com.github.android.sample.R
+import com.github.android.sample.*
 import kotlinx.android.synthetic.main.activity_forecase.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
@@ -104,6 +101,28 @@ class ForecaseActivity : ToolbarActivity() {
                     break
                 }
             }
+        }
+
+        // 传递 obj
+        btn_obj.setOnClickListener {
+            val book = Book(3, "小程序开发")
+            foreInterface?.transactObj(book)   // 服务端修改没有用
+            e(book.toString())
+        }
+
+        // 传递 bundle 包测试
+        btn_bundle.setOnClickListener {
+            val book = Book(3, "小程序开发")
+            val bundle = Bundle().apply {
+                putParcelable("book", book)
+            }
+            foreInterface?.transactSync(bundle)
+            e(book.toString())
+
+            // 以下是被服务端修改的；
+            bundle.classLoader = ForecaseActivity::class.java.classLoader
+            val book2 = bundle.getParcelable<Book>("book")
+            e("2" + book2.toString())
         }
     }
 
