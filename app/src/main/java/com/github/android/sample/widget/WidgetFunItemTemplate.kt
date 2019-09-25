@@ -12,6 +12,7 @@ import com.github.android.sample.ipc.aidl.BookManagerActivity
 import com.github.android.sample.ipc.forecast.ForecaseActivity
 import com.github.android.sample.ipc.messenger.Messenger2Activity
 import com.github.android.sample.ipc.messenger.MessengerActivity
+import com.github.android.sample.ipc.messenger.MessengerPassActivity
 import com.github.android.sample.ipc.resultreceiver.ResultReceiverTest1Activity
 import com.github.android.sample.ipc.sample.AlbumIPCActivity
 import com.github.android.sample.ipc.socket.TcpSocketClientActivity
@@ -135,6 +136,13 @@ class WidgetFunItemTemplate private constructor(ctx: Context) {
                     title = "Messenger消息"
                     desc = "基于消息的进程间通信 - 相互通信"
                     clazz = Messenger2Activity::class.java
+                }
+
+                item {
+                    pid = 3
+                    title = "传递Messenger"
+                    desc = "Messenger传递给服务端"
+                    clazz = MessengerPassActivity::class.java
                 }
 
                 item {

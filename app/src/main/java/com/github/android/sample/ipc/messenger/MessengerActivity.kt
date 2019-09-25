@@ -60,6 +60,8 @@ class MessengerActivity : ToolbarActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        unbindService(connection)
+        if(messenger != null) {
+            unbindService(connection)
+        }
     }
 }

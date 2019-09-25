@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.github.android.sample">
     <!-- 自定义权限 start -->
     <!-- 天气预报查询权限 -->
@@ -18,13 +19,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ipc.messenger.MessengerPassActivity"></activity>
 
         <provider
-            android:name="com.github.android.sample.provider.db.database.DatabaseProvider"
+            android:name=".provider.db.database.DatabaseProvider"
             android:authorities="${applicationId}"
             android:exported="true" />
 
-        <activity android:name=".provider.db.DBActivity1"></activity>
+        <activity android:name=".provider.db.DBActivity1" />
         <activity
             android:name=".activity_base.singleTask.SingleInstanceActivity"
             android:launchMode="singleInstance" />
@@ -110,6 +112,11 @@
         <service
             android:name=".ipc.resultreceiver.BankService"
             android:process=":remote2" />
+        <service android:name=".ipc.messenger.MessengerPassService">
+            <intent-filter>
+                <action android:name="com.github.android.sample.ipc.messenger.MessengerPassService" />
+            </intent-filter>
+        </service>
 
         <activity android:name=".ipc.messenger.MessengerActivity" />
         <activity android:name=".ipc.messenger.Messenger2Activity" />
