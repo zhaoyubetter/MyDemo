@@ -6,17 +6,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @author :Created by cz
- * @date 2019-06-21 16:24
- * 设定表不同字段名,防止字段修改,字段值不同
- */
+ * @author zhaoyu1  2019-09-26
+ **/
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface TableField {
+public @interface PrimaryKey {
     /**
-     * 字段名
+     * 是否自增
      *
      * @return
      */
-    String value() default "";
+    boolean autoGenerate() default false;
 }

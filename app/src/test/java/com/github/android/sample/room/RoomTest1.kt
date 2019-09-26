@@ -2,7 +2,7 @@ package com.github.android.sample.room
 
 import android.arch.persistence.room.Room
 import android.content.Context
-import android.support.test.InstrumentationRegistry
+//import android.support.test.InstrumentationRegistry
 import com.github.android.sample.widget.room.AppDatabase
 import com.github.android.sample.widget.room.MobilePhone
 import com.github.android.sample.widget.room.MobilePhoneDao
@@ -21,7 +21,7 @@ class RoomTest1 {
 
     @Before
     fun before() {
-        ctx = InstrumentationRegistry.getTargetContext()
+//        ctx = InstrumentationRegistry.getTargetContext()
         db = Room.databaseBuilder(ctx, AppDatabase::class.java, "roomTest.db").build()
         mobilePhoneDao = db.mobilePhoneDao()
         println(db.isOpen)

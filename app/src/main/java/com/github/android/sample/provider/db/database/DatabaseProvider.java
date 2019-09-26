@@ -7,10 +7,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 
 import com.github.android.sample.provider.db.annotations.FieldFilter;
+import com.github.android.sample.provider.db.annotations.PrimaryKey;
 import com.github.android.sample.provider.db.annotations.Table;
 import com.github.android.sample.provider.db.annotations.TableField;
 
@@ -94,7 +96,9 @@ public class DatabaseProvider extends ContentProvider {
         Uri notifyUri = null;
         if (!TextUtils.isEmpty(tableName)) {
             SQLiteDatabase writableDatabase = getWritableDatabase();
-            long rowId = writableDatabase.insert(tableName, null, values);
+            // 使用 insert or replace into
+            long rowId = writableDatabase.insertWithOnConflict(tableName, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+//            long rowId = writableDatabase.insert(tableName, null, values);
             if (rowId > 0) {
                 notifyUri = ContentUris.withAppendedId(newUri, rowId);
                 getContext().getContentResolver().notifyChange(notifyUri, null);
@@ -243,8 +247,13 @@ public class DatabaseProvider extends ContentProvider {
      */
     private final void createTable(Class<?> clazz) {
         final Field[] fields = clazz.getDeclaredFields();
-        final List<Pair<String, Boolean>> primaryKeys = new ArrayList<>();
+        // 属性上配置的了 @PrimaryKey
+        final List<Pair<String, Boolean>> propPrimaryKeys = new ArrayList<>();
         final HashMap<String, String> fieldItems = new HashMap<>();
+        // 联合主键
+        String[] unionPrimaryKeys = null;
+        boolean hasPrimaryKey = false;
+
         for (int i = 0; i < fields.length; i++) {
             Class<?> type = fields[i].getType();
             String fieldType;
@@ -259,55 +268,62 @@ public class DatabaseProvider extends ContentProvider {
             } else {
                 fieldType = " TEXT";
             }
+
             //过滤字段
             FieldFilter fieldFilter = fields[i].getAnnotation(FieldFilter.class);
             if (Modifier.STATIC != (fields[i].getModifiers() & Modifier.STATIC) && (null == fieldFilter || !fieldFilter.value())) {
-                String fieldName;
+                String fieldName = fields[i].getName();
                 TableField tableField = fields[i].getAnnotation(TableField.class);
-                if (null != tableField && !TextUtils.isEmpty(tableField.value())) {
-                    fieldName = tableField.value();
-                    if (tableField.primaryKey()) {
-                        //主键
-                        primaryKeys.add(new Pair<>(fieldName, tableField.autoIncrement()));
-                    } else {
-                        fieldItems.put(fieldName, fieldType);
-                    }
+                PrimaryKey primaryKey = fields[i].getAnnotation(PrimaryKey.class);  // 是否配置了注解
+                if (null != tableField) {
+                    fieldName = TextUtils.isEmpty(tableField.value()) ? fields[i].getName() : tableField.value();
+                }
+                if (null != primaryKey) {
+                    propPrimaryKeys.add(new Pair(fieldName, primaryKey.autoGenerate()));
                 } else {
-                    fieldItems.put(fields[i].getName(), fieldType);
+                    fieldItems.put(fieldName, fieldType);
                 }
             }
         }
         String tableName = DatabaseHelper.getTable(clazz);
         String sql = "CREATE TABLE " + tableName + "(";
-        if (primaryKeys.isEmpty()) {
-            //当一个字段主键都未设置时,检测Table注释中是否设置默认主键
-            Table table = clazz.getAnnotation(Table.class);
-            if (null != table && !TextUtils.isEmpty(table.primaryKey())) {
-                sql += (table.primaryKey() + " INTEGER PRIMARY KEY " + (table.autoIncrement() ? "AUTOINCREMENT" : "") + ",");
+        // 字段主键只能有一个
+        if (propPrimaryKeys.size() > 1) {
+            throw new RuntimeException("table " + tableName + " has more than one primary key.");
+        }
+        if (propPrimaryKeys.size() == 1) {
+            hasPrimaryKey = true;
+            final Pair<String, Boolean> pair = propPrimaryKeys.get(0);
+            sql += (pair.first + " INTEGER PRIMARY KEY " + (pair.second ? "AUTOINCREMENT" : "") + ",");
+        }
+
+        // 获取联合主键设置
+        Table table = clazz.getAnnotation(Table.class);
+        if (null != table && table.primaryKeys().length > 0) {
+            unionPrimaryKeys = table.primaryKeys();
+            if (hasPrimaryKey) {
+                throw new RuntimeException("table " + tableName + " has more than one primary key.");
             }
         }
-        //一个主键时,设置单个主键
-        int size = primaryKeys.size();
-        if (1 == size) {
-            Pair<String, Boolean> primaryPair = primaryKeys.get(0);
-            sql += (primaryPair.first + (primaryPair.second ? " INTEGER" : "") + " PRIMARY KEY " + (primaryPair.second ? "AUTOINCREMENT" : "") + ",");
-        }
+
+        // 组织列信息
         int index = 0;
         for (Map.Entry<String, String> entry : fieldItems.entrySet()) {
             sql += (entry.getKey() + " " + entry.getValue() + " " + (index++ != fieldItems.size() - 1 ? "," : " "));
         }
-        //多个主键时,设置联合主键
-        if (1 < size) {
+        // 可能有多个主键时,设置联合主键
+        if (unionPrimaryKeys != null && unionPrimaryKeys.length > 0) {
             sql += (", PRIMARY KEY(");
-            for (int i = 0; i < size; i++) {
-                Pair<String, Boolean> pair = primaryKeys.get(i);
-                sql += (pair.first + (i != size - 1 ? "," : "))"));
+            for (int i = 0; i < unionPrimaryKeys.length; i++) {
+                String key = unionPrimaryKeys[i];
+                sql += (key + (i != unionPrimaryKeys.length - 1 ? "," : "))"));
             }
         } else {
             sql += ")";
         }
         //创建建此表
         SQLiteDatabase writableDatabase = getWritableDatabase();
+        Log.e("better", sql);
         writableDatabase.execSQL(sql);
     }
 

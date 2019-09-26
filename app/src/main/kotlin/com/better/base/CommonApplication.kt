@@ -4,12 +4,7 @@ import android.app.Application
 import com.better.base.lifecycle.CommonActivityLifeCycleCallback
 import android.app.ActivityManager
 import android.content.Context
-import android.content.Context.ACTIVITY_SERVICE
 import android.os.Process
-import android.os.Process.myPid
-
-
-
 
 
 /**
@@ -17,8 +12,17 @@ import android.os.Process.myPid
  */
 class CommonApplication : Application() {
 
+    companion object {
+        var ctx: Application? = null
+        fun getContext(): Context {
+            return ctx!!
+        }
+    }
+
+
     override fun onCreate() {
         super.onCreate()
+        ctx = this
         registerActivityLifecycleCallbacks(CommonActivityLifeCycleCallback())
 
         val pid = Process.myPid()
@@ -29,6 +33,5 @@ class CommonApplication : Application() {
                 break
             }
         }
-
     }
 }

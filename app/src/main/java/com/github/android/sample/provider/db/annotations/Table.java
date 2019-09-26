@@ -15,22 +15,21 @@ import java.lang.annotation.Target;
 public @interface Table {
     /**
      * 表名
+     *
      * @return
      */
     String value() default "";
-    /**
-     * 标记主键
-     * @return
-     */
-    String primaryKey() default "";
 
     /**
-     * 主键自增长
+     * 主键集合
+     *
      * @return
      */
-    boolean autoIncrement() default false;
+    String[] primaryKeys() default {};
+
     /**
      * 是否暴露
+     *
      * @return
      */
     boolean exported() default false;

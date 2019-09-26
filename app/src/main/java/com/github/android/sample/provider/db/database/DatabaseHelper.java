@@ -295,7 +295,7 @@ public class DatabaseHelper {
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             } finally {
                 if (null != cursor) {
                     cursor.close();
@@ -401,9 +401,6 @@ public class DatabaseHelper {
         Field[] fields = clazz.getDeclaredFields();
         ArrayList<String> selectionLists = new ArrayList<>();
         Table table = clazz.getAnnotation(Table.class);
-        if (null != table && !TextUtils.isEmpty(table.primaryKey())) {
-            selectionLists.add(table.primaryKey());
-        }
         for (int i = 0; i < fields.length; i++) {
             fields[i].setAccessible(true);
             String fieldName;
