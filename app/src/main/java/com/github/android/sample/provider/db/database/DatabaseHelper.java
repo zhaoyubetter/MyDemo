@@ -58,10 +58,11 @@ public class DatabaseHelper {
 
     /**
      * 获得操作对象
-     *
+     * context 会来自不同进程
      * @return
      */
-    public static DatabaseHelper getInstance() {
+    public static DatabaseHelper getInstance(Context context) {
+        appContext = context.getApplicationContext();
         return helper;
     }
 
@@ -530,7 +531,7 @@ public class DatabaseHelper {
     }
 
 
-    // 原生查询操作
+    // 原生查询操作，注意这里无法跨进程操作；
     public void execSQL(String sql) {
         if(DatabaseProvider.myDatabase != null) {
             SQLiteDatabase writableDatabase = DatabaseProvider.myDatabase.getWritableDatabase();

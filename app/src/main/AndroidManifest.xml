@@ -23,8 +23,8 @@
         <activity android:name=".ipc.messenger.MessengerPassActivity"></activity>
         <provider
             android:name=".provider.db.database.DatabaseProvider"
-            android:authorities="${applicationId}"
-            android:exported="true" />
+            android:exported="true"
+            android:authorities="${applicationId}" />
 
         <activity android:name=".provider.db.DBActivity1" />
         <activity
@@ -112,7 +112,8 @@
         <service
             android:name=".ipc.resultreceiver.BankService"
             android:process=":remote2" />
-        <service android:name=".ipc.messenger.MessengerPassService">
+        <service android:name=".ipc.messenger.MessengerPassService"
+            android:process=":remote">
             <intent-filter>
                 <action android:name="com.github.android.sample.ipc.messenger.MessengerPassService" />
             </intent-filter>

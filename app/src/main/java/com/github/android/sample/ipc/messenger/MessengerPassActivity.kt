@@ -10,6 +10,8 @@ import android.os.Messenger
 import android.util.Log
 import com.better.base.e
 import com.github.android.sample.R
+import com.github.android.sample.provider.db.AuthEntity
+import com.github.android.sample.provider.db.database.DatabaseHelper
 import kotlinx.android.synthetic.main.activity_messenger_pass.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import java.lang.ref.WeakReference
@@ -51,6 +53,7 @@ class MessengerPassActivity : AppCompatActivity() {
                     if (msg.what == 0) {
                         val uri = msg.data.getParcelable<Uri>("completed-uri")
                         Log.e("MessengerPass", "$uri")
+                        e("" + DatabaseHelper.getInstance(applicationContext).queryList(AuthEntity::class.java).size)
                     }
                 }
             }

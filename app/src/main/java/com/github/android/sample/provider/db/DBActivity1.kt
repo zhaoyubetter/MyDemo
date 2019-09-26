@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.activity_db1.*
 
 class DBActivity1 : ToolbarActivity() {
 
-    val dbHelper = DatabaseHelper.getInstance()
+    val dbHelper = DatabaseHelper.getInstance(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

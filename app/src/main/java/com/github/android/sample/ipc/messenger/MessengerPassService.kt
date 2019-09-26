@@ -7,8 +7,12 @@ import android.os.Bundle
 import android.os.Message
 import android.os.Messenger
 import android.os.SystemClock
+import android.provider.ContactsContract
 import com.better.base.e
 import com.better.base.isNotNull
+import com.github.android.sample.provider.db.AuthEntity
+import com.github.android.sample.provider.db.database.DatabaseHelper
+import com.github.android.sample.provider.db.database.MyDatabase
 
 /**
  * IntentService
@@ -34,9 +38,32 @@ class MessengerPassService(val name: String = "") : IntentService(name) {
                         putParcelable("completed-uri", uri)
                     }
                 }
-
+                testProvider()
                 clientMessenger?.send(msg)
             }
         }
+    }
+
+    private fun testProvider() {
+        var entity = AuthEntity().apply {
+            id = 1
+            appId = "appId1"
+            scope = "scope1"
+            permission = "permission1"
+            title = "title1"
+            description = "description1"
+            state = 0
+        }
+        DatabaseHelper.getInstance(applicationContext).insert(entity)
+        e("" + DatabaseHelper.getInstance(applicationContext).queryList(AuthEntity::class.java).size)
+
+        entity = AuthEntity().apply {
+            appId = "appId2"
+            scope = "scope2"
+            permission = "脑壳痛"
+
+        }
+        DatabaseHelper.getInstance(applicationContext).insert(entity)
+        e("" + DatabaseHelper.getInstance(applicationContext).queryList(AuthEntity::class.java).size)
     }
 }

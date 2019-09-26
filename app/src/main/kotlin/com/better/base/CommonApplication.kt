@@ -36,7 +36,7 @@ class CommonApplication : Application() {
         }
 
 
-        DatabaseHelper.getInstance().setOnDbUpgradeListener { db, oldVersion, newVersion ->
+        DatabaseHelper.getInstance(this).setOnDbUpgradeListener { db, oldVersion, newVersion ->
             d("old: $oldVersion, new:$newVersion")
         }
     }

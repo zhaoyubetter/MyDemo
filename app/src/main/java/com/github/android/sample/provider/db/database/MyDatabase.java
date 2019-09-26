@@ -1,5 +1,6 @@
 package com.github.android.sample.provider.db.database;
 
+import android.app.Application;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -13,12 +14,14 @@ import android.util.Log;
  */
 public class MyDatabase extends SQLiteOpenHelper {
     /**
-     * 默认数据库版本
+     * 当前数据库版本
      */
-    private static final int DEFAULT_VERSION = 2;
+    private static final int CURRENT_VERSION = 2;
+    private Context context;
 
     public MyDatabase(Context context, String name) {
-        super(context, name, null, DEFAULT_VERSION);
+        super(context, name, null, CURRENT_VERSION);
+        context = context.getApplicationContext();
     }
 
     /**
@@ -35,7 +38,7 @@ public class MyDatabase extends SQLiteOpenHelper {
     /**
      * 执行数据库操作时，此方法才走
      * 由于我们的数据库是在使用时才创建，如果用户卸载重装时，数据表都是最新的结构了。
-     * 这点要额外注意
+     * 这点要额外注意。
      *
      * @param db
      * @param oldVersion
@@ -51,7 +54,7 @@ public class MyDatabase extends SQLiteOpenHelper {
                 break;
         }
         try {
-            DatabaseHelper instance = DatabaseHelper.getInstance();
+            DatabaseHelper instance = DatabaseHelper.getInstance(context);
             //升级数据库版本
             instance.onUpgrade(db, oldVersion, newVersion);
         } finally {
