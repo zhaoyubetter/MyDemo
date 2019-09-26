@@ -16,10 +16,6 @@ class DBActivity1 : ToolbarActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_db1)
 
-        dbHelper.setOnDbUpgradeListener { db, oldVersion, newVersion ->
-            d("old: $oldVersion, new:$newVersion")
-        }
-
         btn_add.setOnClickListener {
             for (i in (0..100)) {
                 dbHelper.insert(User(name = "better$i", age = 20 + i))
@@ -40,6 +36,13 @@ class DBActivity1 : ToolbarActivity() {
         btn_test.setOnClickListener {
             //            testNull()
             testUnionPrimaryKey()
+        }
+
+        // 原生查询
+        btn_rawQuery.setOnClickListener {
+            val cursor = dbHelper.rawQuery("select * from tb_user", null)
+            e("user count: " + cursor.count)
+            cursor.close()
         }
     }
 

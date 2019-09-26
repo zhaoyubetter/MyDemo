@@ -5,6 +5,7 @@ import com.better.base.lifecycle.CommonActivityLifeCycleCallback
 import android.app.ActivityManager
 import android.content.Context
 import android.os.Process
+import com.github.android.sample.provider.db.database.DatabaseHelper
 
 
 /**
@@ -32,6 +33,11 @@ class CommonApplication : Application() {
                 e2("app", appProcessInfo.processName)
                 break
             }
+        }
+
+
+        DatabaseHelper.getInstance().setOnDbUpgradeListener { db, oldVersion, newVersion ->
+            d("old: $oldVersion, new:$newVersion")
         }
     }
 }

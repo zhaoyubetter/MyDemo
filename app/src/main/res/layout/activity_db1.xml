@@ -32,4 +32,10 @@
         android:layout_height="wrap_content"
         android:text="测试" />
 
+    <Button
+        android:id="@+id/btn_rawQuery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="原始查询" />
+
 </LinearLayout>

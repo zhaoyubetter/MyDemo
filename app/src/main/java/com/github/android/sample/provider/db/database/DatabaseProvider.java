@@ -169,22 +169,6 @@ public class DatabaseProvider extends ContentProvider {
         return (int) lastId;
     }
 
-    public void execSQL(String sql) {
-        SQLiteDatabase writableDatabase = getWritableDatabase();
-        writableDatabase.execSQL(sql);
-    }
-
-    public void execSQL(String sql, String[] bindArgs) {
-        SQLiteDatabase writableDatabase = getWritableDatabase();
-        writableDatabase.execSQL(sql, bindArgs);
-    }
-
-    public Cursor rawQuery(String sql, String[] selectionArgs) {
-        SQLiteDatabase readableDatabase = getReadableDatabase();
-        return readableDatabase.rawQuery(sql, selectionArgs);
-    }
-
-
     private Uri ensureUri(Uri uri) {
         String path = uri.getPath();
         String authority = uri.getAuthority();

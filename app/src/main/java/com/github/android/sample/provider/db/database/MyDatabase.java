@@ -3,6 +3,7 @@ package com.github.android.sample.provider.db.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 
 /**
@@ -14,26 +15,45 @@ public class MyDatabase extends SQLiteOpenHelper {
     /**
      * 默认数据库版本
      */
-    private static final int DEFAULT_VERSION = 1;
+    private static final int DEFAULT_VERSION = 2;
 
-    public MyDatabase(Context context,String name) {
+    public MyDatabase(Context context, String name) {
         super(context, name, null, DEFAULT_VERSION);
     }
 
+    /**
+     * 数据库第一次创建的时候调用
+     * getWritableDatabase()的时候才会创建数据库
+     *
+     * @param db
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        //升级版本
-        DatabaseHelper databaseHelper = DatabaseHelper.getInstance();
-        int databaseVersion = databaseHelper.getDatabaseVersion();
-        onUpgrade(db, db.getVersion(), databaseVersion);
+        Log.e("better", "onCreate: " + db.getVersion());
     }
 
+    /**
+     * 执行数据库操作时，此方法才走
+     * 由于我们的数据库是在使用时才创建，如果用户卸载重装时，数据表都是最新的结构了。
+     * 这点要额外注意
+     *
+     * @param db
+     * @param oldVersion
+     * @param newVersion
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        Log.e("better", "onUpgrade, old:" + oldVersion + ", new: " + newVersion);
+        switch (newVersion) {
+            case 2:
+                break;
+            default:
+                break;
+        }
         try {
             DatabaseHelper instance = DatabaseHelper.getInstance();
             //升级数据库版本
-            instance.onUpgrade(db,oldVersion,newVersion);
+            instance.onUpgrade(db, oldVersion, newVersion);
         } finally {
             //设置数据库新的版本
             db.setVersion(newVersion);

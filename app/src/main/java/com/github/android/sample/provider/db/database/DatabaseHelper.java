@@ -43,10 +43,6 @@ public class DatabaseHelper {
      * 数据库版本变化监听
      */
     private OnDatabaseUpgradeListener upgradeListener;
-    /**
-     * 数据库版本,最低版本为1
-     */
-    private int version = 1;
 
     /**
      * 初部初始化操作
@@ -317,24 +313,6 @@ public class DatabaseHelper {
     }
 
     /**
-     * 设置数据库版本
-     *
-     * @param version
-     */
-    public void setDatabaseVersion(int version) {
-        this.version = version;
-    }
-
-    /**
-     * 获得数据库版本
-     *
-     * @return
-     */
-    int getDatabaseVersion() {
-        return version;
-    }
-
-    /**
      * 数据库升级
      *
      * @param db
@@ -551,4 +529,27 @@ public class DatabaseHelper {
         return item;
     }
 
+
+    // 原生查询操作
+    public void execSQL(String sql) {
+        if(DatabaseProvider.myDatabase != null) {
+            SQLiteDatabase writableDatabase = DatabaseProvider.myDatabase.getWritableDatabase();
+            writableDatabase.execSQL(sql);
+        }
+    }
+
+    public void execSQL(String sql, String[] bindArgs) {
+        if(DatabaseProvider.myDatabase != null) {
+            SQLiteDatabase writableDatabase = DatabaseProvider.myDatabase.getWritableDatabase();
+            writableDatabase.execSQL(sql, bindArgs);
+        }
+    }
+
+    public Cursor rawQuery(String sql, String[] selectionArgs) {
+        if (DatabaseProvider.myDatabase != null) {
+            SQLiteDatabase readableDatabase = DatabaseProvider.myDatabase.getReadableDatabase();
+            return readableDatabase.rawQuery(sql, selectionArgs);
+        }
+        return null;
+    }
 }
