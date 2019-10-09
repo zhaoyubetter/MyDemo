@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
@@ -22,9 +23,13 @@ import java.util.*;
 
 /**
  * Created by momo on 2015/1/1.
+ * Updatey by better on 2019/09/27
  * 统计信息内容提供者
  */
-public class DatabaseProvider extends ContentProvider {
+public abstract class DatabaseProvider extends ContentProvider {
+
+    static final String RESET_DB = "resetDB";
+
     /**
      * 同步锁
      */
@@ -36,7 +41,7 @@ public class DatabaseProvider extends ContentProvider {
     private static final SparseArray<String> matchIds;
     // 下标（即表）对应数据库表的列
     private static final SparseArray<LinkedHashMap<String, String>> selectionMaps;
-    public static SQLiteOpenHelper myDatabase;// 数据库操作对象
+    private SQLiteOpenHelper myDatabase;// 数据库操作对象
 
     static {
         matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -48,13 +53,30 @@ public class DatabaseProvider extends ContentProvider {
     }
 
     /**
-     * 获得database helper对象,可用于子类复用,重新设定不同的DatabaseHelper对象
+     * 获得 onCreate 时，初始化的 database helper 对象
      *
      * @param context
+     * @param dbName  dbName
      * @return
      */
-    public SQLiteOpenHelper getSQLiteOpenHelper(Context context) {
-        return new MyDatabase(context, "mydb.db");
+    public abstract SQLiteOpenHelper getSQLiteHelper(Context context, String dbName);
+
+    /**
+     * 获取 contentProvider#onCreate时的dbName
+     *
+     * @return
+     */
+    public abstract String getInitDbName();
+
+    /**
+     * change database helper, for example : change db
+     */
+    private void resetDB(Context context, String dbName) {
+        synchronized (LOCK) {
+            matchIds.clear();   // 切换表后，清空静态变量
+            selectionMaps.clear();
+            this.myDatabase = getSQLiteHelper(context, dbName);
+        }
     }
 
     @Override
@@ -63,7 +85,7 @@ public class DatabaseProvider extends ContentProvider {
         //初始化 DatabaseHelper对象
         DatabaseHelper.init(context);
         //初始化数据库对象
-        myDatabase = getSQLiteOpenHelper(context);
+        myDatabase = getSQLiteHelper(context, getInitDbName());
         return true;
     }
 
@@ -340,7 +362,7 @@ public class DatabaseProvider extends ContentProvider {
     SQLiteDatabase getReadableDatabase() {
         if (null == myDatabase) {
             Context context = getContext();
-            myDatabase = getSQLiteOpenHelper(context);
+            myDatabase = getSQLiteHelper(context,getInitDbName());
         }
         return myDatabase.getReadableDatabase();
     }
@@ -351,8 +373,52 @@ public class DatabaseProvider extends ContentProvider {
     SQLiteDatabase getWritableDatabase() {
         if (null == myDatabase) {
             Context context = getContext();
-            myDatabase = getSQLiteOpenHelper(context);
+            myDatabase = getSQLiteHelper(context, getInitDbName());
         }
         return myDatabase.getWritableDatabase();
+    }
+
+    /**
+     * call useful
+     *
+     * @param method
+     * @param arg
+     * @param extras
+     * @return
+     */
+    @Override
+    public Bundle call(String method, String arg, Bundle extras) {
+        Bundle bundle = new Bundle();
+        bundle.putString("method", method);
+
+        // 重新创建数据库，用途，app 使用过程中，需要切换数据库
+        if (RESET_DB.equals(method) && !TextUtils.isEmpty(arg)) {
+            resetDB(getContext(), arg);    // arg 为数据库名字
+            bundle.putBoolean("result", true);
+        }
+        return bundle;
+    }
+
+    // 原生查询操作，注意这里暂时无法跨进程操作；
+    public void execSQL(String sql) {
+        if (myDatabase != null) {
+            SQLiteDatabase writableDatabase = myDatabase.getWritableDatabase();
+            writableDatabase.execSQL(sql);
+        }
+    }
+
+    public void execSQL(String sql, String[] bindArgs) {
+        if (myDatabase != null) {
+            SQLiteDatabase writableDatabase = myDatabase.getWritableDatabase();
+            writableDatabase.execSQL(sql, bindArgs);
+        }
+    }
+
+    public Cursor rawQuery(String sql, String[] selectionArgs) {
+        if (myDatabase != null) {
+            SQLiteDatabase readableDatabase = myDatabase.getReadableDatabase();
+            return readableDatabase.rawQuery(sql, selectionArgs);
+        }
+        return null;
     }
 }

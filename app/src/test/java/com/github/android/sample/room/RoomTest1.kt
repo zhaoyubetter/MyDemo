@@ -25,6 +25,10 @@ class RoomTest1 {
         db = Room.databaseBuilder(ctx, AppDatabase::class.java, "roomTest.db").build()
         mobilePhoneDao = db.mobilePhoneDao()
         println(db.isOpen)
+
+
+        Room.databaseBuilder(ctx, AppDatabase::class.java, "11.bb")
+                .fallbackToDestructiveMigration().build()
     }
 
     @Test

@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author :Created by cz
+ * @author :Created by cz, better
  * @date 2019-06-21 16:40
  * 数据库操作对象
  */
@@ -59,6 +59,7 @@ public class DatabaseHelper {
     /**
      * 获得操作对象
      * context 会来自不同进程
+     *
      * @return
      */
     public static DatabaseHelper getInstance(Context context) {
@@ -379,7 +380,6 @@ public class DatabaseHelper {
     public static String[] getSelection(Class<?> clazz) {
         Field[] fields = clazz.getDeclaredFields();
         ArrayList<String> selectionLists = new ArrayList<>();
-        Table table = clazz.getAnnotation(Table.class);
         for (int i = 0; i < fields.length; i++) {
             fields[i].setAccessible(true);
             String fieldName;
@@ -530,27 +530,15 @@ public class DatabaseHelper {
         return item;
     }
 
+    // ==== content provider call method 的使用
 
-    // 原生查询操作，注意这里无法跨进程操作；
-    public void execSQL(String sql) {
-        if(DatabaseProvider.myDatabase != null) {
-            SQLiteDatabase writableDatabase = DatabaseProvider.myDatabase.getWritableDatabase();
-            writableDatabase.execSQL(sql);
-        }
-    }
-
-    public void execSQL(String sql, String[] bindArgs) {
-        if(DatabaseProvider.myDatabase != null) {
-            SQLiteDatabase writableDatabase = DatabaseProvider.myDatabase.getWritableDatabase();
-            writableDatabase.execSQL(sql, bindArgs);
-        }
-    }
-
-    public Cursor rawQuery(String sql, String[] selectionArgs) {
-        if (DatabaseProvider.myDatabase != null) {
-            SQLiteDatabase readableDatabase = DatabaseProvider.myDatabase.getReadableDatabase();
-            return readableDatabase.rawQuery(sql, selectionArgs);
-        }
-        return null;
+    /**
+     * 重置数据库
+     *
+     * @param dbName dbName
+     */
+    public final void resetDatabase(String dbName) {
+        final Uri uri = Uri.parse("content://" + appContext.getPackageName());
+        appContext.getContentResolver().call(uri, DatabaseProvider.RESET_DB, dbName, null);
     }
 }

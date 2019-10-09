@@ -1,6 +1,7 @@
 package com.github.android.sample.provider.db
 
 import android.os.Bundle
+import com.better.base.CommonApplication
 import com.better.base.ToolbarActivity
 import com.better.base.d
 import com.better.base.e
@@ -10,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_db1.*
 
 class DBActivity1 : ToolbarActivity() {
 
-    val dbHelper = DatabaseHelper.getInstance(this)
+    val dbHelper = DatabaseHelper.getInstance(CommonApplication.getContext())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,11 +39,25 @@ class DBActivity1 : ToolbarActivity() {
             testUnionPrimaryKey()
         }
 
-        // 原生查询
-        btn_rawQuery.setOnClickListener {
-            val cursor = dbHelper.rawQuery("select * from tb_user", null)
-            e("user count: " + cursor.count)
-            cursor.close()
+        // call方法
+        btn_call.setOnClickListener {
+            val bundle = dbHelper.resetDatabase("better.db")
+        }
+
+        // like 操作
+        btn_like.setOnClickListener {
+            var entity = AuthEntity().apply {
+                id = 1
+                appId = "appId2"
+                scope = "scope2"
+                permission = "other"
+                title = "title1"
+                description = "description1"
+                state = 0
+            }
+            dbHelper.insert(entity)
+
+            dbHelper.queryList(AuthEntity::class.java, "permission like ?", arrayOf("oth%"), null)
         }
     }
 

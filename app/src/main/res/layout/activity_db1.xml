@@ -33,9 +33,15 @@
         android:text="测试" />
 
     <Button
-        android:id="@+id/btn_rawQuery"
+        android:id="@+id/btn_like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="原始查询" />
+        android:text="like" />
+
+    <Button
+        android:id="@+id/btn_call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="call方法调用" />
 
 </LinearLayout>

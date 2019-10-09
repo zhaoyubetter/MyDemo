@@ -22,8 +22,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ipc.messenger.MessengerPassActivity"></activity>
         <provider
-            android:name=".provider.db.database.DatabaseProvider"
-            android:exported="true"
+            android:name=".provider.db.database.MyDatabaseProvider"
+            android:exported="false"
             android:authorities="${applicationId}" />
 
         <activity android:name=".provider.db.DBActivity1" />
