@@ -7,6 +7,7 @@ import android.util.Log
 
 /**
  * 自定义的ResultReceiver
+ * handler 用与指定回调执行 （onReceiveResult） 所在线程
  * @author zhaoyu1  2019/5/22
  **/
 class BankResultReceiver(handler: Handler) : ResultReceiver(handler) {
@@ -37,7 +38,7 @@ class BankResultReceiver(handler: Handler) : ResultReceiver(handler) {
     }
 
     /**
-     * 回调接口
+     * 回调接口，将后端任务的数据传递给调用者
      */
     interface ResultReceiverCallback<T> {
         fun onSuccess(data: T)
