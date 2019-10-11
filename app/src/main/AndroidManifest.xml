@@ -24,7 +24,6 @@
         <provider
             android:name=".provider.db.database.MyDatabaseProvider"
             android:exported="false"
-            android:process=":remote"
             android:authorities="${applicationId}" />
 
         <activity android:name=".provider.db.DBActivity1" />
