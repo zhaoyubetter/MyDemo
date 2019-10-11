@@ -73,7 +73,11 @@ import com.github.android.sample.Book
         /**
          * 运行在service 对应的进程
          */
-        override fun onHandleIntent(intent: Intent) {
+        override fun onHandleIntent(intent: Intent?) {
+            if(intent == null) {
+                return
+            }
+
             // 子线程
             Log.e("better", "thread name : ${Thread.currentThread().name}")
             // 1. get ResultReceiver object from intent

@@ -112,7 +112,7 @@ internal class JSBridge {
                             val dataJson = JSONObject(getQueryParameter(KEY_DATA))    // 数据
                             val type = dataJson.opt(KEY_TYPE)                       // 类型
                             param = dataJson.optString(KEY_ATTACH)          // 调用参数
-                            callback = getQueryParameter(KEY_CALLBACK)      // 回调地址
+                            callback = getQueryParameter(KEY_CALLBACK).toString()       // 回调地址
                             methodName = type2Method.get(type)              // 获取方法名
                         } catch (e: Exception) {
 

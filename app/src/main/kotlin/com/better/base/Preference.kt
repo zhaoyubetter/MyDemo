@@ -30,11 +30,11 @@ class Preference<T>(val context: Context, val name: String, val default: T,
     private fun <A> findPreference(name: String, default: A): A = with(sharedPreferences) {
         val res: Any = when (default) {
             is Long -> getLong(name, default)
-            is String -> getString(name, default)
+            is String -> getString(name, default) ?: ""
             is Int -> getInt(name, default)
             is Boolean -> getBoolean(name, default)
             is Float -> getFloat(name, default)
-            else -> getString(name, default as String)
+            else -> getString(name, default as String) ?: ""
         }
         res as A
     }

@@ -67,7 +67,7 @@ class NavigationDrawerFragment : Fragment() {
         mDrawerListView = inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false) as ListView
         mDrawerListView?.let {
-            it?.adapter = object : ArrayAdapter<String>(activity,
+            it?.adapter = object : ArrayAdapter<String>(activity!!,
                     android.R.layout.simple_list_item_activated_1,
                     android.R.id.text1,
                     arrayOf(getString(R.string.title_section1),

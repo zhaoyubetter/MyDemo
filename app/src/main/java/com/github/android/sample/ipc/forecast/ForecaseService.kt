@@ -33,8 +33,8 @@ class ForecaseService : Service() {
         override fun transactSync(bundle: Bundle) {
             bundle.classLoader = ForecaseService::class.java.classLoader
             val book = bundle.getParcelable<Book>("book")
-            book.bookId = 555
-            book.bookName = book.bookName + "better"
+            book?.bookId = 555
+            book?.bookName = book?.bookName + "better"
         }
 //        // 运行在 binder 线程中，模拟耗时操作
 //        override fun getForecase(cityCode: String?): ForecaseEntity? {

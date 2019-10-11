@@ -23,7 +23,10 @@ class MessengerPassService(val name: String = "") : IntentService(name) {
     /**
      * Running on sub thread.
      */
-    override fun onHandleIntent(intent: Intent) {
+    override fun onHandleIntent(intent: Intent?) {
+        if(intent == null) {
+            return
+        }
         val uris = intent.getParcelableArrayListExtra<Uri>("uris")
         val clientMessenger: Messenger? = intent.getParcelableExtra("client-messenger")
         e("clientMessenger: $clientMessenger")      // 跟客户端的Messenger是同一个对象

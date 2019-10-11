@@ -22,13 +22,13 @@ class ShaderView3(ctx: Context, attributeSet: AttributeSet? = null) : View(ctx, 
         if (bmpBG == null) {
             // bitmap设置为控件宽高
             bmpBG = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-            val canvasBG = Canvas(bmpBG)
+            val canvasBG = Canvas(bmpBG!!)
             canvasBG.drawBitmap(bmp, null, RectF(0f, 0f, width * 1.0f, height * 1.0f), paint)
         }
 
         // 画出局部
         if (dx != -1f && dy != -1f) {
-            paint.shader = BitmapShader(bmpBG, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT)
+            paint.shader = BitmapShader(bmpBG!!, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT)
             canvas.drawCircle(dx, dy, 150f, paint)
         }
     }

@@ -30,7 +30,7 @@ class BankResultReceiver(handler: Handler) : ResultReceiver(handler) {
         callback?.apply {
             if (resultCode === RESULT_CODE_OK) {
                 // 如果 bundle 有非基本数据类型 会报错：classnotfound found； 需要先设置  resultData.classLoader = javaClass.classLoader
-                this.onSuccess(resultData.getSerializable(PARAM_RESULT))
+                resultData.getSerializable(PARAM_RESULT)?.let { this.onSuccess(it) }
             } else {
                 this.onError(resultData.getSerializable(PARAM_EXCEPTION) as Exception)
             }
