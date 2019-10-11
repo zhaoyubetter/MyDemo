@@ -59,6 +59,16 @@ class DBActivity1 : ToolbarActivity() {
 
             dbHelper.queryList(AuthEntity::class.java, "permission like ?", arrayOf("oth%"), null)
         }
+
+        // 子线程调用 ：所有的数据库和文件操作 都是block的主线程
+        // 如果耗时请使用子线程操作；
+        /* contentProvider 对应的 query 方法也会在调用方的子线程中运行
+         * 如果contentProvider 配置了 process，则运行在binder线程中 */
+        btn_thread.setOnClickListener {
+            Thread {
+                d("" + dbHelper.queryCount(User::class.java))
+            }.start()
+        }
     }
 
     private fun testUnionPrimaryKey() {
