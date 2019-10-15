@@ -7,9 +7,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Pair;
 
+
 import com.github.android.sample.provider.db.annotations.FieldFilter;
+import com.github.android.sample.provider.db.annotations.PrimaryKey;
 import com.github.android.sample.provider.db.annotations.Table;
 import com.github.android.sample.provider.db.annotations.TableField;
 
@@ -25,7 +28,7 @@ import java.util.Map;
  * @date 2019-06-21 16:40
  * 数据库操作对象
  */
-public class DatabaseHelper {
+public final class DatabaseHelper {
     private static final String TAG = "DatabaseHelper";
     /**
      * 保存字节码对象与uri路径
@@ -137,7 +140,7 @@ public class DatabaseHelper {
         int code = -1;
         if (null != item) {
             Pair<String, String[]> where = getWhere(item);
-            code = delete(item, where.first, where.second);
+            code = delete(item.getClass(), where.first, where.second);
         }
         return code;
     }
@@ -145,15 +148,14 @@ public class DatabaseHelper {
     /**
      * 根据条件删除指定对象
      *
-     * @param item
      * @param where
      * @param whereArgs
      * @return
      */
-    public final int delete(Object item, String where, String[] whereArgs) {
+    public final int delete(Class clazz, String where, String[] whereArgs) {
         int code = -1;
-        if (null != item) {
-            Uri uri = getObjectUri(item.getClass());
+        if (null != clazz) {
+            final Uri uri = getObjectUri(clazz);
             if (null != appContext && null != uri) {
                 ContentResolver resolver = appContext.getContentResolver();
                 code = resolver.delete(uri, where, whereArgs);
@@ -541,4 +543,93 @@ public class DatabaseHelper {
         final Uri uri = Uri.parse("content://" + appContext.getPackageName());
         appContext.getContentResolver().call(uri, DatabaseProvider.RESET_DB, dbName, null);
     }
+
+    // SqliteHelper#onCreate() 生成数据表
+
+    /**
+     * 创建表
+     *s @param clazz
+     */
+    static final void createTable(Class<?> clazz, final SQLiteDatabase db) {
+        final Field[] fields = clazz.getDeclaredFields();
+        // 属性上配置的了 @PrimaryKey
+        final List<Pair<String, Boolean>> propPrimaryKeys = new ArrayList<>();
+        final HashMap<String, String> fieldItems = new HashMap<>();
+        // 联合主键
+        String[] unionPrimaryKeys = null;
+        boolean hasPrimaryKey = false;
+
+        for (int i = 0; i < fields.length; i++) {
+            Class<?> type = fields[i].getType();
+            String fieldType;
+            if (int.class == type || short.class == type || Integer.class == type || Short.class == type) {
+                fieldType = " INTEGER";
+            } else if (float.class == type || double.class == type || Float.class == type || Double.class == type) {
+                fieldType = " FLOAT";
+            } else if (boolean.class == type || Boolean.class == type) {
+                fieldType = " BOOLEAN";
+            } else if (long.class == type || Long.class == type) {
+                fieldType = " LONG";
+            } else {
+                fieldType = " TEXT";
+            }
+
+            //过滤字段
+            FieldFilter fieldFilter = fields[i].getAnnotation(FieldFilter.class);
+            if (Modifier.STATIC != (fields[i].getModifiers() & Modifier.STATIC) && (null == fieldFilter || !fieldFilter.value())) {
+                String fieldName = fields[i].getName();
+                TableField tableField = fields[i].getAnnotation(TableField.class);
+                PrimaryKey primaryKey = fields[i].getAnnotation(PrimaryKey.class);  // 是否配置了注解
+                if (null != tableField) {
+                    fieldName = TextUtils.isEmpty(tableField.value()) ? fields[i].getName() : tableField.value();
+                }
+                if (null != primaryKey) {
+                    propPrimaryKeys.add(new Pair(fieldName, primaryKey.autoGenerate()));
+                } else {
+                    fieldItems.put(fieldName, fieldType);
+                }
+            }
+        }
+        String tableName = DatabaseHelper.getTable(clazz);
+        String sql = "CREATE TABLE IF NOT EXISTS " + tableName + "(";
+        // 字段主键只能有一个
+        if (propPrimaryKeys.size() > 1) {
+            throw new RuntimeException("table " + tableName + " has more than one primary key.");
+        }
+        if (propPrimaryKeys.size() == 1) {
+            hasPrimaryKey = true;
+            final Pair<String, Boolean> pair = propPrimaryKeys.get(0);
+            sql += (pair.first + " INTEGER PRIMARY KEY " + (pair.second ? "AUTOINCREMENT" : "") + ",");
+        }
+
+        // 获取联合主键设置
+        Table table = clazz.getAnnotation(Table.class);
+        if (null != table && table.primaryKeys().length > 0) {
+            unionPrimaryKeys = table.primaryKeys();
+            if (hasPrimaryKey) {
+                throw new RuntimeException("table " + tableName + " has more than one primary key.");
+            }
+        }
+
+        // 组织列信息
+        int index = 0;
+        for (Map.Entry<String, String> entry : fieldItems.entrySet()) {
+            sql += (entry.getKey() + " " + entry.getValue() + " " + (index++ != fieldItems.size() - 1 ? "," : " "));
+        }
+        // 可能有多个主键时,设置联合主键
+        if (unionPrimaryKeys != null && unionPrimaryKeys.length > 0) {
+            sql += (", PRIMARY KEY(");
+            for (int i = 0; i < unionPrimaryKeys.length; i++) {
+                String key = unionPrimaryKeys[i];
+                sql += (key + (i != unionPrimaryKeys.length - 1 ? "," : "))"));
+            }
+        } else {
+            sql += ")";
+        }
+        //创建建此表
+        Log.e("better", sql);
+        db.execSQL(sql);
+    }
+
 }
+

@@ -10,7 +10,7 @@ public class MyDatabaseProvider extends DatabaseProvider {
 
     @Override
     public SQLiteOpenHelper getSQLiteHelper(Context context, String dbName) {
-        return new MyDatabase(context, dbName);
+        return MyDatabaseHelper.getInstance(context, dbName);
     }
 
     @Override

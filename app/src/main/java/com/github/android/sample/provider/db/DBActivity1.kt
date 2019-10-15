@@ -2,6 +2,7 @@ package com.github.android.sample.provider.db
 
 import android.os.Bundle
 import android.os.SystemClock
+import android.util.Log
 import com.better.base.CommonApplication
 import com.better.base.ToolbarActivity
 import com.better.base.d
@@ -31,8 +32,8 @@ class DBActivity1 : ToolbarActivity() {
         }
 
         btn_query2.setOnClickListener {
-            d("" + dbHelper.query(User::class.java, "name=?", arrayOf("Chelsea"), null))
-            d("" + dbHelper.queryList(User::class.java, "age > ?", arrayOf("50"), null)?.size)
+            Log.d("better", "" + dbHelper.query(User::class.java, "name=?", arrayOf("Chelsea"), null))
+            Log.d("better", "" + dbHelper.queryList(User::class.java, "age > ?", arrayOf("50"), null)?.size)
         }
 
         // 测试
@@ -93,9 +94,28 @@ class DBActivity1 : ToolbarActivity() {
             Caused by: java.lang.IllegalStateException: SQLiteDatabase created and never closed
         5. sqlite 同一时间只能进行一个写操作，需要保证db单例；
         6. 注意：尽量不要在多线程环境下操作数据库；
+
+
+        【实验，单线程下】：
+        1. 关闭DB，插入 1000条
+          cost 9695/9156 ms；
+        2. 不关闭 db，插入1000条件
+          cost 3907/3967 ms 明显降低；
+        实验结果：writeDB 的开启与关闭是非常耗时的；
+
+
+        【实验，多线线下】：
+        不能关闭链接，如果关闭了链接，后面执行查询会有一场，因为db.close()，调用的是 sqliteHelper.close()
+        也就会报错了
+        所以方案是确保全局只有一个db链接
+
+        【最终方法】
+        1. 要么不关闭数据库；
+        2. 要么只使用一个数据库链接.getWriteableDatabase()
      */
     private fun doDBCloseWork() {
-        (0..10).forEach { _ ->
+        val currentTime = SystemClock.currentThreadTimeMillis()
+        (0..100).forEach { _ ->
             // 1. contentProvider 在独立进程中，报错如下：
             //   java.lang.IllegalStateException: Cannot perform this operation because the connection pool has been closed.
             // 2. contentProvider 在主进程中，报错如下：
@@ -113,8 +133,11 @@ class DBActivity1 : ToolbarActivity() {
                 SystemClock.sleep(Random().nextInt(200).toLong())
                 d(Thread.currentThread().name)
                 dbHelper.insert(entity)
+                dbHelper.queryList(AuthEntity::class.java, "permission like ?", arrayOf("oth%"), null)
             }.start()
         }
+        val costTime = SystemClock.currentThreadTimeMillis() - currentTime
+        Log.e("better", "cost$costTime")
     }
 
     private fun testUnionPrimaryKey() {

@@ -1,6 +1,10 @@
 package com.github.android.sample.provider.db.database;
 
-import android.content.*;
+import android.content.ContentProvider;
+import android.content.ContentUris;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -8,18 +12,11 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
-import android.util.Pair;
 import android.util.SparseArray;
 
-import com.github.android.sample.provider.db.annotations.FieldFilter;
-import com.github.android.sample.provider.db.annotations.PrimaryKey;
-import com.github.android.sample.provider.db.annotations.Table;
-import com.github.android.sample.provider.db.annotations.TableField;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by momo on 2015/1/1.
@@ -41,7 +38,11 @@ public abstract class DatabaseProvider extends ContentProvider {
     private static final SparseArray<String> matchIds;
     // 下标（即表）对应数据库表的列
     private static final SparseArray<LinkedHashMap<String, String>> selectionMaps;
-    private SQLiteOpenHelper myDatabase;// 数据库操作对象
+    private SQLiteOpenHelper sqLiteOpenHelper;// 数据库操作对象
+    private SQLiteDatabase writeDatabase;
+    // 确保只使用一个数据库链接
+    private AtomicInteger openCounter = new AtomicInteger();
+
 
     static {
         matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -75,7 +76,12 @@ public abstract class DatabaseProvider extends ContentProvider {
         synchronized (LOCK) {
             matchIds.clear();   // 切换表后，清空静态变量
             selectionMaps.clear();
-            this.myDatabase = getSQLiteHelper(context, dbName);
+            if(writeDatabase != null) {
+                writeDatabase.close();
+                writeDatabase = null;
+            }
+            openCounter.set(0); // 复位
+            this.sqLiteOpenHelper = getSQLiteHelper(context, dbName);
         }
     }
 
@@ -85,7 +91,7 @@ public abstract class DatabaseProvider extends ContentProvider {
         //初始化 DatabaseHelper对象
         DatabaseHelper.init(context);
         //初始化数据库对象
-        myDatabase = getSQLiteHelper(context, getInitDbName());
+        sqLiteOpenHelper = getSQLiteHelper(context, getInitDbName());
         return true;
     }
 
@@ -117,13 +123,15 @@ public abstract class DatabaseProvider extends ContentProvider {
         final String tableName = matchIds.get(matchId);
         Uri notifyUri = null;
         if (!TextUtils.isEmpty(tableName)) {
-            SQLiteDatabase writableDatabase = getWritableDatabase();
-            // 使用 insert or replace into
-            long rowId = writableDatabase.insertWithOnConflict(tableName, null, values, SQLiteDatabase.CONFLICT_REPLACE);
-//            long rowId = writableDatabase.insert(tableName, null, values);
-            if (rowId > 0) {
-                notifyUri = ContentUris.withAppendedId(newUri, rowId);
-                getContext().getContentResolver().notifyChange(notifyUri, null);
+            SQLiteDatabase db = getWritableDatabase();
+            try {
+                // 使用 insert or replace into
+                long rowId = db.insertWithOnConflict(tableName, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+                if (rowId > 0) {
+                    notifyUri = ContentUris.withAppendedId(newUri, rowId);
+                    getContext().getContentResolver().notifyChange(notifyUri, null);
+                }
+            } finally {
             }
         }
         return notifyUri;
@@ -137,10 +145,13 @@ public abstract class DatabaseProvider extends ContentProvider {
         int rows = -1;
         if (!TextUtils.isEmpty(tableName)) {
             SQLiteDatabase writableDatabase = getWritableDatabase();
-            rows = writableDatabase.delete(tableName, selection, selectionArgs);
-            if (-1 != rows) {
-                Uri notifyUri = ContentUris.withAppendedId(newUri, rows);
-                getContext().getContentResolver().notifyChange(notifyUri, null);
+            try {
+                rows = writableDatabase.delete(tableName, selection, selectionArgs);
+                if (-1 != rows) {
+                    Uri notifyUri = ContentUris.withAppendedId(newUri, rows);
+                    getContext().getContentResolver().notifyChange(notifyUri, null);
+                }
+            } finally {
             }
         }
         return rows;
@@ -154,10 +165,13 @@ public abstract class DatabaseProvider extends ContentProvider {
         int rows = -1;
         if (!TextUtils.isEmpty(tableName)) {
             SQLiteDatabase writableDatabase = getWritableDatabase();
-            rows = writableDatabase.update(tableName, values, selection, selectionArgs);
-            if (-1 != rows) {
-                Uri notifyUri = ContentUris.withAppendedId(newUri, rows);
-                getContext().getContentResolver().notifyChange(notifyUri, null);
+            try {
+                rows = writableDatabase.update(tableName, values, selection, selectionArgs);
+                if (-1 != rows) {
+                    Uri notifyUri = ContentUris.withAppendedId(newUri, rows);
+                    getContext().getContentResolver().notifyChange(notifyUri, null);
+                }
+            } finally {
             }
         }
         return rows;
@@ -171,21 +185,24 @@ public abstract class DatabaseProvider extends ContentProvider {
         long lastId = -1;
         if (!TextUtils.isEmpty(tableName)) {
             SQLiteDatabase writableDatabase = getWritableDatabase();
-            writableDatabase.beginTransaction();
-            for (int i = 0; i < values.length; i++) {
-                long rowId = writableDatabase.insert(tableName, null, values[i]);
-                if (i == values.length - 1) {
-                    lastId = rowId;
+            try {
+                writableDatabase.beginTransaction();
+                for (int i = 0; i < values.length; i++) {
+                    long rowId = writableDatabase.insertWithOnConflict(tableName, null, values[i], SQLiteDatabase.CONFLICT_REPLACE);
+                    if (i == values.length - 1) {
+                        lastId = rowId;
+                    }
+                    if (0 > rowId) {
+                        //异常插入
+                    }
                 }
-                if (0 > rowId) {
-                    //异常插入
+                writableDatabase.setTransactionSuccessful();
+                writableDatabase.endTransaction();
+                if (lastId > 0) {
+                    Uri notifyUri = ContentUris.withAppendedId(newUri, lastId);
+                    getContext().getContentResolver().notifyChange(notifyUri, null);
                 }
-            }
-            writableDatabase.setTransactionSuccessful();
-            writableDatabase.endTransaction();
-            if (lastId > 0) {
-                Uri notifyUri = ContentUris.withAppendedId(newUri, lastId);
-                getContext().getContentResolver().notifyChange(notifyUri, null);
+            } finally {
             }
         }
         return (int) lastId;
@@ -205,10 +222,6 @@ public abstract class DatabaseProvider extends ContentProvider {
             String tableName = DatabaseHelper.getTable(clazz);
             if (0 > matchIds.indexOfValue(tableName)) {
                 synchronized (LOCK) {
-                    //检测表是否存在,不存在创建
-                    if (!tableExist(tableName)) {
-                        createTable(clazz);
-                    }
                     //添加表信息
                     addTable(clazz);
                 }
@@ -246,93 +259,6 @@ public abstract class DatabaseProvider extends ContentProvider {
         return result;
     }
 
-    /**
-     * 创建表
-     *
-     * @param clazz
-     */
-    private final void createTable(Class<?> clazz) {
-        final Field[] fields = clazz.getDeclaredFields();
-        // 属性上配置的了 @PrimaryKey
-        final List<Pair<String, Boolean>> propPrimaryKeys = new ArrayList<>();
-        final HashMap<String, String> fieldItems = new HashMap<>();
-        // 联合主键
-        String[] unionPrimaryKeys = null;
-        boolean hasPrimaryKey = false;
-
-        for (int i = 0; i < fields.length; i++) {
-            Class<?> type = fields[i].getType();
-            String fieldType;
-            if (int.class == type || short.class == type || Integer.class == type || Short.class == type) {
-                fieldType = " INTEGER";
-            } else if (float.class == type || double.class == type || Float.class == type || Double.class == type) {
-                fieldType = " FLOAT";
-            } else if (boolean.class == type || Boolean.class == type) {
-                fieldType = " BOOLEAN";
-            } else if (long.class == type || Long.class == type) {
-                fieldType = " LONG";
-            } else {
-                fieldType = " TEXT";
-            }
-
-            //过滤字段
-            FieldFilter fieldFilter = fields[i].getAnnotation(FieldFilter.class);
-            if (Modifier.STATIC != (fields[i].getModifiers() & Modifier.STATIC) && (null == fieldFilter || !fieldFilter.value())) {
-                String fieldName = fields[i].getName();
-                TableField tableField = fields[i].getAnnotation(TableField.class);
-                PrimaryKey primaryKey = fields[i].getAnnotation(PrimaryKey.class);  // 是否配置了注解
-                if (null != tableField) {
-                    fieldName = TextUtils.isEmpty(tableField.value()) ? fields[i].getName() : tableField.value();
-                }
-                if (null != primaryKey) {
-                    propPrimaryKeys.add(new Pair(fieldName, primaryKey.autoGenerate()));
-                } else {
-                    fieldItems.put(fieldName, fieldType);
-                }
-            }
-        }
-        String tableName = DatabaseHelper.getTable(clazz);
-        String sql = "CREATE TABLE " + tableName + "(";
-        // 字段主键只能有一个
-        if (propPrimaryKeys.size() > 1) {
-            throw new RuntimeException("table " + tableName + " has more than one primary key.");
-        }
-        if (propPrimaryKeys.size() == 1) {
-            hasPrimaryKey = true;
-            final Pair<String, Boolean> pair = propPrimaryKeys.get(0);
-            sql += (pair.first + " INTEGER PRIMARY KEY " + (pair.second ? "AUTOINCREMENT" : "") + ",");
-        }
-
-        // 获取联合主键设置
-        Table table = clazz.getAnnotation(Table.class);
-        if (null != table && table.primaryKeys().length > 0) {
-            unionPrimaryKeys = table.primaryKeys();
-            if (hasPrimaryKey) {
-                throw new RuntimeException("table " + tableName + " has more than one primary key.");
-            }
-        }
-
-        // 组织列信息
-        int index = 0;
-        for (Map.Entry<String, String> entry : fieldItems.entrySet()) {
-            sql += (entry.getKey() + " " + entry.getValue() + " " + (index++ != fieldItems.size() - 1 ? "," : " "));
-        }
-        // 可能有多个主键时,设置联合主键
-        if (unionPrimaryKeys != null && unionPrimaryKeys.length > 0) {
-            sql += (", PRIMARY KEY(");
-            for (int i = 0; i < unionPrimaryKeys.length; i++) {
-                String key = unionPrimaryKeys[i];
-                sql += (key + (i != unionPrimaryKeys.length - 1 ? "," : "))"));
-            }
-        } else {
-            sql += ")";
-        }
-        //创建建此表
-        SQLiteDatabase writableDatabase = getWritableDatabase();
-        Log.e("better", sql);
-        writableDatabase.execSQL(sql);
-    }
-
     private void addTable(Class<?> clazz) {
         final Context context = getContext();
         final String tableName = DatabaseHelper.getTable(clazz);
@@ -360,22 +286,36 @@ public abstract class DatabaseProvider extends ContentProvider {
      * 获取一个读取的数据库对象
      */
     SQLiteDatabase getReadableDatabase() {
-        if (null == myDatabase) {
+        if (null == sqLiteOpenHelper) {
             Context context = getContext();
-            myDatabase = getSQLiteHelper(context,getInitDbName());
+            sqLiteOpenHelper = getSQLiteHelper(context, getInitDbName());
         }
-        return myDatabase.getReadableDatabase();
+        return sqLiteOpenHelper.getReadableDatabase();
     }
 
     /**
-     * 获取一个读取的数据库对象
+     * 获取一个读取的数据库对象，我们确保链接使用同一个就行了
      */
     SQLiteDatabase getWritableDatabase() {
-        if (null == myDatabase) {
+        if (null == sqLiteOpenHelper) {
             Context context = getContext();
-            myDatabase = getSQLiteHelper(context, getInitDbName());
+            sqLiteOpenHelper = getSQLiteHelper(context, getInitDbName());
         }
-        return myDatabase.getWritableDatabase();
+        if (openCounter.incrementAndGet() == 1 || (writeDatabase == null || !writeDatabase.isOpen())) {
+            writeDatabase = sqLiteOpenHelper.getWritableDatabase();
+        }
+        return writeDatabase;
+    }
+
+    /**
+     * 不能关闭close db，会导致整个 sqliteHelper 都会广播
+     * @param db
+     */
+    @Deprecated
+    private synchronized void closeDB(SQLiteDatabase db) {
+        if (openCounter.decrementAndGet() == 0) {
+//            db.close();
+        }
     }
 
     /**
@@ -401,22 +341,26 @@ public abstract class DatabaseProvider extends ContentProvider {
 
     // 原生查询操作，注意这里暂时无法跨进程操作；
     public void execSQL(String sql) {
-        if (myDatabase != null) {
-            SQLiteDatabase writableDatabase = myDatabase.getWritableDatabase();
-            writableDatabase.execSQL(sql);
+        if (sqLiteOpenHelper != null) {
+            if (writeDatabase == null || !writeDatabase.isOpen()) {
+                writeDatabase = getWritableDatabase();
+            }
+            writeDatabase.execSQL(sql);
         }
     }
 
     public void execSQL(String sql, String[] bindArgs) {
-        if (myDatabase != null) {
-            SQLiteDatabase writableDatabase = myDatabase.getWritableDatabase();
-            writableDatabase.execSQL(sql, bindArgs);
+        if (sqLiteOpenHelper != null) {
+            if (writeDatabase != null && !writeDatabase.isOpen()) {
+                writeDatabase = getWritableDatabase();
+            }
+            writeDatabase.execSQL(sql);
         }
     }
 
     public Cursor rawQuery(String sql, String[] selectionArgs) {
-        if (myDatabase != null) {
-            SQLiteDatabase readableDatabase = myDatabase.getReadableDatabase();
+        if (sqLiteOpenHelper != null) {
+            SQLiteDatabase readableDatabase = getReadableDatabase();
             return readableDatabase.rawQuery(sql, selectionArgs);
         }
         return null;

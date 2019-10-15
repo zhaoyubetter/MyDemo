@@ -7,12 +7,10 @@ import android.os.Bundle
 import android.os.Message
 import android.os.Messenger
 import android.os.SystemClock
-import android.provider.ContactsContract
 import com.better.base.e
 import com.better.base.isNotNull
 import com.github.android.sample.provider.db.AuthEntity
 import com.github.android.sample.provider.db.database.DatabaseHelper
-import com.github.android.sample.provider.db.database.MyDatabase
 
 /**
  * IntentService

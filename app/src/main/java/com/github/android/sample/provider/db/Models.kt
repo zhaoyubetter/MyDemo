@@ -11,7 +11,11 @@ import com.github.android.sample.provider.db.annotations.TableField
 @Table("tb_user")
 data class User(
         var name: String = "",
-        var age: Int = 0)
+        var age: Int = 0
+         , var summary:String = ""  // 版本2 新增 summary : String
+         , var sex:Boolean = false  // 版本3 新增 sex Boolean 可以直接映射成 INT 类型，反之亦然
+         , var company:String = ""  // 版本4 新增 company String
+)
 
 @Table("tb_user2")
 class User2(
