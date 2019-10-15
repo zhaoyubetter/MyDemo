@@ -43,6 +43,12 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         if (instance != null && !instance.getDatabaseName().equals(dbName)) {
             synchronized (MyDatabaseHelper.class) {
                 Log.e("better", String.format("prev: %s, current: %s", instance.getDatabaseName(), dbName));
+                try {
+                    instance.close();  // 删除老的库
+                    context.deleteDatabase(instance.getDatabaseName());
+                } catch (Exception e) {
+                    Log.e("better", "del db failed: " + e);
+                }
                 instance = null;
             }
         }

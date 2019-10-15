@@ -1,9 +1,6 @@
 package com.github.android.sample.provider.db
 
-import android.arch.persistence.room.ColumnInfo
-import com.github.android.sample.provider.db.annotations.PrimaryKey
 import com.github.android.sample.provider.db.annotations.Table
-import com.github.android.sample.provider.db.annotations.TableField
 
 /**
  * Created by better On 2019-09-05.

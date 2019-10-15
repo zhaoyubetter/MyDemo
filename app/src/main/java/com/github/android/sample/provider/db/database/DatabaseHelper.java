@@ -338,14 +338,12 @@ public final class DatabaseHelper {
         this.upgradeListener = listener;
     }
 
-
     /**
      * 数据库版本变化监听
      */
     public interface OnDatabaseUpgradeListener {
         void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion);
     }
-
 
     /**
      * 根据class获得访问uri地址
