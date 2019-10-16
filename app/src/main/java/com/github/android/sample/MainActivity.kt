@@ -1,14 +1,12 @@
 package com.github.android.sample
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import com.github.android.sample.problem.ProblemContentFragment
 import com.github.android.sample.widget.WidgetContentFragment
-//import kotlinx.android.extensions.CacheImplementation
-//import kotlinx.android.extensions.ContainerOptions
 import kotlinx.android.synthetic.main.activity_main.*
 
 //@ContainerOptions(cache = CacheImplementation.NO_CACHE)
@@ -30,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         val improve = WidgetContentFragment()
         val problem = ProblemContentFragment()
         val project = WidgetContentFragment()
-        val fragments = listOf(base, improve, problem, project)
+        val fragments = listOf<Fragment>(base, improve, problem, project)
         val adapter = TabContentAdapter(supportFragmentManager, fragments, tabTitle)
         viewPager.adapter = adapter
 

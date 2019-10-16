@@ -1,9 +1,10 @@
 package com.github.android.sample.annotationProcesser;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.android.sample.R;
 import com.github.better.annotation.BindView;

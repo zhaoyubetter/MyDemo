@@ -1,8 +1,8 @@
 package com.github.android.sample.anim
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.animation.*
+import androidx.appcompat.app.AppCompatActivity
 import com.github.android.sample.R
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onClick

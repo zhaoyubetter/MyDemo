@@ -1,6 +1,7 @@
 package com.github.android.sample.widget.room
 
-import android.arch.persistence.room.*
+import androidx.room.*
+
 
 @Dao
 interface MobilePhoneDao {

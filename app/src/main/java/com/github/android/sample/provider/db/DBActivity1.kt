@@ -42,9 +42,12 @@ class DBActivity1 : ToolbarActivity() {
             testUnionPrimaryKey()
         }
 
-        // call方法
+        // call方法-切换数据库
         btn_call.setOnClickListener {
-            val bundle = dbHelper.resetDatabase("better.db")
+            val dbName = et_dbname.text.trim()
+            if(dbName.isNotEmpty()) {
+                val bundle = dbHelper.resetDatabase(dbName.toString())
+            }
         }
 
         // like 操作

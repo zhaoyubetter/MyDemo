@@ -4,9 +4,9 @@ import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Process
+import androidx.appcompat.app.AppCompatActivity
 import com.better.base.e2
 import com.better.base.getProcessName
 import com.better.base.toast

@@ -1,8 +1,7 @@
 package com.github.android.sample.ipc.subthread
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity
 import com.github.android.sample.R
 
 import org.jetbrains.anko.toast

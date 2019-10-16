@@ -2,12 +2,12 @@ package com.github.android.sample.ipc.messenger
 
 import android.content.Intent
 import android.net.Uri
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.os.Messenger
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.better.base.e
 import com.github.android.sample.R
 import com.github.android.sample.provider.db.AuthEntity

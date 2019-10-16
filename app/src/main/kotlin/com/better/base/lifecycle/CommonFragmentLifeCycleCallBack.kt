@@ -1,6 +1,7 @@
 package com.better.base.lifecycle
 
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.FragmentManager
+
 
 /**
  * Created by zhaoyu on 2018/3/11.

@@ -3,13 +3,13 @@ package com.github.android.sample.anim
 import android.app.Activity
 import android.graphics.Typeface
 import android.os.Bundle
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
 import android.widget.TextView
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.better.base.ToolbarActivity
 import com.better.base.model.SampleItem
 import com.github.android.sample.R

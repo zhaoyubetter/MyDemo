@@ -5,7 +5,6 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.app.Activity
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import com.better.base.ToolbarActivity
 import com.better.base.model.SampleItem
 import com.github.android.sample.R

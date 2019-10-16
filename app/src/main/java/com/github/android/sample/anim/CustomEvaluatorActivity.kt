@@ -6,7 +6,6 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.better.base.ToolbarActivity
 import com.better.base.model.SampleItem

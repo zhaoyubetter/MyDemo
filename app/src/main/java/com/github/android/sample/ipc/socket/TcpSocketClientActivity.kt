@@ -1,15 +1,14 @@
 package com.github.android.sample.ipc.socket
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
+import androidx.appcompat.app.AppCompatActivity
 import com.better.base.d
 import com.better.base.e
 import com.better.base.getProcessName
 import com.github.android.sample.R
 import kotlinx.android.synthetic.main.activity_tcp_socket_client.*
-import org.jetbrains.anko.sdk25.coroutines.onClick
 import java.io.*
 import java.net.Socket
 

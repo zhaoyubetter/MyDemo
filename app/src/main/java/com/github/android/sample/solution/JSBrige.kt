@@ -2,7 +2,6 @@ package com.github.android.sample.solution
 
 import android.net.Uri
 import android.os.Build
-import android.support.annotation.Keep
 import android.text.TextUtils
 import android.webkit.JsPromptResult
 import android.webkit.WebView
@@ -12,6 +11,8 @@ import java.lang.ref.WeakReference
 import java.lang.reflect.Method
 import java.lang.reflect.Modifier
 import android.webkit.ValueCallback
+import androidx.annotation.Keep
+import androidx.annotation.RequiresApi
 
 
 // 协议格式如下：
@@ -99,6 +100,7 @@ internal class JSBridge {
 
 
         // me://jsbridge?data={"type":"1","attach":{"msg":"你好，better"}}&callback=304594818
+        @RequiresApi(Build.VERSION_CODES.N)
         fun callNative(webView: WebView, uriString: String): String {
             lateinit var className: String
             lateinit var callback: String    // 回调地址

@@ -2,20 +2,15 @@ package com.github.android.sample.widget.recyler.layoutman
 
 import android.content.ContentValues.TAG
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.util.Log
 import android.util.SparseArray
 import android.util.SparseIntArray
 import android.view.View
 import android.view.ViewGroup
-import com.github.android.sample.R.id.recycler
 import android.graphics.PointF
-import android.support.v7.widget.LinearSmoothScroller
-
-
-
-
+import androidx.recyclerview.widget.LinearSmoothScroller
+import androidx.recyclerview.widget.RecyclerView
 
 
 /**

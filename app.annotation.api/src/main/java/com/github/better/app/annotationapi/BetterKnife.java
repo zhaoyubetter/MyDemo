@@ -1,7 +1,8 @@
 package com.github.better.app.annotationapi;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.github.better.app.annotationapi.api.ViewBinder;
 import com.github.better.app.annotationapi.api.ViewFinder;

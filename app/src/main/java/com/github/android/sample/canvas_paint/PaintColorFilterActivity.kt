@@ -2,8 +2,8 @@ package com.github.android.sample.canvas_paint
 
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.graphics.drawable.DrawableCompat
 import android.view.ViewGroup
+import androidx.core.graphics.drawable.DrawableCompat
 import com.better.base.ToolbarActivity
 import com.better.base.setTitleFromIntent
 import com.github.android.sample.R
@@ -13,7 +13,6 @@ import com.github.android.sample.canvas_paint.colorFilter.ColorFilterView3
 import kotlinx.android.synthetic.main.activity_paint_color_filter.*
 import org.jetbrains.anko.imageView
 import org.jetbrains.anko.linearLayout
-import org.jetbrains.anko.sdk25.coroutines.onClick
 
 class PaintColorFilterActivity : ToolbarActivity() {
 

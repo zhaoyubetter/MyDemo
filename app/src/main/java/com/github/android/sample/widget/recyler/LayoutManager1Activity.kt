@@ -1,9 +1,9 @@
 package com.github.android.sample.widget.recyler
 
 import android.os.Bundle
-import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.better.base.ToolbarActivity
 import com.better.base.setTitleFromIntent
 import com.github.android.sample.R

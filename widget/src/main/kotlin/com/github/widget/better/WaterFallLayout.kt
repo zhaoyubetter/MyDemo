@@ -91,7 +91,7 @@ class WaterFallLayout(ctx: Context, attrs: AttributeSet? = null) : ViewGroup(ctx
             top[column] += childHeight + vSpace    // 最小值下标，并设置当前总高度
         }
 
-        setMeasuredDimension(if (widthMode == MeasureSpec.AT_MOST) expectWidth else widthSize, top?.max()
+        setMeasuredDimension(if (widthMode == MeasureSpec.AT_MOST) expectWidth else widthSize, top.max()
                 ?: MeasureSpec.getSize(heightMeasureSpec))
     }
 

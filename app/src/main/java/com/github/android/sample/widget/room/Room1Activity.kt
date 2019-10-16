@@ -1,14 +1,12 @@
 package com.github.android.sample.widget.room
 
-import android.arch.persistence.room.Room
 import android.os.Bundle
+import androidx.room.Room
 import com.better.base.ToolbarActivity
 import com.better.base.e
 import com.better.base.setTitleFromIntent
-import com.better.base.toast
 import com.github.android.sample.R
 import kotlinx.android.synthetic.main.activity_room1.*
-import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.toast
 
 class Room1Activity : ToolbarActivity() {

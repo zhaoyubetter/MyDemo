@@ -2,8 +2,8 @@ package com.github.android.sample.widget.recyler.fragment
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 import com.github.android.sample.widget.recyler.adapter.SimpleAdapter
 import com.github.android.sample.widget.recyler.layoutman.FixedGridLayoutManager
 

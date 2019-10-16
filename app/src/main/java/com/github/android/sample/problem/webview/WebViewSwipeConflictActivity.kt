@@ -1,26 +1,23 @@
 package com.github.android.sample.problem.webview
 
-import android.annotation.SuppressLint
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.webkit.WebView
 import com.better.base.ToolbarActivity
-import com.better.base.setTitleFromIntent
 import com.github.android.sample.R
-import kotlinx.android.synthetic.main.activity_web_view_swipe_conflict.*
 import android.graphics.Bitmap
 import android.net.Uri
+import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.webkit.WebViewClient
 import android.webkit.WebSettings
+import kotlinx.android.synthetic.main.activity_web_view_swipe_conflict.*
 
 /**
  * webview 里头的h5的下拉与原生下拉刷新控件冲突了。
  * 通过获取webview 的 url 参数，来禁用原生的下拉刷新
  */
-
-
 class WebViewSwipeConflictActivity : ToolbarActivity() {
 
     var isRefresh = true
@@ -30,9 +27,7 @@ class WebViewSwipeConflictActivity : ToolbarActivity() {
         setContentView(R.layout.activity_web_view_swipe_conflict)
         setWebView(webview)
         webview.loadUrl("http://m.jd.com")
-        swipe.setOnRefreshListener {
-            webview.reload()
-        }
+        webview.reload()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -44,7 +39,7 @@ class WebViewSwipeConflictActivity : ToolbarActivity() {
         when (item?.itemId) {
             R.id.action_forbidden -> {       // 禁用下拉
                 isRefresh = !isRefresh
-                webview.loadUrl(if (isRefresh) "http://m.jd.com" else  "http://m.jd.com?refresh=no" )
+                webview.loadUrl(if (isRefresh) "http://m.jd.com" else "http://m.jd.com?refresh=no")
             }
         }
         return super.onOptionsItemSelected(item)

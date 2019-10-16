@@ -1,7 +1,5 @@
 package com.github.android.sample.widget.recyler.fragment
 
-import android.support.v4.app.Fragment
-import android.support.v7.widget.RecyclerView
 import android.widget.AdapterView
 import android.os.Bundle
 import android.view.*
@@ -9,6 +7,8 @@ import com.github.android.sample.R
 import com.github.android.sample.widget.recyler.adapter.SimpleAdapter
 import org.jetbrains.anko.find
 import android.view.MenuInflater
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.github.android.sample.widget.recyler.NumberPickerDialog
 import org.jetbrains.anko.support.v4.toast
 
@@ -54,12 +54,12 @@ abstract class RecyclerViewFragment : Fragment(), AdapterView.OnItemClickListene
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater?.inflate(R.menu.grid_options, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item != null && activity != null) {
             activity?.let {
                 val dialog = NumberPickerDialog(it).apply {

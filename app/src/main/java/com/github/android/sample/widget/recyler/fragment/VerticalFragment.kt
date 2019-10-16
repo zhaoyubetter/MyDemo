@@ -2,9 +2,10 @@ package com.github.android.sample.widget.recyler.fragment
 
 import com.github.android.sample.widget.recyler.adapter.SimpleAdapter
 import android.os.Bundle
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
 import android.widget.LinearLayout
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 
 class VerticalFragment : RecyclerViewFragment() {
@@ -22,7 +23,7 @@ class VerticalFragment : RecyclerViewFragment() {
     }
 
 
-    override fun getLayoutManager() = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+    override fun getLayoutManager() = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
 
     override fun getItemDecoration() = DividerItemDecoration(activity, LinearLayout.VERTICAL)
 

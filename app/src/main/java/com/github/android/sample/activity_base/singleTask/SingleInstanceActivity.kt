@@ -1,7 +1,6 @@
 package com.github.android.sample.activity_base.singleTask
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.better.base.ToolbarActivity
 import com.github.android.sample.R

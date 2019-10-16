@@ -1,6 +1,10 @@
 package com.github.android.sample.widget.room
 
-import android.arch.persistence.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
+
 
 @Entity(tableName = "tb_mobilePhone")
 data class MobilePhone(

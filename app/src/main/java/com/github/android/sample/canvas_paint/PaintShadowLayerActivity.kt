@@ -1,7 +1,6 @@
 package com.github.android.sample.canvas_paint
 
 import android.graphics.Color
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.SeekBar

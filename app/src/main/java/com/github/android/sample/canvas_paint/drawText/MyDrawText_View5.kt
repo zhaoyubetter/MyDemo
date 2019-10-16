@@ -6,7 +6,6 @@ import android.util.AttributeSet
 import android.view.View
 import com.better.base.e
 import android.graphics.Paint.FontMetricsInt
-import android.support.compat.R.id.text
 
 
 /**

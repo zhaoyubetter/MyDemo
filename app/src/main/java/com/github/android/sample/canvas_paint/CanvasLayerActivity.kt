@@ -1,8 +1,5 @@
 package com.github.android.sample.canvas_paint
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toolbar
 import com.better.base.ToolbarActivity

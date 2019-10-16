@@ -1,6 +1,6 @@
 package com.github.android.sample.canvas_paint
 
-import android.support.v7.app.AppCompatActivity
+
 import android.os.Bundle
 import android.widget.Toolbar
 import com.better.base.ToolbarActivity

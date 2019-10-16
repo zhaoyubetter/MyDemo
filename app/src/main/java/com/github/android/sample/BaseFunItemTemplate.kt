@@ -6,6 +6,7 @@ import com.better.base.model.SampleItem
 import com.github.android.sample.activity_base.singleTask.SingleTaskMainTestActivity
 import com.github.android.sample.anim.*
 import com.github.android.sample.canvas_paint.*
+import com.github.android.sample.jetpack.architecture.ViewModelTest1Activity
 import com.github.android.sample.md.DrawerLayoutActivity
 import com.github.android.sample.provider.db.DBActivity1
 import com.github.android.sample.svg.SVG1Activity
@@ -158,7 +159,7 @@ class BaseFunItemTemplate private constructor(ctx: Context) {
             item {
                 pid = 0
                 id = 2
-                title = "自定义控件系列"
+                title = "自定义控件集成系列"
                 desc = "由浅入深介绍"
                 item {
                     pid = 2
@@ -318,6 +319,27 @@ class BaseFunItemTemplate private constructor(ctx: Context) {
                     title = "provider 数据库"
                     desc = "provider 数据库"
                     clazz = DBActivity1::class.java
+                }
+            }
+
+            // jetpack
+            item {
+                pid = 0
+                id = 7
+                title = "jetpack 使用"
+                desc = "jetpack 的使用"
+                item {
+                    id = 71
+                    pid = 7
+                    title = "architecture"
+                    desc = "architecture 架构"
+
+                    item {
+                        pid = 71
+                        title = "ViewModel"
+                        desc = "ViewModel 使用"
+                        clazz = ViewModelTest1Activity::class.java
+                    }
                 }
             }
         }

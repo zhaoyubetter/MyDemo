@@ -3,8 +3,8 @@ package com.github.android.sample.widget.recyler
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
 import android.widget.NumberPicker
+import androidx.appcompat.app.AlertDialog
 
 class NumberPickerDialog(ctx: Context, theme: Int = 0) : AlertDialog(ctx, theme), DialogInterface.OnClickListener {
 

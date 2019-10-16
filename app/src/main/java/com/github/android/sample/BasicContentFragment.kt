@@ -2,12 +2,12 @@ package com.github.android.sample
 
 import android.app.Activity
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.better.base.holder.Type1Holder
 import com.better.base.model.SampleItem
 import com.github.better.recycler.*
@@ -22,7 +22,7 @@ class BasicContentFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_basic_content, container, false)
-        recycler = view.find(R.id.recycler)
+        recycler = view.findViewById(R.id.recycler)
         return view
     }
 
@@ -37,7 +37,7 @@ class BasicContentFragment : Fragment() {
         // ExpandNode
         val curExpandNodes = mutableListOf<ExpandNode<SampleItem<Activity>>>()
         curItems?.forEach { it ->
-            val node = ExpandNode(it, 0, level == 1)
+            val node = ExpandNode(it, 0, false)
             curExpandNodes.add(node)                // 父节点
             // 孩子节点
             getData(it.id, mutableListOf(), level++)?.let {

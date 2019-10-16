@@ -1,8 +1,8 @@
 package com.github.android.sample.widget.recyler.layoutman
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 
 /**
  * 第一版，实现基本的 flowLayout，可以展示，但不能滑动
