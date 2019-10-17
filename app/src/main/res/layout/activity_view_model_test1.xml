@@ -7,20 +7,30 @@
     tools:context=".jetpack.architecture.ViewModelTest1Activity">
 
     <TextView
+        android:id="@+id/hello_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/hello_textview"/>
+        android:layout_centerVertical="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Hello World!"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Chronometer
         android:id="@+id/chronometer"
         android:layout_width="wrap_content"
-        android:layout_height="201dp"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/hello_textview"
         android:layout_centerHorizontal="true"
-        tools:layout_editor_absoluteX="182dp"
-        tools:layout_editor_absoluteY="166dp" />
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

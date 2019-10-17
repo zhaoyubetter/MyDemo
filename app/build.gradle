@@ -69,6 +69,8 @@ dependencies {
     implementation project(':app.annotation')
     implementation project(':app.annotation.api')
     // 如果工程中，引入了kt，需要将  annotationProcessor 修改成 kapt
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     kapt project(':app.annotation.compiler')
     // annotationProcessor project(':app.annotation.compiler')
 

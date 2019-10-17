@@ -6,7 +6,8 @@ import com.better.base.model.SampleItem
 import com.github.android.sample.activity_base.singleTask.SingleTaskMainTestActivity
 import com.github.android.sample.anim.*
 import com.github.android.sample.canvas_paint.*
-import com.github.android.sample.jetpack.architecture.ViewModelTest1Activity
+import com.github.android.sample.jetpack.*
+import com.github.android.sample.jetpack.architecture.*
 import com.github.android.sample.md.DrawerLayoutActivity
 import com.github.android.sample.provider.db.DBActivity1
 import com.github.android.sample.svg.SVG1Activity
@@ -337,8 +338,36 @@ class BaseFunItemTemplate private constructor(ctx: Context) {
                     item {
                         pid = 71
                         title = "ViewModel"
-                        desc = "ViewModel 使用"
+                        desc = "ViewModel 简单使用"
                         clazz = ViewModelTest1Activity::class.java
+                    }
+
+                    item {
+                        pid = 71
+                        title = "LiveData"
+                        desc = "LiveData 简单使用"
+                        clazz = LiveDataTest1Activity::class.java
+                    }
+
+                    item {
+                        pid = 71
+                        title = "Lifecycle"
+                        desc = "Lifecycle 简单使用"
+                        clazz = LifeCycleTest1Activity::class.java
+                    }
+
+                    item {
+                        pid = 71
+                        title = "LiveData实现数据通信"
+                        desc = "LiveData实现数据通信"
+                        clazz = SeekBarTestActivity::class.java
+                    }
+
+                    item {
+                        pid = 71
+                        title = "SavedState 示例"
+                        desc = "SavedState 示例"
+                        clazz = SavedStateActivity::class.java
                     }
                 }
             }
