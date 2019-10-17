@@ -546,7 +546,7 @@ public final class DatabaseHelper {
 
     /**
      * 创建表
-     *s @param clazz
+     * s @param clazz
      */
     static final void createTable(Class<?> clazz, final SQLiteDatabase db) {
         final Field[] fields = clazz.getDeclaredFields();
@@ -589,7 +589,7 @@ public final class DatabaseHelper {
             }
         }
         String tableName = DatabaseHelper.getTable(clazz);
-        String sql = "CREATE TABLE IF NOT EXISTS " + tableName + "(";
+        StringBuilder sql = new StringBuilder("CREATE TABLE IF NOT EXISTS ").append("`" + tableName + "`").append("(");
         // 字段主键只能有一个
         if (propPrimaryKeys.size() > 1) {
             throw new RuntimeException("table " + tableName + " has more than one primary key.");
@@ -597,7 +597,7 @@ public final class DatabaseHelper {
         if (propPrimaryKeys.size() == 1) {
             hasPrimaryKey = true;
             final Pair<String, Boolean> pair = propPrimaryKeys.get(0);
-            sql += (pair.first + " INTEGER PRIMARY KEY " + (pair.second ? "AUTOINCREMENT" : "") + ",");
+            sql.append("`" + pair.first + "`").append(" INTEGER PRIMARY KEY").append(pair.second ? "AUTOINCREMENT" : "").append(",");
         }
 
         // 获取联合主键设置
@@ -612,21 +612,21 @@ public final class DatabaseHelper {
         // 组织列信息
         int index = 0;
         for (Map.Entry<String, String> entry : fieldItems.entrySet()) {
-            sql += (entry.getKey() + " " + entry.getValue() + " " + (index++ != fieldItems.size() - 1 ? "," : " "));
+            sql.append("`" + entry.getKey() + "`").append(entry.getValue()).append(" ").append((index++ != fieldItems.size() - 1 ? "," : " "));
         }
         // 可能有多个主键时,设置联合主键
         if (unionPrimaryKeys != null && unionPrimaryKeys.length > 0) {
-            sql += (", PRIMARY KEY(");
+            sql.append(", PRIMARY KEY(");
             for (int i = 0; i < unionPrimaryKeys.length; i++) {
                 String key = unionPrimaryKeys[i];
-                sql += (key + (i != unionPrimaryKeys.length - 1 ? "," : "))"));
+                sql.append("`" + key  + "`").append(i != unionPrimaryKeys.length - 1 ? "," : "));");
             }
         } else {
-            sql += ")";
+            sql.append(");");
         }
         //创建建此表
-        Log.e("better", sql);
-        db.execSQL(sql);
+        Log.e("better", sql.toString());
+        db.execSQL(sql.toString());
     }
 
 }

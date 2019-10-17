@@ -29,7 +29,7 @@ class Cat(var number: Int = 0) {
 }
 
 // 联合主键测试
-@Table(value = "auth_entity", primaryKeys = ["appId, scope"])
+@Table(value = "auth_entity", primaryKeys = ["appId", "scope"])
 class AuthEntity {
     var id: Int = 0
     var appId = ""
