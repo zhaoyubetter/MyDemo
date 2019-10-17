@@ -36,6 +36,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_7
     }
 
+    // dataBinding
+    dataBinding {
+        enabled = true
+    }
 }
 
 
@@ -85,7 +89,6 @@ dependencies {
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycleVersion"
     annotationProcessor "androidx.room:room-compiler:$roomVersion"
     // ======= jetpack 相关  =======
-
 
     // 测试引入
 
