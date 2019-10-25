@@ -90,6 +90,8 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$roomVersion"
     // ======= jetpack 相关  =======
 
+    kapt 'com.android.databinding:compiler:3.0.0'
+
     // 测试引入
 
     //仪器测试用依赖

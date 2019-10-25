@@ -9,6 +9,7 @@ import com.github.android.sample.canvas_paint.*
 import com.github.android.sample.jetpack.*
 import com.github.android.sample.jetpack.architecture.*
 import com.github.android.sample.jetpack.databinding.DataBindTest1Activity
+import com.github.android.sample.jetpack.databinding.DataBindTest2Activity
 import com.github.android.sample.md.DrawerLayoutActivity
 import com.github.android.sample.provider.db.DBActivity1
 import com.github.android.sample.svg.SVG1Activity
@@ -383,6 +384,12 @@ class BaseFunItemTemplate private constructor(ctx: Context) {
                         title = "DataBinding 简单使用"
                         desc = "DataBinding 简单使用"
                         clazz = DataBindTest1Activity::class.java
+                    }
+                    item {
+                        pid = 72
+                        title = "DataBinding ObserableField"
+                        desc = "DataBinding 简单使用"
+                        clazz = DataBindTest2Activity::class.java
                     }
                 }
             }

@@ -5,11 +5,25 @@
 
     <!-- 使用变量 -->
     <data>
-        <import
-            type="com.github.android.sample.jetpack.databinding.DataBindTest1Activity.UserVO" />
+
+        <import type="com.github.android.sample.jetpack.databinding.DataBindTest1Activity.UserVO" />
+
+        <import type="com.github.android.sample.jetpack.databinding.DataBindTest1Activity.Goods" />
+        <!-- 其实不习惯写布局中写click事件 -->
+        <import type="com.github.android.sample.jetpack.databinding.DataBindTest1Activity.GoodsHandler" />
+
         <variable
             name="userVO"
             type="UserVO" />
+
+        <variable
+            name="goodsVO"
+            type="Goods" />
+
+        <variable
+            name="goodsHandler"
+            type="GoodsHandler" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,11 +38,13 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="@{userVO.name}"
+            android:text="@{userVO.name, default=better}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.521"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.259" />
 
         <TextView
             android:id="@+id/textView2"
@@ -37,12 +53,78 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="@{userVO.pwd}"
+            android:text="@{userVO.pwd, default=123}"
             app:layout_constraintBottom_toBottomOf="@+id/textView1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
+        <Button
+            android:id="@+id/btn_change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="change1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.026"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/mae_album_black_36"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <!-- 单项数据绑定 -->
+        <TextView
+            android:id="@+id/tv_goods_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{goodsVO.name}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line" />
+
+        <TextView
+            android:id="@+id/tv_goods_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="36dp"
+            android:text="@{goodsVO.detail}"
+            app:layout_constraintLeft_toRightOf="@+id/tv_goods_name"
+            app:layout_constraintTop_toBottomOf="@+id/line" />
+
+        <TextView
+            android:id="@+id/tv_goods_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="36dp"
+            android:text="@{String.valueOf(goodsVO.price)}"
+            app:layout_constraintLeft_toRightOf="@+id/tv_goods_detail"
+            app:layout_constraintTop_toBottomOf="@+id/line" />
+
+        <Button
+            android:id="@+id/btn_change2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:onClick="@{()->goodsHandler.changeGoodsName()}"
+            android:text="change2"
+            app:layout_constraintTop_toBottomOf="@+id/tv_goods_price" />
+
+        <Button
+            android:id="@+id/btn_change3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:onClick="@{()->goodsHandler.changeGoodsDetail()}"
+            android:text="change all"
+            app:layout_constraintTop_toBottomOf="@+id/btn_change2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
