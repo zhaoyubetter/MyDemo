@@ -23,9 +23,23 @@ import kotlinx.android.synthetic.main.activity_single_task_test.*
  *  此时新的任务栈为包名；
  *
  *
+ *
  *  launchMode为singleTask的作用仅仅只是：
  *  在启动一个singleTask的Activity实例时，如果系统中已经存在这样一个实例，
  *  就会将这个实例调度到任务栈的栈顶，并清除它当前所在任务中位于它上面的所有的activity。
+ *
+ *
+ *  ======= 补充学习资料：=======
+ *  查看任务栈命令：adb shell dumpsys activity (搜索：ACTIVITY MANAGER ACTIVITIES)
+ *  1. ActivityRecord : Activity 实例与 ActivityRecord 一一对应
+ *      packageName, processName, taskAffinity 等；
+ *  2. TaskRecord : 记录 Activity 开启的先后顺序，里面的 Activity 顺序不能动
+ *      ArrayList<ActivityRecord> mActivities;
+ *  3. ActivityStack : Activity 任务栈，维护 TaskRecord 列表，列表中的 TaskRecord 可以重排序；
+ *      ArrayList<TaskRecord> mTaskHistory
+ *  ==》ActivityStack 管理 TaskRecord, TaskRecord 管理 ActivityRecord; ActivityStack Activity 任务栈发挥着调度的作用；
+ *  ==》ActivityStack 表示亲和性的意思
+ *
  */
 class SingleTaskMainTestActivity : ToolbarActivity() {
 

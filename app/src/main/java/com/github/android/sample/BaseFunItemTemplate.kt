@@ -10,9 +10,11 @@ import com.github.android.sample.jetpack.*
 import com.github.android.sample.jetpack.architecture.*
 import com.github.android.sample.jetpack.databinding.DataBindTest1Activity
 import com.github.android.sample.jetpack.databinding.DataBindTest2Activity
+import com.github.android.sample.jetpack.databinding.DatabindTest3Activity
 import com.github.android.sample.md.DrawerLayoutActivity
 import com.github.android.sample.provider.db.DBActivity1
 import com.github.android.sample.svg.SVG1Activity
+import com.github.android.sample.tools.ToolAttributesTest1Activity
 
 /**
  * Created by zhaoyu on 2018/3/11.
@@ -390,6 +392,27 @@ class BaseFunItemTemplate private constructor(ctx: Context) {
                         title = "DataBinding ObserableField"
                         desc = "DataBinding 简单使用"
                         clazz = DataBindTest2Activity::class.java
+                    }
+
+                    item {
+                        pid = 72
+                        title = "DataBinding BindingAdapter"
+                        desc = "DataBinding BindingAdapter"
+                        clazz = DatabindTest3Activity::class.java
+                    }
+                }
+
+                item {
+                    id = 73
+                    pid = 7
+                    title = "工具相关"
+                    desc = "Google提供的一些工具"
+
+                    item {
+                        pid = 73
+                        title = "Tools Attributes"
+                        desc = "Tools Attributes"
+                        clazz = ToolAttributesTest1Activity::class.java
                     }
                 }
             }

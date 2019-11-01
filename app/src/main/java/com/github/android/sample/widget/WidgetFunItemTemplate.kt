@@ -218,7 +218,7 @@ class WidgetFunItemTemplate private constructor(ctx: Context) {
 
             item {
                 pid = 0
-                id = 4
+                id = 5
                 title = "JSBrige"
                 desc = "native h5 双向通信方案"
                 clazz = JSBrigeActivity::class.java

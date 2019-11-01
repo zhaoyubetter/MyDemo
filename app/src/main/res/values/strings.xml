@@ -1,8 +1,9 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">MyDemo</string>
 
 
-    <string name="title_section1">Vertical List</string>
+    <!-- 配置只支持一个语言 -->
+    <string name="title_section1" tools:ignore="MissingTranslation">Vertical List</string>
     <string name="title_section2">Horizontal List</string>
     <string name="title_section3">Vertical Grid</string>
     <string name="title_section4">Vertical Staggered Grid</string>

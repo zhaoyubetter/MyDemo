@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.github.android.sample.jetpack.databinding.DatabindTest3Activity.Image" />
+        <import type="com.github.android.sample.jetpack.databinding.DatabindTest3Activity.Handler" />
+
+        <variable
+            name="image"
+            type="Image" />
+
+        <variable
+            name="handler"
+            type="Handler" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/img_7645" />
+        <Button
+            android:onClick="@{()->handler.onClick(image)}"
+            android:text='改变图片Url'
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</layout>

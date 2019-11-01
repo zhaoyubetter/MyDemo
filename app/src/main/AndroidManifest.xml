@@ -21,7 +21,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".jetpack.databinding.DataBindTest2Activity"></activity>
+        <activity android:name=".jetpack.databinding.DatabindTest3Activity"></activity>
+        <activity android:name=".tools.ToolAttributesTest1Activity" />
+        <activity android:name=".jetpack.databinding.DataBindTest2Activity" />
         <activity android:name=".jetpack.databinding.DataBindTest1Activity" />
         <activity android:name=".jetpack.architecture.SavedStateActivity" />
         <activity android:name=".jetpack.architecture.SeekBarTestActivity" />
