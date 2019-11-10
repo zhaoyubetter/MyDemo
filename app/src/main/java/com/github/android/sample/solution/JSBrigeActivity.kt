@@ -8,6 +8,8 @@ import com.github.android.sample.R
 import org.jetbrains.anko.find
 import android.webkit.JsPromptResult
 import android.webkit.WebChromeClient
+import kotlinx.android.synthetic.main.activity_jsbrige.*
+import org.json.JSONObject
 
 
 class JSBrigeActivity : ToolbarActivity() {
@@ -28,6 +30,13 @@ class JSBrigeActivity : ToolbarActivity() {
             settings.javaScriptEnabled = true
             webChromeClient = JSBridgeWebChromeClient()
             loadUrl("file:///android_asset/h5/jsBrige.html") //
+        }
+
+        // 原生调用js
+        btn_call_js.setOnClickListener {
+            val json = "{'data':'11233'}"
+            JSBridge.callH5(webview, "testH5Func", JSONObject(json))
+//            webview.loadUrl("javascript:JSBridge._handleMessageFromNative($json);")
         }
     }
 }

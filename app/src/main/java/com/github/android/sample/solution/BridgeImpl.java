@@ -1,5 +1,6 @@
 package com.github.android.sample.solution;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -116,4 +117,30 @@ public class BridgeImpl implements IBrige {
         }
         return null;
     }
+
+
+    /**
+     * 调用H5页面的制定方法
+     * 参数：
+     * param1：参数1
+
+    public static void callH5Func(final Activity webLoader, WebView wv, JSONObject param, final Callback callback) {
+        final String handleName = param.optString("handleName");
+        wv.post(new Runnable() {
+            public void run() {
+                //做一些自己的操作，操作完毕后将值通过回调回传给h5页面
+                try {
+                    JSONObject object = new JSONObject();
+                    object.put("param1", "传给h5的参数~");
+                    //主动调用h5中注册的方法
+                    callback.apply(getJSONObject(0, "ok", object));
+                    callback.call(webLoader, handleName, JSBridge.getSuccessJSONObject(object));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+     */
+
 }
