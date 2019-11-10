@@ -4,14 +4,15 @@ import android.net.Uri
 import android.os.Build
 import android.text.TextUtils
 import android.webkit.JsPromptResult
-import android.webkit.ValueCallback
-import android.webkit.WebChromeClient
 import android.webkit.WebView
-import androidx.annotation.Keep
+import android.webkit.WebChromeClient
 import org.json.JSONObject
 import java.lang.ref.WeakReference
 import java.lang.reflect.Method
 import java.lang.reflect.Modifier
+import android.webkit.ValueCallback
+import androidx.annotation.Keep
+import androidx.annotation.RequiresApi
 
 
 // 协议格式如下：
@@ -41,20 +42,44 @@ class Callback(webView: WebView, private val port: String) {
     private val webViewRef: WeakReference<WebView> = WeakReference(webView)
 
     companion object {
-        val CALLBACK_JS_FORMAT = "javascript:JSBridge._handleMessageFromNative('%s');"
+        val CALLBACK_JS_FORMAT = "javascript:JSBridge.onFinish('%s', %s);"
     }
 
     fun apply(jsonObject: JSONObject) {
-        val execJs = String.format(CALLBACK_JS_FORMAT, jsonObject.toString())
+        val execJs = String.format(CALLBACK_JS_FORMAT, port, jsonObject.toString())
         webViewRef?.get()?.apply {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {   // 4.4含以上
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {   // 4.4含以上
                 evaluateJavascript(execJs, object : ValueCallback<String> {
                     override fun onReceiveValue(value: String?) {
                         // TODO://
                     }
                 })
             } else {
-                post { loadUrl(execJs) }
+                post{loadUrl(execJs) }
+            }
+        }
+    }
+}
+
+@Keep
+class CallH5Callback(webView: WebView) {
+    private val webViewRef: WeakReference<WebView> = WeakReference(webView)
+
+    companion object {
+        val CALLBACK_JS_FORMAT = "javascript:JSBridge._handleMessageFromNative('%s');"
+    }
+
+    fun apply(jsonObject: JSONObject) {
+        val execJs = String.format(CALLBACK_JS_FORMAT,jsonObject.toString())
+        webViewRef?.get()?.apply {
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {   // 4.4含以上
+                evaluateJavascript(execJs, object : ValueCallback<String> {
+                    override fun onReceiveValue(value: String?) {
+                        // TODO://
+                    }
+                })
+            } else {
+                post{loadUrl(execJs) }
             }
         }
     }
@@ -139,7 +164,7 @@ internal class JSBridge {
         // 原生调用 h5，调用格式："{'handlerName':'testH5Func', 'data':'11233'}"
         fun callH5(webView: WebView, method: String, data: JSONObject) {
             val json = data.put("handlerName", method)
-            Callback(webView, "").apply(json)
+            CallH5Callback(webView).apply(json)
         }
     }
 }

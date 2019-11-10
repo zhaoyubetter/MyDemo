@@ -136,6 +136,7 @@
     //注册一个测试函数( 原生调用 h5)
     JSBridge.registerHandler('testH5Func', function(data) {
         alert('测试函数接收到数据:' + JSON.stringify(data));
+        return "ok-处理完毕";
     });
 
 })(window);
