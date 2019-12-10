@@ -17,8 +17,8 @@ import kotlinx.android.synthetic.main.activity_single_task_test.*
  *  如果对方activity配置了launchMode为singleTask，则新栈中只能出现一个activity示例；
  *  如果没配置launchMode为singleTask，跟普通Activity没区别了；
  *
- *  如果配置了launchMode为singleTask，启动时，没有传递 Intent.FLAG_ACTIVITY_NEW_TASK，那么这个Activity
- *  跟普通的Activity没有区别，该 Activity 可以启动多次。
+ *
+ *
  *
  *  Intent.FLAG_ACTIVITY_NEW_TASK的作用：
  *  如果不配置 taskAffinity 属性，则不会创建新的任务栈，直接使用parent的任务栈；
@@ -31,6 +31,9 @@ import kotlinx.android.synthetic.main.activity_single_task_test.*
  *  在启动一个singleTask的Activity实例时，如果系统中已经存在这样一个实例，
  *  就会将这个实例调度到任务栈的栈顶，并清除它当前所在任务中位于它上面的所有的activity。
  *
+ *
+ *  onActivityResult() 返回失败问题
+ *  如果传递 Intent.FLAG_ACTIVITY_NEW_TASK onActivityResult 将失效。这是什么逻辑
  *
  *  ======= 补充学习资料：=======
  *  查看任务栈命令：adb shell dumpsys activity (搜索：ACTIVITY MANAGER ACTIVITIES)
