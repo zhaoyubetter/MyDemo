@@ -41,7 +41,8 @@
         <activity
             android:name=".activity_base.singleTask.SingleInstanceActivity"
             android:launchMode="singleInstance" />
-        <activity android:name=".activity_base.singleTask.OtherActivity" />
+        <activity android:name=".activity_base.singleTask.OtherActivity"
+            android:taskAffinity=".better" />
         <activity
             android:name=".activity_base.singleTask.SingleTaskActivity"
             android:launchMode="singleTask"

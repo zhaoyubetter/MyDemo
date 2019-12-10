@@ -40,6 +40,11 @@ android {
     dataBinding {
         enabled = true
     }
+
+    //使用生成文件
+    kapt {
+        generateStubs = true
+    }
 }
 
 

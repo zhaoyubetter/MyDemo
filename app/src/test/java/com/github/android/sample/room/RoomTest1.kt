@@ -1,7 +1,7 @@
 package com.github.android.sample.room
 
-import android.arch.persistence.room.Room
 import android.content.Context
+import androidx.room.Room
 //import android.support.test.InstrumentationRegistry
 import com.github.android.sample.widget.room.AppDatabase
 import com.github.android.sample.widget.room.MobilePhone
