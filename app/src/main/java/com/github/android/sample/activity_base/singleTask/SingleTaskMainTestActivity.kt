@@ -17,6 +17,9 @@ import kotlinx.android.synthetic.main.activity_single_task_test.*
  *  如果对方activity配置了launchMode为singleTask，则新栈中只能出现一个activity示例；
  *  如果没配置launchMode为singleTask，跟普通Activity没区别了；
  *
+ *  如果配置了launchMode为singleTask，启动时，没有传递 Intent.FLAG_ACTIVITY_NEW_TASK，那么这个Activity
+ *  跟普通的Activity没有区别，该 Activity 可以启动多次。
+ *
  *  Intent.FLAG_ACTIVITY_NEW_TASK的作用：
  *  如果不配置 taskAffinity 属性，则不会创建新的任务栈，直接使用parent的任务栈；
  *  如果使用applicationContext来启动目标，由于applicationContext没有任务栈，所以需要添加 Intent.FLAG_ACTIVITY_NEW_TASK，
