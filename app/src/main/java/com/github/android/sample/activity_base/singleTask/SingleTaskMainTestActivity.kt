@@ -12,9 +12,6 @@ import kotlinx.android.synthetic.main.activity_single_task_test.*
  *  同理如果配置launchMode为singleTask，如果不配置 taskAffinity 则不会启动新的任务栈；
  *  可见 taskAffinity 属性是多么重要；
  *
- *  如果清单中：配置了 singleTask，并配置了 taskAffinity,如果启动时，不传递 Intent.FLAG_ACTIVITY_NEW_TASK
- *  taskAffinity 不起作用。
- *
  *  实验证明：
  *  前提：如果启动Intent添加flags = Intent.FLAG_ACTIVITY_NEW_TASK：
  *  如果对方activity配置了launchMode为singleTask，则新栈中只能出现一个activity示例；
