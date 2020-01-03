@@ -1,17 +1,16 @@
 package com.github.android.sample.problem.webview
 
 import android.os.Bundle
-import android.webkit.WebView
 import com.better.base.ToolbarActivity
 import com.github.android.sample.R
 import android.graphics.Bitmap
 import android.net.Uri
+import android.util.Log
 import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.webkit.WebViewClient
-import android.webkit.WebSettings
+import android.webkit.*
 import kotlinx.android.synthetic.main.activity_web_view_swipe_conflict.*
 
 /**
@@ -26,8 +25,8 @@ class WebViewSwipeConflictActivity : ToolbarActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_web_view_swipe_conflict)
         setWebView(webview)
-        webview.loadUrl("http://m.jd.com")
-        webview.reload()
+//        webview.loadUrl("https://www.baidu.com")
+        webview.loadUrl("file:///android_asset/h5/jsBrige.html") //
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -39,7 +38,7 @@ class WebViewSwipeConflictActivity : ToolbarActivity() {
         when (item?.itemId) {
             R.id.action_forbidden -> {       // 禁用下拉
                 isRefresh = !isRefresh
-                webview.loadUrl(if (isRefresh) "http://m.jd.com" else "http://m.jd.com?refresh=no")
+                webview.loadUrl(if (isRefresh) "https://www.baidu.com" else "https://www.baidu.com?refresh=no")
             }
         }
         return super.onOptionsItemSelected(item)
@@ -77,12 +76,44 @@ class WebViewSwipeConflictActivity : ToolbarActivity() {
             }
 
             // 链接跳转都会走这个方法
+            // 当前webview要加载下一个h5页面时调用，可以截取并通过return值确定是否要本地处理或者交给webview处理，他不拦截资源加载，如：js、css；
+            // 参考：https://juejin.im/post/5a5d8ef2f265da3e393a6b76
+            //      https://www.jianshu.com/p/3474cb8096da
+            // ==》 此方法并非阻止WebView loadUrl时调用系统浏览器
+            // ==》若想让WebView loadUrl时，不会调用系统浏览器，需要设置自定的WebViewClient
+            // 重写该方法是为了：主要是给WebView提供时机，让其选择是否对UrlLoading进行拦截。 True（拦截WebView加载Url），False（允许WebView加载Url）
+
+            /**
+             * WebView的前进、后退、刷新、以及post请求都不会调用shouldOverrideUrlLoading方法，
+             * 除去以上行为，还得满足（ ! isLoadUrl || isRedirect） 即 （不是通过webView.loadUrl来加载的 或者 是重定向） 这个条件，
+             * 才会调用shouldOverrideUrlLoading方法。
+             * 经测试，以下请求会走此方法：
+             * <a href="#" onclick="javascript:window.location.reload() ;">刷新</a> <br>
+             * <a href="https://www.baidu.com">baidu</a> <br>
+             * <a href="#" onclick="javascript:window.location.href='https://www.google.com'">google</a> <br>
+             * <a href="test1.html">test1</a> <br>
+             */
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                view.loadUrl(url)   // 强制在当前 WebView 中加载 url
-                Uri.parse(url).apply {
-                    swipe.isEnabled = ("no" != this.getQueryParameter("refresh"))
-                }
-                return true
+                Log.d("better", "url:$url")
+
+//                view.loadUrl(url)   // 强制在当前 WebView 中加载 url
+//
+//                Uri.parse(url).apply {
+//                    swipe.isEnabled = ("no" != this.getQueryParameter("refresh"))
+//                }
+//                return true
+                /**
+                该方法返回 true ，则说明由应用的代码处理该 url，WebView 不处理，也就是程序员自己做处理。
+                方法返回 false，则说明由 WebView 处理该 url，即用 WebView 加载该 url。
+                 */
+                return false
+            }
+
+            // h5页面请求如.js等资源文件的时调用，可以截取并更换资源文件（用native资源替换h5页面的资源）
+            //一个h5页面可能会有多个资源文件请求。
+            override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest?): WebResourceResponse? {
+                Log.d("better", "request: ${request?.url}")
+                return super.shouldInterceptRequest(view, request)
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
