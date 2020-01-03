@@ -92,6 +92,7 @@ class WebViewSwipeConflictActivity : ToolbarActivity() {
              * <a href="https://www.baidu.com">baidu</a> <br>
              * <a href="#" onclick="javascript:window.location.href='https://www.google.com'">google</a> <br>
              * <a href="test1.html">test1</a> <br>
+             * <a href="qzzl://qzzl.open">自定义协议</a> <br>
              */
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                 Log.d("better", "url:$url")
