@@ -15,6 +15,10 @@ import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.textView
 import java.util.*
 
+/**
+ * messenger 是排队执行任务，并不是真正意义上的阻塞，并等待 service 结果返回啊
+ * 一定要记住啊
+ */
 class Messenger2Activity : ToolbarActivity() {
 
     // 2个messenger对象
@@ -117,7 +121,9 @@ class Messenger2Activity : ToolbarActivity() {
                     }
                     replyTo = getReplyMessenger
                 }
+                d("发送了 start")
                 messenger?.send(msg)
+                d("发送了 end")
             }
         }
 

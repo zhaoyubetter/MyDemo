@@ -5,10 +5,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
-import android.os.Bundle
-import android.os.IBinder
-import android.os.Message
-import android.os.Messenger
+import android.os.*
 import com.better.base.*
 import com.github.android.sample.R
 import kotlinx.android.synthetic.main.activity_messenger.*
@@ -20,6 +17,7 @@ class MessengerActivity : ToolbarActivity() {
 
     private var messenger: Messenger? = null
 
+    // 有内存泄露问题，内部类
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             if (service.isNotNull()) {
@@ -37,13 +35,10 @@ class MessengerActivity : ToolbarActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_messenger)
-        setTitleFromIntent(intent)
 
         //  bind service
         btn_bind.setOnClickListener {
-            Intent(this@MessengerActivity, MessengerService::class.java).apply {
-                bindService(this, connection, Context.BIND_AUTO_CREATE)
-            }
+            bindService(Intent(this@MessengerActivity, MessengerService::class.java), connection, Context.BIND_AUTO_CREATE)
         }
 
         // 发送消

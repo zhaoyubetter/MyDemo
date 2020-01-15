@@ -116,6 +116,8 @@ class ForecaseActivity : ToolbarActivity() {
             val bundle = Bundle().apply {
                 putParcelable("book", book)
             }
+
+            // 调用远程服务，并挂起当前线程，服务端处理完毕后，继续执行
             foreInterface?.transactSync(bundle)
             e(book.toString())
 

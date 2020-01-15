@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.IBinder
+import android.os.SystemClock
 import com.better.base.e
 import com.github.android.sample.Book
 import com.github.android.sample.ForecaseEntity
@@ -30,6 +31,7 @@ class ForecaseService : Service() {
             book.bookId = book.bookId + 550   // 这里修改，客户端不会生效的；
         }
 
+        // aidl 接口运行在 Binder 线程池中：Binder:13014_1
         override fun transactSync(bundle: Bundle) {
             bundle.classLoader = ForecaseService::class.java.classLoader
             val book = bundle.getParcelable<Book>("book")
