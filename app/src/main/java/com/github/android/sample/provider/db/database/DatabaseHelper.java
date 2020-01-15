@@ -538,8 +538,12 @@ public final class DatabaseHelper {
      * @param dbName dbName
      */
     public final void resetDatabase(String dbName) {
-        final Uri uri = Uri.parse("content://" + appContext.getPackageName());
-        appContext.getContentResolver().call(uri, DatabaseProvider.RESET_DB, dbName, null);
+        try {
+            final Uri uri = Uri.parse("content://" + appContext.getPackageName());
+            appContext.getContentResolver().call(uri, DatabaseProvider.RESET_DB, dbName, null);
+        } catch (Exception e) {
+            // 极少崩溃，外界调用，应避免一开始就调用 provider 的方法，避免provider未初始化完成
+        }
     }
 
     // SqliteHelper#onCreate() 生成数据表

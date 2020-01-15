@@ -91,7 +91,7 @@ public abstract class DatabaseProvider extends ContentProvider {
         //初始化 DatabaseHelper对象
         DatabaseHelper.init(context);
         //初始化数据库对象
-        sqLiteOpenHelper = getSQLiteHelper(context, getInitDbName());
+//        sqLiteOpenHelper = getSQLiteHelper(context, getInitDbName());
         return true;
     }
 
