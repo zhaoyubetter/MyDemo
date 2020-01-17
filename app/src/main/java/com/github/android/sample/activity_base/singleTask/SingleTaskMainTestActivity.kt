@@ -36,7 +36,7 @@ import kotlinx.android.synthetic.main.activity_single_task_test.*
  *  如果传递 Intent.FLAG_ACTIVITY_NEW_TASK onActivityResult 将失效。这是什么逻辑
  *
  *  ======= 补充学习资料：=======
- *  查看任务栈命令：adb shell dumpsys activity (搜索：ACTIVITY MANAGER ACTIVITIES)
+ *  查看任务栈命令: adb shell dumpsys activity activities (搜索： Running activities (most recent first):)
  *  1. ActivityRecord : Activity 实例与 ActivityRecord 一一对应
  *      packageName, processName, taskAffinity 等；
  *  2. TaskRecord : 记录 Activity 开启的先后顺序，里面的 Activity 顺序不能动
@@ -46,6 +46,10 @@ import kotlinx.android.synthetic.main.activity_single_task_test.*
  *  ==》ActivityStack 管理 TaskRecord, TaskRecord 管理 ActivityRecord; ActivityStack Activity 任务栈发挥着调度的作用；
  *  ==》ActivityStack 表示亲和性的意思
  *
+ *  ========= 自我总结 ======
+ *  1. 如果在一个 activity A （taskAffinity 为 tA） 上打开其他 activity 如 B (taskAffinity 为包名)，那么 B 则会在 A 的任务栈里头；
+ *  2. 如果打开时，添加 Intent.FLAG_ACTIVITY_NEW_TASK 标记，则 B 会回到自己的任务栈里头（即：taskAffinity 为包名的任务栈），如果任务栈名存在，
+ *     这就会造成 B 返回时，栈返回问题；
  */
 class SingleTaskMainTestActivity : ToolbarActivity() {
 
