@@ -17,6 +17,7 @@ import com.github.android.sample.svg.SVG1Activity
 import com.github.android.sample.tools.ToolAttributesTest1Activity
 import view.BaseViewCoordinateActivity
 import view.BaseViewScrollActivity
+import view.BaseViewTouchAnimActivity
 import view.BaseViewXAndTranslationXActivity
 
 /**
@@ -443,6 +444,12 @@ class BaseFunItemTemplate private constructor(ctx: Context) {
                     title = "setX setTranslationX diff"
                     desc = "setX setTranslationX diff"
                     clazz = BaseViewXAndTranslationXActivity::class.java
+                }
+                item {
+                    pid = 8
+                    title = "随着手指滑动"
+                    desc = "随着手指滑动"
+                    clazz = BaseViewTouchAnimActivity::class.java
                 }
             }
         }
