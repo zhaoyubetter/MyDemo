@@ -15,6 +15,9 @@ import com.github.android.sample.md.DrawerLayoutActivity
 import com.github.android.sample.provider.db.DBActivity1
 import com.github.android.sample.svg.SVG1Activity
 import com.github.android.sample.tools.ToolAttributesTest1Activity
+import view.BaseViewCoordinateActivity
+import view.BaseViewScrollActivity
+import view.BaseViewXAndTranslationXActivity
 
 /**
  * Created by zhaoyu on 2018/3/11.
@@ -414,6 +417,32 @@ class BaseFunItemTemplate private constructor(ctx: Context) {
                         desc = "Tools Attributes"
                         clazz = ToolAttributesTest1Activity::class.java
                     }
+                }
+            }
+
+            // view base
+            item {
+                pid = 0
+                id = 8
+                title = "View 基础知识"
+                desc = "View 基础知识"
+                item {
+                    pid = 8
+                    title = "View 的坐标"
+                    desc = "Android 坐标与视图坐标"
+                    clazz = BaseViewCoordinateActivity::class.java
+                }
+                item {
+                    pid = 8
+                    title = "View 的ScrollTo/By与ScrollX/Y"
+                    desc = "View 的ScrollTo/By与ScrollX/Y"
+                    clazz = BaseViewScrollActivity::class.java
+                }
+                item {
+                    pid = 8
+                    title = "setX setTranslationX diff"
+                    desc = "setX setTranslationX diff"
+                    clazz = BaseViewXAndTranslationXActivity::class.java
                 }
             }
         }

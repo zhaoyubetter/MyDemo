@@ -1,0 +1,66 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/tv_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="info" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <Button
+            android:id="@+id/btn_x"
+            android:layout_width="36dp"
+            android:layout_height="wrap_content"
+            android:text="X" />
+
+        <Button
+            android:id="@+id/btn_translate_x"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TranslationX" />
+
+        <Button
+            android:id="@+id/btn_lp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="布局改变" />
+
+        <Button
+            android:id="@+id/btn_revert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="还原" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#18000000">
+
+        <TextView
+            android:id="@+id/tv_base"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="16dp"
+            android:background="@color/blue_27"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="demo" />
+    </LinearLayout>
+
+</LinearLayout>
