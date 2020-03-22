@@ -13,40 +13,24 @@
         android:layout_weight="1"
         android:background="#12000000">
 
-        <view.testView.AutoScrollBackView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="28dp"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="500dp"
-                    android:scaleType="fitXY"
-                    android:src="@mipmap/animal_" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="100dp"
-                    android:text="ok" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="100dp"
-                    android:text="ok" />
-            </LinearLayout>
-
-        </view.testView.AutoScrollBackView>
-
     </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:orientation="horizontal"></LinearLayout>
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_base"
+            android:layout_width="62dp"
+            android:layout_height="wrap_content"
+            android:text="阻尼回弹" />
+
+        <Button
+            android:id="@+id/btn_pullDown"
+            android:layout_width="62dp"
+            android:layout_height="wrap_content"
+            android:text="下拉view" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/headerView"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_marginTop="-150dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/animal_" />
+
+
+    <view.testView.PullScrollView
+        android:id="@+id/pullView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TableLayout
+            android:layout_marginTop="150dp"
+            android:id="@+id/tableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </view.testView.PullScrollView>
+</FrameLayout>
+
