@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>JSBridge</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1, user-scalable=no"/>
+    <script src="file:///android_asset/h5/JSBridge.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var mycars = new Array()
+        mycars[0] = "/storage/emulated/0/DCIM/Camera/IMG_20200306_122040.jpg";
+        mycars[1] = "/storage/emulated/0/DCIM/Camera/IMG_20200306_122038.jpg";
+        mycars[2] = "/storage/emulated/0/DCIM/Camera/IMG_20200306_122036.jpg";
+        mycars[3] = "/storage/emulated/0/DCIM/Camera/IMG_20200306_122033.jpg";
+        mycars[4] = "/storage/emulated/0/DCIM/Camera/IMG_20200306_122031.jpg";
+        mycars[5] = "/storage/emulated/0/DCIM/Camera/IMG_20200306_122028.jpg";
+        mycars[6] = "/storage/emulated/0/DCIM/Camera/IMG_20200305_110500.jpg";
+        mycars[7] = "/storage/emulated/0/DCIM/Camera/IMG_20200305_110418.jpg";
+        mycars[8] = "/storage/emulated/0/DCIM/Camera/IMG_20200302_145109.jpg";
+        function createImg() {
+            var img=new Image();
+            img.width = 100;
+            img.height = 100;
+            img.src= mycars[Math.ceil(Math.random()*9)];
+            document.body.parentNode.appendChild(img);
+        }
+        /*
+         /storage/emulated/0/DCIM/Camera/IMG_20200306_122040.jpg,
+         /storage/emulated/0/DCIM/Camera/IMG_20200306_122038.jpg,
+         /storage/emulated/0/DCIM/Camera/IMG_20200306_122036.jpg,
+         /storage/emulated/0/DCIM/Camera/IMG_20200306_122033.jpg,
+         /storage/emulated/0/DCIM/Camera/IMG_20200306_122031.jpg,
+          /storage/emulated/0/DCIM/Camera/IMG_20200306_122028.jpg,
+           /storage/emulated/0/DCIM/Camera/IMG_20200305_110500.jpg,
+           /storage/emulated/0/DCIM/Camera/IMG_20200305_110418.jpg,
+            /storage/emulated/0/DCIM/Camera/IMG_20200302_145109.jpg
+
+        */
+    </script>
+    <style>
+    </style>
+</head>
+
+<body>
+<div style="background-color:#ffccff; height: 24px; width:360px"></div>
+<div>
+    <h3>JSBridge 测试</h3>
+</div>
+<ul class="list">
+
+    <br/>
+
+    <li>
+        <div>
+            <button onclick="javascript:createImg('/storage/emulated/0/DCIM/Camera/IMG_20200306_122040.jpg');">
+                获取图片并显示
+            </button>
+        </div>
+    </li>
+    <br/>
+</ul>
+<br>
+
+</body>
+</html>

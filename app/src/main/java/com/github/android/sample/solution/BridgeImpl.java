@@ -8,10 +8,15 @@ import android.os.Build;
 import android.webkit.WebView;
 import android.widget.Toast;
 
+import com.github.android.sample.third.GlideEngine;
+import com.yu.bundles.album.AlbumListener;
+import com.yu.bundles.album.MaeAlbum;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,6 +48,7 @@ public class BridgeImpl implements IBrige {
         map.put("toast", "showToast");
         map.put("dialog", "showDialog");
         map.put("album", "openAlbum");
+        map.put("album2", "openAlbum2");
         return map;
     }
 
@@ -103,6 +109,27 @@ public class BridgeImpl implements IBrige {
             intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
         }
         webView.getContext().startActivity(intent);
+    }
+
+    public final static void openAlbum2(final WebView webView, final JSONObject param, final Callback callback) {
+        MaeAlbum.setImageEngine(new GlideEngine());
+        MaeAlbum.from((Activity) webView.getContext()).forResult(new AlbumListener() {
+            @Override
+            public void onSelected(List<String> list) {
+                JSONObject object = new JSONObject();
+                try {
+                    object.put("key", list.get(0));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                callback.apply(getJSONObject(0, "ok", object));
+            }
+
+            @Override
+            public void onFull(List<String> list, String s) {
+
+            }
+        });
     }
 
     private final static JSONObject getJSONObject(int code, String msg, JSONObject result) {

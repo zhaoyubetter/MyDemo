@@ -6,12 +6,21 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".solution.JSBrigeActivity">
-
-    <Button
-        android:id="@+id/btn_call_js"
-        android:text="原生调用js"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btn_call_js"
+            android:text="原生调用js"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btn_load_img"
+            android:text="加载本地图片"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
     <WebView
         android:id="@+id/webview"
