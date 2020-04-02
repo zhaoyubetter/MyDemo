@@ -21,7 +21,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="view.BaseViewXAndTranslationXActivity"></activity>
+        <activity android:name=".thridlib.tencent.TencentLbsActivity"></activity>
+        <activity android:name="view.BaseViewXAndTranslationXActivity" />
         <activity android:name="view.BaseViewScrollActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -30,7 +31,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="view.BaseViewCoordinateActivity"></activity>
+        <activity android:name="view.BaseViewCoordinateActivity" />
         <activity android:name=".jetpack.databinding.DatabindTest3Activity" />
         <activity android:name=".tools.ToolAttributesTest1Activity" />
         <activity android:name=".jetpack.databinding.DataBindTest2Activity" />
@@ -173,6 +174,12 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".problem.webview.WebViewSwipeConflictActivity" />
         <activity android:name=".ipc.resultreceiver.ResultReceiverTest1Activity" />
+
+        <!-- location -->
+        <meta-data
+            android:name="TencentMapSDK"
+            android:value="EXLBZ-B7TH5-CTZIK-QNQFR-76OGO-GNFCS" />
+
     </application>
 
 </manifest>

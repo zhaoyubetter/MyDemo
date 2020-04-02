@@ -27,6 +27,7 @@ buildscript {
         mavenLocal()
         maven { url 'https://maven.aliyun.com/repository/jcenter' }
         maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url "https://oss.sonatype.org/content/groups/public" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.1'
@@ -40,6 +41,8 @@ allprojects {
         mavenLocal()
         maven { url 'https://maven.aliyun.com/repository/jcenter' }
         maven { url 'https://maven.aliyun.com/repository/google' }
+        // 使用腾讯地图
+        maven { url "https://oss.sonatype.org/content/groups/public" }
         maven {url 'https://jitpack.io'}
     }
 }

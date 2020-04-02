@@ -13,6 +13,7 @@ android {
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk { abiFilters "armeabi", "x86" }
     }
     buildTypes {
         release {
@@ -97,7 +98,10 @@ dependencies {
 
     kapt 'com.android.databinding:compiler:3.0.0'
 
-    // 测试引入
+    // 第三方lib
+    implementation 'com.tencent.map.geolocation:TencentLocationSdk-openplatform:7.2.5'   // 定位
+    //这里始终使用最新的稳定版本，用户也可以指定 4.0.3.2 之后的地图 sdk 版本号
+    implementation 'com.tencent.map:tencent-map-vector-sdk:latest.release'  // 地图
 
     //仪器测试用依赖
     androidTestImplementation 'com.android.support:support-annotations:27.1.1'

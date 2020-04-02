@@ -6,13 +6,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.github.android.sample.problem.ProblemContentFragment
+import com.github.android.sample.thridlib.ThirdLibFragment
 import com.github.android.sample.widget.WidgetContentFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 //@ContainerOptions(cache = CacheImplementation.NO_CACHE)
 class MainActivity : AppCompatActivity() {
 
-    val tabTitle = listOf("基础部分", "进阶", "问题", "项目实战")
+    val tabTitle = listOf("基础部分", "进阶", "问题", "第三方lib")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         val base = BasicContentFragment()
         val improve = WidgetContentFragment()
         val problem = ProblemContentFragment()
-        val project = WidgetContentFragment()
+        val project = ThirdLibFragment()
         val fragments = listOf<Fragment>(base, improve, problem, project)
         val adapter = TabContentAdapter(supportFragmentManager, fragments, tabTitle)
         viewPager.adapter = adapter
