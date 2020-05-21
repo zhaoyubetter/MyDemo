@@ -3,6 +3,7 @@ package com.github.android.sample.thridlib
 import android.app.Activity
 import android.content.Context
 import com.better.base.model.SampleItem
+import com.github.android.sample.concurrent.WorkThreadActivity
 import com.github.android.sample.ipc.aidl.BookManager2Activity
 import com.github.android.sample.ipc.aidl.BookManager3Activity
 import com.github.android.sample.ipc.aidl.BookManagerActivity
@@ -67,6 +68,21 @@ class ThirdLibFunItemTemplate private constructor(ctx: Context) {
                     title = "腾讯定位服务"
                     desc = "腾讯定位服务"
                     clazz = TencentLbsActivity::class.java
+                }
+            }
+
+            item {
+                pid = 0
+                id = 2
+                title = "并发"
+                desc = "并发问题"
+
+                item {
+                    pid = 2
+                    id = 21
+                    title = "WorkThread"
+                    desc = "WorkThread"
+                    clazz = WorkThreadActivity::class.java
                 }
             }
         }
