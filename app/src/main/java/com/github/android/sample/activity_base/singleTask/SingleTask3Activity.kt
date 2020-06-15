@@ -8,26 +8,19 @@ import com.github.android.sample.R
 import kotlinx.android.synthetic.main.activity_single_task.*
 
 /**
- * SingleTaskActivity 是否在新的任务栈，需要配置一下：taskAffinity
- *
+ * 这里按返回键会回到主task,而不是 SingleTask2Activity
  */
-class SingleTaskActivity : ToolbarActivity() {
+class SingleTask3Activity : ToolbarActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_single_task)
+        setContentView(R.layout.activity_single_3task)
 
-        // other 为标准模式
-        button.setOnClickListener {
-            startActivity(Intent(SingleTaskActivity@ this, OtherActivity::class.java).apply {
-                this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            })
-        }
 
         text.text = "${text.text} ${taskId}"
 
 
-        setTitle("SingleTask")
+        setTitle("SingleTask为配置Affinity")
     }
 
     override fun onNewIntent(intent: Intent?) {

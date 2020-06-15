@@ -61,6 +61,14 @@
             android:name=".activity_base.singleTask.SingleTaskActivity"
             android:launchMode="singleTask"
             android:taskAffinity=".better" />
+        <activity
+            android:name=".activity_base.singleTask.SingleTask2Activity"
+            android:launchMode="singleTask"
+            android:taskAffinity=".better" />
+        <!-- 不配置taskAffinity -->
+        <activity
+            android:name=".activity_base.singleTask.SingleTask3Activity"
+            android:launchMode="singleTask"/>
         <activity android:name=".activity_base.singleTask.SingleTaskMainTestActivity" />
         <activity android:name=".constraintLayout.ConstaintLayoutDemo1Activity" />
         <activity android:name=".anim.TweenAnim1Activity" />

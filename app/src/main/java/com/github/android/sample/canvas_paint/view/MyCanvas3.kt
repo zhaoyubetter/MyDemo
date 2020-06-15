@@ -20,7 +20,7 @@ class MyCanvas3(ctx: Context, attrs: AttributeSet? = null) : View(ctx, attrs) {
             color = Color.RED
         }
         canvas.drawCircle(300f, 300f, 148f, paint1)
-        canvas.scale(0.5f,1f)
+        canvas.scale(2f,2f)
         //canvas.scale(0.5f,1f, 300f,300f)
         val paint2 = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             strokeWidth = 2f

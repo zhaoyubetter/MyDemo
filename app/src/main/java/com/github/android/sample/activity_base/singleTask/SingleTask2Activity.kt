@@ -11,23 +11,23 @@ import kotlinx.android.synthetic.main.activity_single_task.*
  * SingleTaskActivity 是否在新的任务栈，需要配置一下：taskAffinity
  *
  */
-class SingleTaskActivity : ToolbarActivity() {
+class SingleTask2Activity : ToolbarActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_single_task)
+        setContentView(R.layout.activity_single_2task)
 
-        // other 为标准模式
+        // 这里启动3，3运行在主Task, 3 返回键将会到 SingleTaskMainTestActivity;
+        // 如何解决了呢, startActivityForResult
         button.setOnClickListener {
-            startActivity(Intent(SingleTaskActivity@ this, OtherActivity::class.java).apply {
-                this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            })
+//            startActivity(Intent(SingleTaskActivity@ this, SingleTask3Activity::class.java).apply {})
+            startActivityForResult(Intent(SingleTaskActivity@ this, SingleTask3Activity::class.java).apply {}, 22)
         }
 
         text.text = "${text.text} ${taskId}"
 
 
-        setTitle("SingleTask")
+        setTitle("SingleTask启动SingleTask")
     }
 
     override fun onNewIntent(intent: Intent?) {

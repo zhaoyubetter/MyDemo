@@ -8,7 +8,8 @@ import com.github.android.sample.R
 import kotlinx.android.synthetic.main.activity_single_task_test.*
 
 /**
- *  如果Intent添加flags = Intent.FLAG_ACTIVITY_NEW_TASK则需要跟 taskAffinity 配合起来使用；
+ *  如果Intent添加flags = Intent.FLAG_ACTIVITY_NEW_TASK则需要跟 taskAffinity 配合起来使用，
+ *  单独配置 taskAffinity 无效果；
  *  同理如果配置launchMode为singleTask，如果不配置 taskAffinity 则不会启动新的任务栈；
  *  可见 taskAffinity 属性是多么重要；
  *
@@ -33,7 +34,7 @@ import kotlinx.android.synthetic.main.activity_single_task_test.*
  *
  *
  *  onActivityResult() 返回失败问题
- *  如果传递 Intent.FLAG_ACTIVITY_NEW_TASK onActivityResult 将失效。这是什么逻辑
+ *  如果传递 Intent.FLAG_ACTIVITY_NEW_TASK onActivityResult将立刻执行，不会再 目标activityi关闭后执行；
  *
  *  ======= 补充学习资料：=======
  *  查看任务栈命令: adb shell dumpsys activity activities (搜索： Running activities (most recent first):)
@@ -47,9 +48,15 @@ import kotlinx.android.synthetic.main.activity_single_task_test.*
  *  ==》ActivityStack 表示亲和性的意思
  *
  *  ========= 自我总结 ======
- *  1. 如果在一个 activity A （taskAffinity 为 tA） 上打开其他 activity 如 B (taskAffinity 为包名)，那么 B 则会在 A 的任务栈里头；
- *  2. 如果打开时，添加 Intent.FLAG_ACTIVITY_NEW_TASK 标记，则 B 会回到自己的任务栈里头（即：taskAffinity 为包名的任务栈），如果任务栈名存在，
- *     这就会造成 B 返回时，栈返回问题；
+ *  1. 如果在一个 activity A （taskAffinity 为 tA） 上打开其他 activity 如 B (taskAffinity 为包名，未配置launchModel为singleTask)，
+ *         那么 B 则会在 A 的任务栈里头，即：taskAffinity 单独使用无效；
+ *  2. 如果打开B时（B Affinity 配置了，但launchModel未配置），添加 Intent.FLAG_ACTIVITY_NEW_TASK 标记，则 B 会回到自己的任务栈里头
+ *      （即：taskAffinity 为包名的任务栈），如果任务栈名存在，
+ *     这就会造成 B 返回时，栈返回问题，此时的 Intent.FLAG_ACTIVITY_NEW_TASK 与 清单配置 singleTask 的作用相同；
+*   3. singTask 并且配置了 affinity 独立的 Activity B 启动 另外一个 singleTask 的 Activity C，C 返回时，会发生什么情况
+ *     C 返回到启动 B 的 Activity，如何解决，可使用 startActivityForResult 启动 C；
+ *  4. 只有 配置了 singleTask 模式的 activity 才会发生返回栈问题；
+ *  5. startActivity 时传递 Intent.FLAG_ACTIVITY_NEW_TASK（对方Activity必须配置了taskAffinity） 跟配置 singleTask 的作用相同
  */
 class SingleTaskMainTestActivity : ToolbarActivity() {
 
@@ -61,9 +68,17 @@ class SingleTaskMainTestActivity : ToolbarActivity() {
         // singleTask
         button.setOnClickListener {
             startActivity(Intent(SingleTaskMainTestActivity@ this, SingleTaskActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK  // 如果在不配置 taskAffinity 属性，并没有创建新的任务栈；
+//                flags = Intent.FLAG_ACTIVITY_NEW_TASK  // 如果在不配置 taskAffinity 属性，并没有创建新的任务栈；
             })
         }
+
+        // singleTask
+        // singTask 并且配置了 affinity 独立的 Activity B 启动 另外一个 singleTask 的 Activity C，C 返回时，会发生什么情况
+        btn_singleTask.setOnClickListener {
+            startActivity(Intent(SingleTaskMainTestActivity@ this, SingleTask2Activity::class.java).apply {
+            })
+        }
+
 
         // singleInstance
         btn_singleinstance.setOnClickListener {
