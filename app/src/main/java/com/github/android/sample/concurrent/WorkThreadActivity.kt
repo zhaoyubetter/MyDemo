@@ -1,6 +1,5 @@
 package com.github.android.sample.concurrent
 
-import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import com.better.base.ToolbarActivity
@@ -16,8 +15,6 @@ class WorkThreadActivity : ToolbarActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_work_thread)
-
-        AsyncTask
 
         workThread.startService()
 

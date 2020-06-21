@@ -5,8 +5,8 @@ import android.content.Context
 import com.better.base.model.SampleItem
 import com.github.android.sample.activity_base.singleTask.SingleTaskMainTestActivity
 import com.github.android.sample.anim.*
+import com.github.android.sample.camera.CameraMainActivity
 import com.github.android.sample.canvas_paint.*
-import com.github.android.sample.jetpack.*
 import com.github.android.sample.jetpack.architecture.*
 import com.github.android.sample.jetpack.databinding.DataBindTest1Activity
 import com.github.android.sample.jetpack.databinding.DataBindTest2Activity
@@ -450,6 +450,19 @@ class BaseFunItemTemplate private constructor(ctx: Context) {
                     title = "随着手指滑动"
                     desc = "随着手指滑动"
                     clazz = BaseViewTouchAnimActivity::class.java
+                }
+            }
+
+            item {
+                pid = 0
+                id = 9
+                title = "Camera"
+                desc = "Camera2"
+
+                item {
+                    pid = 9
+                    title = "Camera2"
+                    clazz = CameraMainActivity::class.java
                 }
             }
         }

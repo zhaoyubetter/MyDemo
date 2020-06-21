@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name="com.better.base.CommonApplication"
@@ -21,7 +22,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".concurrent.WorkThreadActivity"></activity>
+        <activity
+            android:name=".camera.CameraMainActivity"></activity>
+        <activity android:name=".concurrent.WorkThreadActivity" />
         <activity android:name=".thridlib.tencent.TencentLbsActivity" />
         <activity android:name="view.BaseViewXAndTranslationXActivity" />
         <activity android:name="view.BaseViewTouchAnimActivity" />
@@ -64,11 +67,10 @@
         <activity
             android:name=".activity_base.singleTask.SingleTask2Activity"
             android:launchMode="singleTask"
-            android:taskAffinity=".better" />
-        <!-- 不配置taskAffinity -->
+            android:taskAffinity=".better" /> <!-- 不配置taskAffinity -->
         <activity
             android:name=".activity_base.singleTask.SingleTask3Activity"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask" />
         <activity android:name=".activity_base.singleTask.SingleTaskMainTestActivity" />
         <activity android:name=".constraintLayout.ConstaintLayoutDemo1Activity" />
         <activity android:name=".anim.TweenAnim1Activity" />
