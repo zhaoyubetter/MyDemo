@@ -3,6 +3,7 @@ package com.github.android.sample.camera;
 import android.content.Context;
 import android.hardware.Camera;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.ViewGroup;
@@ -66,6 +67,7 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
                                 lp.height = size.height;
                             }
                             CameraSurfaceView.this.setLayoutParams(lp);
+                            Log.d("better", String.format("real size, width:%s, height:%s", lp.width, lp.height));
                         }
                     }
                 }

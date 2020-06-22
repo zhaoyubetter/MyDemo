@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.hardware.Camera
 import android.os.Bundle
+import android.util.Log
 import android.widget.FrameLayout
 import com.better.base.ToolbarActivity
 import com.github.android.sample.R
@@ -54,6 +55,7 @@ class CameraOld2Activity : ToolbarActivity() {
         val width = resources.displayMetrics.widthPixels / 2
         val height = resources.displayMetrics.heightPixels / 2
         mAspectLayout.addView(cameraSurfaceView, width, height)
+        Log.d("better", "user want size, width:$width, height:$height")
         mOrientation = CameraUtilsOld2.getCameraDisplayOrientation(this, Camera.CameraInfo.CAMERA_FACING_BACK)
 
         // 拍照
@@ -62,7 +64,20 @@ class CameraOld2Activity : ToolbarActivity() {
                 override fun onPictureTaken(data: ByteArray, camera: Camera) {
                     var bitmap = BitmapFactory.decodeByteArray(data, 0, data.size)
                     if (bitmap != null) {
-                        bitmap = ImageUtils.getRotatedBitmap(bitmap, mOrientation)
+                        var nowAngle = 0
+                        // 1.判断角度
+                        when (mOrientation) {
+                            90 -> nowAngle = Math.abs(mOrientation) % 360
+                            270 -> nowAngle = Math.abs(mOrientation)
+                        }
+                        // 2.判断摄像头
+                        if (CameraUtilsOld2.getCameraID() == Camera.CameraInfo.CAMERA_FACING_BACK) {
+                            nowAngle = nowAngle
+                        } else if (CameraUtilsOld2.getCameraID() == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+                            nowAngle = 360 - nowAngle
+                        }
+
+                        bitmap = ImageUtils.getRotatedBitmap(bitmap, nowAngle)
                         val path = applicationContext.externalCacheDir?.absolutePath + System.currentTimeMillis() + ".jpg"
                         try {
                             val fout = FileOutputStream(path)
