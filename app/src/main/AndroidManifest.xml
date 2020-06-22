@@ -22,8 +22,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".camera.CameraMainActivity"></activity>
+        <activity android:name=".camera.CameraOld2Activity"></activity>
+        <activity android:name=".camera.CameraOldActivity" />
+        <activity android:name=".camera.CameraMainActivity" />
         <activity android:name=".concurrent.WorkThreadActivity" />
         <activity android:name=".thridlib.tencent.TencentLbsActivity" />
         <activity android:name="view.BaseViewXAndTranslationXActivity" />

@@ -6,6 +6,8 @@ import com.better.base.model.SampleItem
 import com.github.android.sample.activity_base.singleTask.SingleTaskMainTestActivity
 import com.github.android.sample.anim.*
 import com.github.android.sample.camera.CameraMainActivity
+import com.github.android.sample.camera.CameraOld2Activity
+import com.github.android.sample.camera.CameraOldActivity
 import com.github.android.sample.canvas_paint.*
 import com.github.android.sample.jetpack.architecture.*
 import com.github.android.sample.jetpack.databinding.DataBindTest1Activity
@@ -458,6 +460,18 @@ class BaseFunItemTemplate private constructor(ctx: Context) {
                 id = 9
                 title = "Camera"
                 desc = "Camera2"
+
+                item {
+                    pid = 9
+                    title = "老的Api基本使用"
+                    clazz = CameraOldActivity::class.java
+                }
+
+                item {
+                    pid = 9
+                    title = "老的Api自定义大小"
+                    clazz = CameraOld2Activity::class.java
+                }
 
                 item {
                     pid = 9
