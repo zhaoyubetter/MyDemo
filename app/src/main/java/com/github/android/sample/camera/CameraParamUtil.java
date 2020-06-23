@@ -54,6 +54,7 @@ public final class CameraParamUtil {
             desiredHeight = surfaceHeight;
         }
 
+        /*
         // Use a very small tolerance because we want an exact match.
         final double ASPECT_TOLERANCE = 0.1;
         double targetRatio = (double) desiredWidth / desiredHeight;
@@ -94,6 +95,38 @@ public final class CameraParamUtil {
         }
 
         result = optimalSize;
+        */
+        ////////////
+        boolean widthOrHeight = false;  // 判断存在宽或高相等的Size
+        // 辗转计算宽高最接近的值
+        for (Camera.Size size : sizes) {
+            // 如果宽高相等，则直接返回
+            if (size.width == desiredWidth && size.height == desiredHeight) {
+                result = size;
+                break;
+            }
+            // 仅仅是宽度相等，计算高度最接近的size
+            if (size.width == desiredWidth) {
+                widthOrHeight = true;
+                if (Math.abs(result.height - desiredHeight) > Math.abs(size.height - desiredHeight)) {
+                    result = size;
+                }
+            }
+            // 高度相等，则计算宽度最接近的Size
+            else if (size.height == desiredHeight) {
+                widthOrHeight = true;
+                if (Math.abs(result.width - desiredWidth) > Math.abs(size.width - desiredHeight)) {
+                    result = size;
+                }
+            }
+            // 如果之前的查找不存在宽或高相等的情况，则计算宽度和高度都最接近的期望值的Size
+            else if (!widthOrHeight) {
+                if (Math.abs(result.width - desiredWidth) > Math.abs(size.width - desiredHeight)
+                        && Math.abs(result.height - desiredHeight) > Math.abs(size.height - desiredHeight)) {
+                    result = size;
+                }
+            }
+        }
 
         Log.d(TAG, "expect:" + expectWidth + ", " + expectHeight + "result:" + result.width + ", " + result.height);
         return result;
