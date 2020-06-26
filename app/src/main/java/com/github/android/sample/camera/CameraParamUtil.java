@@ -14,7 +14,7 @@ import java.util.List;
  * 推荐使用
  */
 public final class CameraParamUtil {
-    private static final String TAG = "CameraParamUtil";
+    private static final String TAG = "better";
     private static CameraParamUtil cameraParamUtil = null;
 
     private CameraParamUtil() {
@@ -95,7 +95,8 @@ public final class CameraParamUtil {
         }
 
         result = optimalSize;
-        */
+         */
+
         ////////////
         boolean widthOrHeight = false;  // 判断存在宽或高相等的Size
         // 辗转计算宽高最接近的值
@@ -121,12 +122,25 @@ public final class CameraParamUtil {
             }
             // 如果之前的查找不存在宽或高相等的情况，则计算宽度和高度都最接近的期望值的Size
             else if (!widthOrHeight) {
-                if (Math.abs(result.width - desiredWidth) > Math.abs(size.width - desiredHeight)
-                        && Math.abs(result.height - desiredHeight) > Math.abs(size.height - desiredHeight)) {
+                // 选取宽高都比期望稍大的
+                if (desiredWidth <= size.width && desiredHeight <= size.height) {
                     result = size;
+                    break;
                 }
             }
         }
+
+        /*
+        后面考虑
+        for (Camera.Size size : sizes) {// sizes 已按照从小到大排序
+            // 选取宽高都比期望稍大的
+            if (desiredWidth <= size.width && desiredHeight <= size.height) {
+                result = size;
+                break;
+            }
+        }
+        */
+        ////////////
 
         Log.d(TAG, "expect:" + expectWidth + ", " + expectHeight + "result:" + result.width + ", " + result.height);
         return result;

@@ -69,6 +69,8 @@ public class CameraUtilsOld2 {
     private static void setCameraPreviewAndPicSize(final Context context, final SurfaceHolder holder, Camera.Parameters parameters) {
         // 设置预览大小，图片大小
         try {
+            mCamera.autoFocus(null);
+
             final int customW = holder.getSurfaceFrame().width();
             final int customH = holder.getSurfaceFrame().height();
             mOrientation = CameraParamUtil.getInstance().getCameraDisplayOrientation(context, mCameraID);
@@ -81,6 +83,10 @@ public class CameraUtilsOld2 {
 
             parameters.setPreviewSize(previewSize.width, previewSize.height);
             parameters.setPictureSize(pictureSize.width, pictureSize.height);
+
+            Log.d("better", String.format("想要大小：%s,%s", customW, customH));
+            Log.d("better", String.format("预览大小：%s,%s", previewSize.width, previewSize.height));
+            Log.d("better", String.format("图片大小：%s,%s", pictureSize.width, pictureSize.height));
 
             // 设置自动对焦
             if (CameraParamUtil.getInstance().isSupportedFocusMode(parameters.getSupportedFocusModes(), Camera.Parameters.FOCUS_MODE_AUTO)) {
@@ -293,6 +299,10 @@ public class CameraUtilsOld2 {
      */
     public static int getCameraID() {
         return mCameraID;
+    }
+
+    public static Camera getCamera() {
+        return mCamera;
     }
 
     /**

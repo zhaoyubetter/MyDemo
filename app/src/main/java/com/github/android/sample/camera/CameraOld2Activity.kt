@@ -52,7 +52,7 @@ class CameraOld2Activity : ToolbarActivity() {
     private fun initView() {
         mAspectLayout = findViewById(R.id.layout_aspect)
         cameraSurfaceView = CameraSurfaceView(this)
-        val width = resources.displayMetrics.widthPixels / 2
+        val width = resources.displayMetrics.widthPixels
         val height = resources.displayMetrics.heightPixels / 2
         mAspectLayout.addView(cameraSurfaceView, width, height)
         Log.d("better", "user want size, width:$width, height:$height")
