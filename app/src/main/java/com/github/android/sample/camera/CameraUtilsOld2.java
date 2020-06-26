@@ -1,5 +1,6 @@
 package com.github.android.sample.camera;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
@@ -7,6 +8,8 @@ import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.WindowManager;
+
+import com.github.android.sample.camera.ImageSize.ChooseImageSizeUitls1;
 
 import java.io.IOException;
 import java.util.List;
@@ -83,10 +86,6 @@ public class CameraUtilsOld2 {
 
             parameters.setPreviewSize(previewSize.width, previewSize.height);
             parameters.setPictureSize(pictureSize.width, pictureSize.height);
-
-            Log.d("better", String.format("想要大小：%s,%s", customW, customH));
-            Log.d("better", String.format("预览大小：%s,%s", previewSize.width, previewSize.height));
-            Log.d("better", String.format("图片大小：%s,%s", pictureSize.width, pictureSize.height));
 
             // 设置自动对焦
             if (CameraParamUtil.getInstance().isSupportedFocusMode(parameters.getSupportedFocusModes(), Camera.Parameters.FOCUS_MODE_AUTO)) {
@@ -227,6 +226,7 @@ public class CameraUtilsOld2 {
     public static Camera.Size getPreviewSize() {
         return previewSize;
     }
+
 
     /**
      * 选择合适的FPS

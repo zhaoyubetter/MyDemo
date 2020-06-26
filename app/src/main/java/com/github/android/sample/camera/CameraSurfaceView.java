@@ -29,6 +29,9 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
     private static final String TAG = CameraSurfaceView.class.getSimpleName();
 
     private SurfaceHolder mSurfaceHolder;
+    private Camera.PreviewCallback previewCallback;
+
+
     private boolean firstTouch = true;
     private float firstTouchLength = 0;
     // 缩放梯度
@@ -68,26 +71,30 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
                 public void run() {
                     if (CameraSurfaceView.this != null && holder != null) {
                         // 真正的设置最佳预览大小
-//                        // 拿到真正的预览大小，来设置最终的大小，避免拉伸
-//                        final Camera.Size size = CameraUtilsOld2.getPreviewSize();
-//                        if (size != null && size.width > 400) {
-//                            ViewGroup.LayoutParams lp = CameraSurfaceView.this.getLayoutParams();
-//                            if (CameraParamUtil.isLandscape(CameraUtilsOld2.getPreviewOrientation())) {
-//                                lp.width = size.height;
-//                                lp.height = size.width;
-//                            } else {
-//                                lp.width = size.width;
-//                                lp.height = size.height;
-//                            }
-//                            CameraSurfaceView.this.setLayoutParams(lp);
-//                            Log.d("better", String.format("real size, width:%s, height:%s", lp.width, lp.height));
-//                        }
+                        final Camera.Size size = CameraUtilsOld2.getPreviewSize();
+                        if (size != null && size.width > 400) {
+                            ViewGroup.LayoutParams lp = CameraSurfaceView.this.getLayoutParams();
+                            if (CameraParamUtil.isLandscape(CameraUtilsOld2.getPreviewOrientation())) {
+                                lp.width = size.height;
+                                lp.height = size.width;
+                            } else {
+                                lp.width = size.width;
+                                lp.height = size.height;
+                            }
+                            CameraSurfaceView.this.setLayoutParams(lp);
+                            Log.d("better", String.format("real preview size, width:%s, height:%s", lp.width, lp.height));
+                        }
                     }
                 }
             }, 400);
         }
 
         CameraUtilsOld2.startPreviewDisplay(holder);
+    }
+
+    public void setCameraPreviewCallback(Camera.PreviewCallback callback) {
+        this.previewCallback = callback;
+        CameraUtilsOld2.previewCallback = callback;
     }
 
     @Override
