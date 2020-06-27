@@ -21,7 +21,6 @@ import kotlinx.android.synthetic.main.activity_camera_old2.*
 import java.io.BufferedOutputStream
 import java.io.FileOutputStream
 import java.io.IOException
-import java.io.OutputStream
 
 
 /**
@@ -42,10 +41,7 @@ class CameraOld3Activity : ToolbarActivity() {
 
     private var mBackgroundHandler: Handler? = null
 
-    /**
-     * camera 方向
-     */
-    private var mOrientation = 0
+    private var usePreviewRect = false
 
     val DST_CENTER_RECT_WIDTH = 200
     val DST_CENTER_RECT_HEIGHT = 200
@@ -70,37 +66,57 @@ class CameraOld3Activity : ToolbarActivity() {
         override fun onPictureTaken(cameraView: CameraView, data: ByteArray) {
             Log.d(TAG, "onPictureTaken " + data.size)
             getBackgroundHandler()?.post {
+
                 val path = applicationContext.externalCacheDir?.absolutePath + System.currentTimeMillis() + ".jpg"
-                var os: OutputStream? = null
                 try {
                     var bitmap = BitmapFactory.decodeByteArray(data, 0, data.size)
+                    // 1.保存原始的图片
+                    saveOriginPic(bitmap)
+                    // 2.保存预览框中的图片
                     createRectPic(bitmap)
 
-                    // 原始图片，这里保存原始图片
-//                    os = FileOutputStream(path)
-//                    os.write(data)
-//                    os.close()
+                    if (!bitmap.isRecycled) {
+                        bitmap.recycle()
+                    }
                 } catch (e: IOException) {
                     Log.w(TAG, "Cannot write to $path", e)
                 } finally {
-                    if (os != null) {
-                        try {
-                            os.close()
-                        } catch (e: IOException) {
-                            // Ignore
-                        }
-                    }
+
                 }
             }
         }
     }
 
+    /**
+     * 所见即所得的图片做法
+     */
+    private fun saveOriginPic(originalBitmap: Bitmap) {
+        var toSaveBitmap = originalBitmap
+        // 原始图片，这里保存原始图片，如果高度设置很小，那么这里的图片也会是全部高度
+        val path = applicationContext.externalCacheDir?.absolutePath + "original_" + System.currentTimeMillis() + ".jpg"
+        if (originalBitmap.height > mCameraView.height) {        // 截图图片
+            val toSavePicSize = createPicPoint(originalBitmap, originalBitmap.width, mCameraView.height)
+            Log.i("better", "original.getWidth() = " + originalBitmap.width + " original.getHeight() = " + originalBitmap.height)
+            toSaveBitmap = Bitmap.createBitmap(originalBitmap, 0, 0, toSavePicSize!!.x, toSavePicSize!!.y)
+        }
+        val fout = FileOutputStream(path)
+        val bos = BufferedOutputStream(fout)
+        toSaveBitmap?.compress(Bitmap.CompressFormat.JPEG, 75, bos)
+        bos.flush()
+        bos.close()
+        fout.close()
+    }
+
     // 预览框图片
     private fun createRectPic(originalBitmap: Bitmap) {
-        if (rectPictureSize == null) {
-            rectPictureSize = createCenterPictureRect(originalBitmap, 3 * DST_CENTER_RECT_WIDTH, 3 * DST_CENTER_RECT_HEIGHT)
+        if (!usePreviewRect) {
+            return
         }
-        val path = applicationContext.externalCacheDir?.absolutePath + System.currentTimeMillis() + ".jpg"
+
+        if (rectPictureSize == null) {
+            rectPictureSize = createPicPoint(originalBitmap, 3 * DST_CENTER_RECT_WIDTH, 3 * DST_CENTER_RECT_HEIGHT)
+        }
+        val path = applicationContext.externalCacheDir?.absolutePath + "_rect_" + System.currentTimeMillis() + ".jpg"
         val x: Int = originalBitmap.width / 2 - rectPictureSize!!.x / 2
         val y: Int = originalBitmap.height / 2 - rectPictureSize!!.y / 2
         Log.i("better", "original.getWidth() = " + originalBitmap.width + " original.getHeight() = " + originalBitmap.height)
@@ -118,9 +134,6 @@ class CameraOld3Activity : ToolbarActivity() {
         } catch (e: IOException) {
             e.printStackTrace()
         } finally {
-            if (originalBitmap.isRecycled) {
-                originalBitmap.recycle()
-            }
             if (rectBitmap!!.isRecycled) {
                 rectBitmap.recycle()
             }
@@ -136,6 +149,10 @@ class CameraOld3Activity : ToolbarActivity() {
         // 遮罩
         maskView = findViewById(R.id.maskView)
         maskView.bringToFront()
+
+        if (!usePreviewRect) {
+            maskView.visibility = View.INVISIBLE
+        }
 
         btn_take.setOnClickListener {
             mCameraView.takePicture()
@@ -180,15 +197,17 @@ class CameraOld3Activity : ToolbarActivity() {
     }
 
     /**生成拍照后图片的中间矩形的宽度和高度
+     * @param originalBitmap 原始图片
      * @param w 屏幕上的矩形宽度，单位px
      * @param h 屏幕上的矩形高度，单位px
      * @return
      */
-    private fun createCenterPictureRect(originalBitmap: Bitmap, w: Int, h: Int): Point? {
-        // 原始图片 size
+    private fun createPicPoint(originalBitmap: Bitmap, w: Int, h: Int): Point? {
+        // 原始图片 size，也有可能是屏幕大小，如果是屏幕，这里需要改写
         val wScreen: Int = originalBitmap.width
         val hScreen: Int = originalBitmap.height
 
+        // 保存图片的宽高
         val wSavePicture: Int = originalBitmap.width
         val hSavePicture: Int = originalBitmap.height
         val wRate = wSavePicture.toFloat() / wScreen.toFloat()
