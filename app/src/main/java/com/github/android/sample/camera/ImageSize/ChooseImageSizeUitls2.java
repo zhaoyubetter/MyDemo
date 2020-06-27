@@ -159,4 +159,113 @@ public class ChooseImageSizeUitls2 {
                 orientationDegrees == 270);
     }
 
+    /*
+    private Camera.Size getBestPreviewSize(int width, int height)
+    {
+        List<Size> sizes = camera.getParameters().getSupportedPreviewSizes();
+        if (sizes == null) return null;
+
+        Size optimalSize = null;
+        double minDiff = Double.MAX_VALUE;
+
+        int targetHeight = height;
+        int targetWidth = width;
+
+        int minWidthDiff = 0;
+        if (optimalSize == null) {
+            minDiff = Double.MAX_VALUE;
+            for (Size size : sizes) {
+                if (Math.abs(size.width - targetWidth) < minDiff) {
+                    if(size.width > width) {
+                        if (minWidthDiff == 0) {
+                            minWidthDiff = size.width - width;
+                            optimalSize = size;
+                        }
+                        else if (Math.abs(size.width - targetWidth) < minWidthDiff) {
+                            minWidthDiff = size.width - width;
+                            optimalSize = size;
+
+                        }
+                        minDiff = Math.abs(size.width - targetWidth);
+                    }
+                }
+            }
+        }
+
+        if (optimalSize == null) {
+            minDiff = Double.MAX_VALUE;
+            for (Size size : sizes) {
+                if (Math.abs(size.height - targetHeight) < minDiff) {
+                    optimalSize = size;
+                    minDiff = Math.abs(size.height - targetHeight);
+                }
+            }
+        }
+        return optimalSize;
+    }
+     */
+
+    // 拍照代码备份
+    /*
+    mOrientation = CameraUtilsOld3.getCameraDisplayOrientation(this, Camera.CameraInfo.CAMERA_FACING_BACK)
+
+        // 拍照
+        btn_take.setOnClickListener {
+            CameraUtilsOld3.takePicture(null, null, object : Camera.PictureCallback {
+                override fun onPictureTaken(data: ByteArray, camera: Camera) {
+                    var bitmap = BitmapFactory.decodeByteArray(data, 0, data.size)
+                    if (bitmap != null) {
+                        var nowAngle = 0
+                        // 1.判断角度
+                        when (mOrientation) {
+                            90 -> nowAngle = Math.abs(mOrientation) % 360
+                            270 -> nowAngle = Math.abs(mOrientation)
+                        }
+                        // 2.判断摄像头
+                        if (CameraUtilsOld3.getCameraID() == Camera.CameraInfo.CAMERA_FACING_BACK) {
+                            nowAngle = nowAngle
+                        } else if (CameraUtilsOld3.getCameraID() == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+                            nowAngle = 360 - nowAngle
+                        }
+//
+                        if (rectPictureSize == null) {
+                            rectPictureSize = createCenterPictureRect(3 * DST_CENTER_RECT_WIDTH, 3 * DST_CENTER_RECT_HEIGHT)
+                        }
+
+                        // 原始图片数据
+                        bitmap = ImageUtils.getRotatedBitmap(bitmap, nowAngle)
+                        val path = applicationContext.externalCacheDir?.absolutePath + System.currentTimeMillis() + ".jpg"
+                        val x: Int = bitmap.width / 2 - rectPictureSize!!.x / 2
+                        val y: Int = bitmap.height / 2 - rectPictureSize!!.y / 2
+                        Log.i("better", "original.getWidth() = " + bitmap.width
+                                + " original.getHeight() = " + bitmap.height)
+                        // 截取图片
+                        var rectBitmap = Bitmap.createBitmap(bitmap, x, y, rectPictureSize!!.x, rectPictureSize!!.y)
+                        Log.i("better", "target.getWidth() = " + rectBitmap.width
+                                + " target.getHeight() = " + rectBitmap.height)
+
+                        try {
+                            val fout = FileOutputStream(path)
+                            val bos = BufferedOutputStream(fout)
+                            rectBitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, bos)
+                            bos.flush()
+                            bos.close()
+                            fout.close()
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                        }
+
+                        if (bitmap.isRecycled) {
+                            bitmap.recycle()
+                            bitmap = null
+                        }
+                        if (rectBitmap!!.isRecycled) {
+                            rectBitmap.recycle()
+                        }
+                    }
+                    // 拍完继续预览
+                    CameraUtilsOld3.startPreview()
+                }
+            })
+     */
 }

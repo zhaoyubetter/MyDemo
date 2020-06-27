@@ -41,18 +41,18 @@ public final class CameraParamUtil {
      */
     public static Camera.Size calculatePerfectSize(List<Camera.Size> sizes, int expectWidth, int expectHeight, int displayOrientation) {
         sortList(sizes); // 根据宽度进行排序
-        Camera.Size result = sizes.get(0);
-        int desiredWidth;
-        int desiredHeight;
+        Camera.Size result = null;
+        int desiredWidth = expectWidth;
+        int desiredHeight = expectHeight;
         final int surfaceWidth = expectWidth;
         final int surfaceHeight = expectHeight;
-        if (isLandscape(displayOrientation)) {
-            desiredWidth = surfaceHeight;
-            desiredHeight = surfaceWidth;
-        } else {
-            desiredWidth = surfaceWidth;
-            desiredHeight = surfaceHeight;
-        }
+//        if (isLandscape(displayOrientation)) {
+//            desiredWidth = surfaceHeight;
+//            desiredHeight = surfaceWidth;
+//        } else {
+//            desiredWidth = surfaceWidth;
+//            desiredHeight = surfaceHeight;
+//        }
 
         for (Camera.Size size : sizes) {// sizes 已按照从小到大排序
             // 选取宽高都比期望稍大的
@@ -61,6 +61,50 @@ public final class CameraParamUtil {
                 break;
             }
         }
+
+        if(result == null) {
+            // Use a very small tolerance because we want an exact match.
+            final double ASPECT_TOLERANCE = 0.1;
+            double targetRatio = (double) desiredWidth / desiredHeight;
+            if (sizes == null)
+                return null;
+
+            Camera.Size optimalSize = null;
+
+            // Start with max value and refine as we iterate over available preview sizes. This is the
+            // minimum difference between view and camera height.
+            double minDiff = Double.MAX_VALUE;
+
+            // Target view height
+            int targetHeight = desiredHeight;
+
+            // Try to find a preview size that matches aspect ratio and the target view size.
+            // Iterate over all available sizes and pick the largest size that can fit in the view and
+            // still maintain the aspect ratio.
+            for (Camera.Size size : sizes) {
+                double ratio = (double) size.width / size.height;
+                if (Math.abs(ratio - targetRatio) > ASPECT_TOLERANCE)
+                    continue;
+                if (Math.abs(size.height - targetHeight) < minDiff) {
+                    optimalSize = size;
+                    minDiff = Math.abs(size.height - targetHeight);
+                }
+            }
+
+            // Cannot find preview size that matches the aspect ratio, ignore the requirement
+            if (optimalSize == null) {
+                minDiff = Double.MAX_VALUE;
+                for (Camera.Size size : sizes) {
+                    if (Math.abs(size.height - targetHeight) < minDiff) {
+                        optimalSize = size;
+                        minDiff = Math.abs(size.height - targetHeight);
+                    }
+                }
+            }
+
+            result = optimalSize;
+        }
+
         Log.d(TAG, "expect:" + expectWidth + ", " + expectHeight + "result:" + result.width + ", " + result.height);
         return result;
     }

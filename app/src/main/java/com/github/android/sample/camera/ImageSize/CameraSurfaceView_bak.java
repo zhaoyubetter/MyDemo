@@ -20,17 +20,17 @@ import static androidx.core.math.MathUtils.clamp;
  * 创建一个SurfaceView，并实现SurfaceHolder的回调。由于Camera在SurfaceView中是通过SurfaceHolder
  * 使得Surfaceview能够预览Camera返回的数据，因此我们需要实现SurfaceHolder 的回调
  * <p>
+ *    这个 View 有问题，拍照的第一次，有抖动，不知道为什么
  * 作者：cain_huang
  * 链接：https://www.jianshu.com/p/9e0f3fc5a3b4
  * 来源：简书
  */
-public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
+public class CameraSurfaceView_bak extends SurfaceView implements SurfaceHolder.Callback {
 
     private static final String TAG = CameraSurfaceView.class.getSimpleName();
 
     private SurfaceHolder mSurfaceHolder;
     private Camera.PreviewCallback previewCallback;
-
 
 
     private boolean firstTouch = true;
@@ -39,17 +39,17 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
     private int zoomGradient = 0;
     int handlerTime = 0;
 
-    public CameraSurfaceView(Context context) {
+    public CameraSurfaceView_bak(Context context) {
         super(context);
         init();
     }
 
-    public CameraSurfaceView(Context context, AttributeSet attrs) {
+    public CameraSurfaceView_bak(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public CameraSurfaceView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CameraSurfaceView_bak(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -64,14 +64,27 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
         CameraUtilsOld2.openBackCamera(getContext(), holder, CameraUtils.DESIRED_PREVIEW_FPS);
     }
 
-
     @Override
     public void surfaceChanged(final SurfaceHolder holder, int format, int width, int height) {
         if (holder != null) {
             this.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if (CameraSurfaceView.this != null && holder != null) {
+                    if (CameraSurfaceView_bak.this != null && holder != null) {
+                        // 真正的设置最佳预览大小，自己动。
+                        final Camera.Size size = CameraUtilsOld2.getPreviewSize();
+                        if (size != null && size.width > 400) {
+                            ViewGroup.LayoutParams lp = CameraSurfaceView_bak.this.getLayoutParams();
+                            if (CameraParamUtil.isLandscape(CameraUtilsOld2.getPreviewOrientation())) {
+                                lp.width = size.height;
+                                lp.height = size.width;
+                            } else {
+                                lp.width = size.width;
+                                lp.height = size.height;
+                            }
+                            CameraSurfaceView_bak.this.setLayoutParams(lp);
+                            Log.d("better", String.format("real preview size, width:%s, height:%s", lp.width, lp.height));
+                        }
                     }
                 }
             }, 400);

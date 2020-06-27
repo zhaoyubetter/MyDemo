@@ -7,6 +7,7 @@ import com.github.android.sample.activity_base.singleTask.SingleTaskMainTestActi
 import com.github.android.sample.anim.*
 import com.github.android.sample.camera.CameraMainActivity
 import com.github.android.sample.camera.CameraOld2Activity
+import com.github.android.sample.camera.CameraOld3Activity
 import com.github.android.sample.camera.CameraOldActivity
 import com.github.android.sample.canvas_paint.*
 import com.github.android.sample.jetpack.architecture.*
@@ -471,6 +472,13 @@ class BaseFunItemTemplate private constructor(ctx: Context) {
                     pid = 9
                     title = "老的Api自定义大小"
                     clazz = CameraOld2Activity::class.java
+                }
+
+                item {
+                    pid = 9
+                    title = "Google 开源的相机与MaskView预览"
+                    desc = "第一次拍也无抖动，棒"
+                    clazz = CameraOld3Activity::class.java
                 }
 
                 item {
