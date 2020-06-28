@@ -54,6 +54,33 @@ class CameraOld3Activity : ToolbarActivity() {
         initView()
     }
 
+    override fun onPause() {
+        mCameraView.stop()
+        super.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) === PackageManager.PERMISSION_GRANTED) {
+            mCameraView.start()
+        }
+        maskView.post {
+            maskView?.setCenterRect(createPicRect(mCameraView, DST_CENTER_RECT_WIDTH * 3, DST_CENTER_RECT_HEIGHT * 3))
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (mBackgroundHandler != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                mBackgroundHandler?.getLooper()?.quitSafely()
+            } else {
+                mBackgroundHandler?.getLooper()?.quit()
+            }
+            mBackgroundHandler = null
+        }
+    }
+
     private val mCallback: CameraView.Callback = object : CameraView.Callback() {
         override fun onCameraOpened(cameraView: CameraView) {
             Log.d(TAG, "onCameraOpened")
@@ -94,8 +121,24 @@ class CameraOld3Activity : ToolbarActivity() {
         var toSaveBitmap = originalBitmap
         // 原始图片，这里保存原始图片，如果高度设置很小，那么这里的图片也会是全部高度
         val path = applicationContext.externalCacheDir?.absolutePath + "original_" + System.currentTimeMillis() + ".jpg"
-        if (originalBitmap.height > mCameraView.height) {        // 截图图片
-            val toSavePicSize = createPicPoint(originalBitmap, originalBitmap.width, mCameraView.height)
+        mCameraView.width
+        // 巨坑，这里不同机型截图图片会有问题：
+        // 可能实际图片 width 2440,而获取的屏幕宽 1080,那么直接拿 1080 去截取，那么截图必错，我们需要分为2部分来做：
+        //  1. 当前图片的比例 ratio，自己肯定知道，假设是 3:4
+        //  2. 屏幕的宽高，你肯定知道，假设是 1080 * 1920，一般拍摄图片，宽都是屏幕宽，高可能用户指定了；
+        //  3. 假设你想要的图片大小是：1080 * 900，实际上，拍出来的图片可能是 (2976*3968)，拍的图片不可能你想要多大，就多大的；
+        // 那怎么办？我确实只想要 1080 * 900，普通的做法，就是直接给图片，缩放一下，但是包含了你不想要的图片部分，我们尝试另一个做法，这个iOS做的很好
+        //  1. 假设拍照时，横向铺满（width: 1080），如果拍出的照片是width是 1080，那么皆大欢喜，直接截图height为 900 即可，如果不是呢，麻烦事情来了？
+        // 我们假设图片大小为(2976*3968)，横向因为铺满，这好办，直接给 2976，那么高度的截取要这么操作：
+        //  a. 横向 1080 (2976)，ratio 3:4，我们得出竖向的实际高度为 1080/(3/4) = 1440，注意：拍照的出来的图片与预览的图片会有差距；
+        //  b. 我们拿 3968 * 1.0f / 1440 得到比例：2.75，然后拿 2.75 * 900 得到 2480，这就是正确的位置；
+        //     计算方法：3968 * 1.0f / 1440 * 900
+        // 特别注意：一般没有特殊要求，不要使用此方法，很容易发生意外，而采用原图提供；
+        // 对于截图的开始的 x/y，一般都是 0,0，如有特殊，也需要按此方案解决
+        if (originalBitmap.height > mCameraView.height) {
+            val showHeight = (mCameraView.width * 1.0f / (3.0f / 4) + 0.5f).toInt()
+            val realCutHeight = (originalBitmap.height * 1.0f / showHeight) * mCameraView.height
+            val toSavePicSize = createPicPoint(originalBitmap, originalBitmap.width, realCutHeight.toInt())
             Log.i("better", "original.getWidth() = " + originalBitmap.width + " original.getHeight() = " + originalBitmap.height)
             toSaveBitmap = Bitmap.createBitmap(originalBitmap, 0, 0, toSavePicSize!!.x, toSavePicSize!!.y)
         }
@@ -105,6 +148,29 @@ class CameraOld3Activity : ToolbarActivity() {
         bos.flush()
         bos.close()
         fout.close()
+    }
+
+
+    /**生成拍照后图片的中间矩形的宽度和高度
+     * @param originalBitmap 原始图片
+     * @param w 屏幕上的矩形宽度，单位px
+     * @param h 屏幕上的矩形高度，单位px
+     * @return
+     */
+    private fun createPicPoint(originalBitmap: Bitmap, w: Int, h: Int): Point? {
+        // 原始图片 size，也有可能是屏幕大小，如果是屏幕，这里需要改写
+        val wScreen: Int = originalBitmap.width
+        val hScreen: Int = originalBitmap.height
+
+        // 保存图片的宽高，也就是 pictureSize
+        val wSavePicture: Int = originalBitmap.width
+        val hSavePicture: Int = originalBitmap.height
+        val wRate = wSavePicture.toFloat() / wScreen.toFloat()
+        val hRate = hSavePicture.toFloat() / hScreen.toFloat()
+        val rate = if (wRate <= hRate) wRate else hRate //也可以按照最小比率计算
+        val wRectPicture = (w * wRate).toInt()
+        val hRectPicture = (h * hRate).toInt()
+        return Point(wRectPicture, hRectPicture)
     }
 
     // 预览框图片
@@ -159,34 +225,6 @@ class CameraOld3Activity : ToolbarActivity() {
         }
     }
 
-    override fun onPause() {
-        mCameraView.stop()
-        super.onPause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) === PackageManager.PERMISSION_GRANTED) {
-            mCameraView.start()
-        }
-        maskView.post {
-            maskView?.setCenterRect(createPicRect(mCameraView, DST_CENTER_RECT_WIDTH * 3, DST_CENTER_RECT_HEIGHT * 3))
-        }
-    }
-
-
-    override fun onDestroy() {
-        super.onDestroy()
-        if (mBackgroundHandler != null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                mBackgroundHandler?.getLooper()?.quitSafely()
-            } else {
-                mBackgroundHandler?.getLooper()?.quit()
-            }
-            mBackgroundHandler = null
-        }
-    }
-
     private fun getBackgroundHandler(): Handler? {
         if (mBackgroundHandler == null) {
             val thread = HandlerThread("background")
@@ -194,28 +232,6 @@ class CameraOld3Activity : ToolbarActivity() {
             mBackgroundHandler = Handler(thread.looper)
         }
         return mBackgroundHandler
-    }
-
-    /**生成拍照后图片的中间矩形的宽度和高度
-     * @param originalBitmap 原始图片
-     * @param w 屏幕上的矩形宽度，单位px
-     * @param h 屏幕上的矩形高度，单位px
-     * @return
-     */
-    private fun createPicPoint(originalBitmap: Bitmap, w: Int, h: Int): Point? {
-        // 原始图片 size，也有可能是屏幕大小，如果是屏幕，这里需要改写
-        val wScreen: Int = originalBitmap.width
-        val hScreen: Int = originalBitmap.height
-
-        // 保存图片的宽高
-        val wSavePicture: Int = originalBitmap.width
-        val hSavePicture: Int = originalBitmap.height
-        val wRate = wSavePicture.toFloat() / wScreen.toFloat()
-        val hRate = hSavePicture.toFloat() / hScreen.toFloat()
-        val rate = if (wRate <= hRate) wRate else hRate //也可以按照最小比率计算
-        val wRectPicture = (w * wRate).toInt()
-        val hRectPicture = (h * hRate).toInt()
-        return Point(wRectPicture, hRectPicture)
     }
 
     /**
