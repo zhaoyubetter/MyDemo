@@ -257,7 +257,7 @@ class Camera1 extends CameraViewImpl {
         }
         mDisplayOrientation = displayOrientation;
         if (isCameraOpened()) {
-            mCameraParameters.setRotation(calcCameraRotation(displayOrientation));
+//            mCameraParameters.setRotation(calcCameraRotation(displayOrientation));
             mCamera.setParameters(mCameraParameters);
             mCamera.setDisplayOrientation(calcDisplayOrientation(displayOrientation));
         }
@@ -334,7 +334,7 @@ class Camera1 extends CameraViewImpl {
         }
         mCameraParameters.setPreviewSize(previewSize.getWidth(), previewSize.getHeight());
         mCameraParameters.setPictureSize(pictureSize.getWidth(), pictureSize.getHeight());
-        mCameraParameters.setRotation(calcCameraRotation(mDisplayOrientation));
+//        mCameraParameters.setRotation(calcCameraRotation(mDisplayOrientation));
         setAutoFocusInternal(mAutoFocus);
         setFlashInternal(mFlash);
         mCamera.setParameters(mCameraParameters);

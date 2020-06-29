@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Point
 import android.graphics.Rect
+import android.hardware.Camera
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -16,6 +17,7 @@ import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import com.better.base.ToolbarActivity
 import com.github.android.sample.R
+import com.github.android.sample.camera.CameraParamUtil.isLandscape
 import com.google.android.cameraview.CameraView
 import kotlinx.android.synthetic.main.activity_camera_old2.*
 import java.io.BufferedOutputStream
@@ -118,10 +120,26 @@ class CameraOld3Activity : ToolbarActivity() {
      * 所见即所得的图片做法
      */
     private fun saveOriginPic(originalBitmap: Bitmap) {
+        // 获取角度
+        val orientation = CameraUtilsOld2.getCameraDisplayOrientation(this, Camera.CameraInfo.CAMERA_FACING_BACK)
+        var nowAngle = 0
+        // 1.判断角度
+        when (orientation) {
+            90 -> nowAngle = Math.abs(orientation) % 360
+            270 -> nowAngle = Math.abs(orientation)
+        }
+        // 2.判断摄像头
+        if (mCameraView.facing == Camera.CameraInfo.CAMERA_FACING_BACK) {
+            nowAngle = nowAngle
+        } else if (mCameraView.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+            nowAngle = 360 - nowAngle
+        }
+        // 旋转一下原始图片
+        val originalBitmap = ImageUtils.getRotatedBitmap(originalBitmap, nowAngle)
+
         var toSaveBitmap = originalBitmap
         // 原始图片，这里保存原始图片，如果高度设置很小，那么这里的图片也会是全部高度
         val path = applicationContext.externalCacheDir?.absolutePath + "original_" + System.currentTimeMillis() + ".jpg"
-        mCameraView.width
         // 巨坑，这里不同机型截图图片会有问题：
         // 可能实际图片 width 2440,而获取的屏幕宽 1080,那么直接拿 1080 去截取，那么截图必错，我们需要分为2部分来做：
         //  1. 当前图片的比例 ratio，自己肯定知道，假设是 3:4
@@ -135,13 +153,16 @@ class CameraOld3Activity : ToolbarActivity() {
         //     计算方法：3968 * 1.0f / 1440 * 900
         // 特别注意：一般没有特殊要求，不要使用此方法，很容易发生意外，而采用原图提供；
         // 对于截图的开始的 x/y，一般都是 0,0，如有特殊，也需要按此方案解决
+
+        // 判断下方向
         if (originalBitmap.height > mCameraView.height) {
-            val showHeight = (mCameraView.width * 1.0f / (3.0f / 4) + 0.5f).toInt()
+            val showHeight = (mCameraView.width * 1.0f / (mCameraView.aspectRatio!!.inverse()!!.toFloat())).toInt()
             val realCutHeight = (originalBitmap.height * 1.0f / showHeight) * mCameraView.height
             val toSavePicSize = createPicPoint(originalBitmap, originalBitmap.width, realCutHeight.toInt())
             Log.i("better", "original.getWidth() = " + originalBitmap.width + " original.getHeight() = " + originalBitmap.height)
             toSaveBitmap = Bitmap.createBitmap(originalBitmap, 0, 0, toSavePicSize!!.x, toSavePicSize!!.y)
         }
+
         val fout = FileOutputStream(path)
         val bos = BufferedOutputStream(fout)
         toSaveBitmap?.compress(Bitmap.CompressFormat.JPEG, 75, bos)
