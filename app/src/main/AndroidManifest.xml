@@ -13,6 +13,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
 
     <application
         android:name="com.better.base.CommonApplication"
@@ -22,10 +24,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".camera.CameraOld3Activity"></activity>
+        <activity android:name=".sensor.SensorMainActivity"></activity>
+        <activity android:name=".camera.CameraOld3Activity" />
         <activity android:name=".camera.CameraOld2Activity" />
         <activity android:name=".camera.CameraOldActivity" />
         <activity android:name=".camera.CameraMainActivity" />
+        <activity android:name=".sensor.AccelerometerPlayActivity" />
         <activity android:name=".concurrent.WorkThreadActivity" />
         <activity android:name=".thridlib.tencent.TencentLbsActivity" />
         <activity android:name="view.BaseViewXAndTranslationXActivity" />

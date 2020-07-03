@@ -10,6 +10,7 @@ import com.github.android.sample.camera.CameraOld2Activity
 import com.github.android.sample.camera.CameraOld3Activity
 import com.github.android.sample.camera.CameraOldActivity
 import com.github.android.sample.canvas_paint.*
+import com.github.android.sample.sensor.SensorMainActivity
 import com.github.android.sample.jetpack.architecture.*
 import com.github.android.sample.jetpack.databinding.DataBindTest1Activity
 import com.github.android.sample.jetpack.databinding.DataBindTest2Activity
@@ -485,6 +486,19 @@ class BaseFunItemTemplate private constructor(ctx: Context) {
                     pid = 9
                     title = "Camera2"
                     clazz = CameraMainActivity::class.java
+                }
+            }
+
+            item {
+                pid = 0
+                id = 10
+                title = "传感器"
+                desc = "传感器"
+
+                item {
+                    pid = 10
+                    title = "传感器"
+                    clazz = SensorMainActivity::class.java
                 }
             }
         }
