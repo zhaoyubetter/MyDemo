@@ -16,6 +16,7 @@ import com.github.android.sample.jetpack.databinding.DataBindTest1Activity
 import com.github.android.sample.jetpack.databinding.DataBindTest2Activity
 import com.github.android.sample.jetpack.databinding.DatabindTest3Activity
 import com.github.android.sample.md.DrawerLayoutActivity
+import com.github.android.sample.opengl.OpenglMainActivity
 import com.github.android.sample.provider.db.DBActivity1
 import com.github.android.sample.svg.SVG1Activity
 import com.github.android.sample.tools.ToolAttributesTest1Activity
@@ -71,14 +72,14 @@ class BaseFunItemTemplate private constructor(ctx: Context) {
                     desc = "介绍tween动画、属性动画"
 
                     item {
-                        pid = 11
+                        pid = 1
                         title = "tween动画"
                         desc = "tween动画基本使用"
                         clazz = TweenAnim1Activity::class.java
                     }
 
                     item {
-                        pid = 11
+                        pid = 1
                         title = "tween动画Interpolator"
                         desc = "tween动画Interpolator详解"
                         clazz = TweenAnimInterpolatorActivity::class.java
@@ -499,6 +500,19 @@ class BaseFunItemTemplate private constructor(ctx: Context) {
                     pid = 10
                     title = "传感器"
                     clazz = SensorMainActivity::class.java
+                }
+            }
+
+            item {
+                pid = 0
+                id = 11
+                title = "openGL"
+                desc = "OpenGL ES"
+
+                item {
+                    pid = 11
+                    title = "openGL主页"
+                    clazz = OpenglMainActivity::class.java
                 }
             }
         }
