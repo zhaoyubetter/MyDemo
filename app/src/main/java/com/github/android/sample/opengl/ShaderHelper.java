@@ -70,6 +70,36 @@ public class ShaderHelper {
         if (programObjectId == 0) {
             Log.w(TAG, "Could not create new program");
         }
+        // 附上着色器, glAttachShader 把顶点着色器和片段着色器附件到程序对象对象
+        glAttachShader(programObjectId, vertexShaderId);
+        glAttachShader(programObjectId, fragmentShaderId);
+        // 链接程序
+        glLinkProgram(programObjectId);
+        // 检查链接是否成功
+        final int[] linkStatus = new int[1];
+        glGetProgramiv(programObjectId, GL_LINK_STATUS, linkStatus, 0);
+        Log.v(TAG, "Results of linking program:" + glGetProgramInfoLog(programObjectId));
+
+        // 如果是 0，表示创建失败，需要删除
+        if (0 == linkStatus[0]) {
+            glDeleteProgram(programObjectId);
+            Log.w(TAG, "Linking of program failed.");
+        }
+
         return programObjectId;
+    }
+
+    /**
+     * 验证程序
+     * @param programObjId
+     * @return
+     */
+    public static boolean validateProgram(int programObjId) {
+        glValidateProgram(programObjId);
+        final int[] validateStatus = new int[1];
+        glGetProgramiv(programObjId, GL_VALIDATE_STATUS, validateStatus, 0);
+        Log.v(TAG, "Results of validating program: " + validateStatus[0] +
+                ", log: " + glGetProgramInfoLog(programObjId));
+        return validateStatus[0] != 0;
     }
 }

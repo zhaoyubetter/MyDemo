@@ -34,16 +34,41 @@ class FirstOpenglFragment : Fragment() {
     )
 
     val tableVerticesWithTriangles = floatArrayOf(
+//            // Triangle 1
+//            0f, 0f,
+//            9f, 14f,
+//            0f, 14f,
+//            // Triangle 2
+//            0f, 0f,
+//            9f, 0f,
+//            9f, 14f,
+//            // Line 1
+//            0f, 7f,
+//            9f, 7f,
+//            // Mallets
+//            4.5f, 2f,
+//            4.5f, 12f
+            // Triangle 1
             0f, 0f,
-            9f, 14f,
-            0f, 14f,
 
-            0f, 0f,
-            9f, 0f,
-            9f, 14f
+
+            // Triangle 2
+            -0.5f, -0.5f,
+            0.5f, -0.5f,
+            0.5f, 0.5f,
+
+            // Line 1
+            -0.5f, 0f,
+            0.5f, 0f,
+
+            // Mallets
+            0f, -0.25f,
+            0f, 0.25f,
+            0f, 0f
     )
 
     // 数据直接给 native 区域, allocateDirect 分配本地内存（不会被垃圾回收管理）
+    // 桌子的顶点位置
     var vertexData: FloatBuffer = ByteBuffer.allocateDirect(tableVerticesWithTriangles.size * BYTES_PER_FLOAT)
             .order(ByteOrder.nativeOrder()).asFloatBuffer()
 
@@ -60,22 +85,51 @@ class FirstOpenglFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         glSurfaceView = GLSurfaceView(view.context)
+        glSurfaceView?.setEGLContextClientVersion(2)    // 需要加上这句，不然画不出来
         glSurfaceView?.setRenderer(FirstRenderer(view.context))        // surface 创建 or 绘制变化时 render都将被调用
         isSetRender = true
         (view as ViewGroup).addView(glSurfaceView)
     }
 
-    class FirstRenderer(ctx: Context) : GLSurfaceView.Renderer {
+    inner class FirstRenderer(ctx: Context) : GLSurfaceView.Renderer {
+
+        // 一个顶点有2个分量
+        val POSITION_COMPONENT_COUNT = 2
 
         val vertexShaderSource: String = readTextFileFromResource(ctx, R.raw.gl_simple_vertex_shader)
         val fragShaderSource: String = readTextFileFromResource(ctx, R.raw.gl_simple_fragment_shader)
+        // 链接程序id
+        var program: Int = 0
+
+        val U_COLOR = "u_Color"
+        var uColorLocation: Int = 0
+        val A_POSITON = "a_Position"
+        var aPositionLocation = 0
 
         override fun onSurfaceCreated(gl: GL10, config: EGLConfig) {
-            // 1.清空屏幕时，显示红色
-            glClearColor(1.0f, 0.0f, 0.0f, 0.0f)
+            // 1.清空屏幕时
+            glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
             // 2.编译着色器
             val vertexShader = ShaderHelper.compileVertexShader(vertexShaderSource)
             val fragmentShader = ShaderHelper.compileFragmentShader(fragShaderSource)
+            program = ShaderHelper.linkProgram(vertexShader, fragmentShader)
+            // 验证程序
+            ShaderHelper.validateProgram(program)
+            // 使用程序
+            glUseProgram(program)
+
+            // 获取 uniform 位置
+            uColorLocation = glGetUniformLocation(program, U_COLOR)
+            // 获取属性位置
+            aPositionLocation = glGetAttribLocation(program, A_POSITON)
+
+            // 告诉 openGL 到哪里找到属性 a_Position 对应的数据
+            vertexData.position(0)
+            glVertexAttribPointer(aPositionLocation, POSITION_COMPONENT_COUNT,
+                    GL_FLOAT, false, 0, vertexData)
+
+            // 使能属性
+            glEnableVertexAttribArray(aPositionLocation)
         }
 
         override fun onSurfaceChanged(gl: GL10, width: Int, height: Int) {
@@ -84,7 +138,28 @@ class FirstOpenglFragment : Fragment() {
 
         override fun onDrawFrame(gl: GL10) {
             // 1.清屏
-            GLES32.glClear(GLES32.GL_COLOR_BUFFER_BIT)
+            glClear(GLES32.GL_COLOR_BUFFER_BIT)
+            // 更新着色器代码中的 u_Color 值
+            glUniform4f(uColorLocation, 1.0f, 1.0f, 1.0f, 1.0f)
+            // 绘制2个三角形 （draw the table）
+            glDrawArrays(GL_TRIANGLES, 0, 6)
+
+            // 绘制分割线
+            glUniform4f(uColorLocation, 1.0f, 0.0f, 0.0f, 1.0f)
+            glDrawArrays(GLES20.GL_LINES, 6, 2)
+
+            // 绘制点1
+            glUniform4f(uColorLocation, 0.0f, 0.0f, 1.0f, 1.0f)
+            glDrawArrays(GLES20.GL_POINTS, 8, 1)
+
+            // 绘制点2
+            glUniform4f(uColorLocation, 1.0f, 0.0f, 0.0f, 1.0f)
+            glDrawArrays(GLES20.GL_POINTS, 9, 1)
+
+            // 绘制点3
+            glDrawArrays(GLES20.GL_POINTS, 10, 1)
+
+            // 绘制长方形
         }
     }
 
