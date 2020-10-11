@@ -49,6 +49,7 @@ class BaseViewScrollActivity : ToolbarActivity() {
         }
     }
 
+    // left top right bottom 除非调用setLayout，其他情况下不会变化
     fun showInfo() {
         Log.d("viewBase", String.format("scrollX:%s, scrolly: %s, left:%s, x:%s, y:%s, translationX:%s, translationY:%s",
                 tv_base.getScrollX(), tv_base.scrollY, tv_base.getLeft(), tv_base.getX(),
