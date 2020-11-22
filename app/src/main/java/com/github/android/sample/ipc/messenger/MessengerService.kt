@@ -26,7 +26,10 @@ class MessengerService : Service() {
             super.handleMessage(msg)
             when (msg.what) {
                 MSG_FROM_CLIENT -> {
-                    e("msg from client: ${msg.data}")
+                    // 如果调用方与service非同一进程（service配置了 process），调入方不会挂着，但服务端会挂起来；
+                    // 否则，调用方将会挂起，知道任务完成，
+                    SystemClock.sleep(3500)
+                    e("better", "msg from client: ${msg.data}")
                 }
             }
         }
