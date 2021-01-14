@@ -4,17 +4,6 @@
     package="com.github.android.sample">
     <!-- 自定义权限 start -->
     <!-- 天气预报查询权限 -->
-    <permission
-        android:name="com.github.android.sample.permission.FORECAST_SERVICE"
-        android:protectionLevel="normal" /> <!-- 自定义权限 end -->
-    <uses-permission android:name="com.github.android.sample.permission.FORECAST_SERVICE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-
     <application
         android:name="com.better.base.CommonApplication"
         android:allowBackup="true"
@@ -23,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".opengl.OpenglMainActivity"></activity>
+        <activity android:name=".problem.memory.MemoryBitmapActivity"></activity>
+        <activity android:name=".opengl.OpenglMainActivity" />
         <activity android:name=".sensor.SensorMainActivity" />
         <activity android:name=".camera.CameraOld3Activity" />
         <activity android:name=".camera.CameraOld2Activity" />
@@ -54,12 +44,8 @@
         <activity android:name=".jetpack.architecture.ViewModelTest1Activity" />
         <activity android:name=".ipc.messenger.MessengerPassActivity" />
 
-        <provider
-            android:name=".provider.db.database.MyDatabaseProvider"
-            android:authorities="${applicationId}"
-            android:exported="false" />
-
         <activity android:name=".provider.db.DBActivity1" />
+
         <activity
             android:name=".activity_base.singleTask.SingleInstanceActivity"
             android:launchMode="singleInstance" />
@@ -73,10 +59,10 @@
         <activity
             android:name=".activity_base.singleTask.SingleTask2Activity"
             android:launchMode="singleTask"
-            android:taskAffinity=".better" /> <!-- 不配置taskAffinity -->
+            android:taskAffinity=".better" />
         <activity
             android:name=".activity_base.singleTask.SingleTask3Activity"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask" /> <!-- 不配置taskAffinity -->
         <activity android:name=".activity_base.singleTask.SingleTaskMainTestActivity" />
         <activity android:name=".constraintLayout.ConstaintLayoutDemo1Activity" />
         <activity android:name=".anim.TweenAnim1Activity" />
@@ -113,13 +99,53 @@
         <activity
             android:name=".md.DrawerLayoutActivity"
             android:label="@string/title_activity_drawer_layout"
-            android:theme="@style/AppTheme" /> <!-- IPC Start -->
+            android:theme="@style/AppTheme" />
+        <activity android:name=".ipc.messenger.MessengerActivity" /> <!-- IPC Start -->
+        <activity android:name=".ipc.messenger.Messenger2Activity" />
+        <activity android:name=".ipc.aidl.BookManagerActivity" />
+        <activity android:name=".ipc.aidl.BookManager2Activity" />
+        <activity android:name=".widget.room.Room1Activity" />
+        <activity android:name=".ipc.aidl.BookManager3Activity" />
+        <activity android:name=".ipc.forecast.ForecaseActivity" />
+        <activity android:name=".ipc.sample.AlbumIPCActivity" />
+        <activity
+            android:name=".ipc.sample.IPCTest1Activity"
+            android:process=":remote" />
+
+        <activity android:name=".ipc.subthread.SubThreadHandleActivity" />
+        <activity
+            android:name=".ipc.socket.TcpSocketClientActivity"
+            android:taskAffinity="" />
+        <activity android:name=".annotationProcesser.AnnotationProcesserTestActivity" />
+        <activity android:name=".svg.SVG1Activity" />
+        <activity
+            android:name=".ipc.subthread.SubThreadResultActivity"
+            android:label="@string/title_activity_sub_thread_result"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".problem.webview.WebViewSwipeConflictActivity" />
+        <activity android:name=".ipc.resultreceiver.ResultReceiverTest1Activity" />
+        <meta-data
+            android:name="TencentMapSDK"
+            android:value="EXLBZ-B7TH5-CTZIK-QNQFR-76OGO-GNFCS" />
+        <provider
+            android:name=".provider.db.database.MyDatabaseProvider"
+            android:authorities="${applicationId}"
+            android:exported="false" />
+
+        <receiver
+            android:name=".ipc.broadcast.ProcessBroadCast"
+            android:process=":better" />
+
+        <receiver
+            android:name=".ipc.broadcast.ProcessBroadCast"
+            android:process=":better" />
+
         <service
             android:name=".ipc.messenger.MessengerService"
-            android:process=":remote" />
+            android:process=":remote" /> <!-- IPC End -->
         <service
             android:name=".ipc.messenger.MessengerService2"
-            android:process=":remote" />
+            android:process=":remote" /> <!-- IPC End -->
         <service
             android:name=".ipc.aidl.BookManagerService"
             android:process=":remote">
@@ -153,48 +179,23 @@
             <intent-filter>
                 <action android:name="com.github.android.sample.ipc.messenger.MessengerPassService" />
             </intent-filter>
-        </service>
-
-        <activity android:name=".ipc.messenger.MessengerActivity" />
-        <activity android:name=".ipc.messenger.Messenger2Activity" />
-        <activity android:name=".ipc.aidl.BookManagerActivity" />
-        <activity android:name=".ipc.aidl.BookManager2Activity" />
-        <activity android:name=".widget.room.Room1Activity" />
-        <activity android:name=".ipc.aidl.BookManager3Activity" />
-        <activity android:name=".ipc.forecast.ForecaseActivity" />
-        <activity android:name=".ipc.sample.AlbumIPCActivity" />
-        <activity
-            android:name=".ipc.sample.IPCTest1Activity"
-            android:process=":remote" />
-
+        </service> <!-- location -->
         <service
             android:name=".ipc.socket.TcpSocketService"
             android:enabled="true"
             android:exported="true"
             android:process=":remote" />
+    </application> <!-- 自定义权限 end -->
+    <permission
+        android:name="com.github.android.sample.permission.FORECAST_SERVICE"
+        android:protectionLevel="normal" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-        <activity android:name=".ipc.subthread.SubThreadHandleActivity" />
-
-        <receiver
-            android:name=".ipc.broadcast.ProcessBroadCast"
-            android:process=":better" /> <!-- IPC End -->
-        <receiver
-            android:name=".ipc.broadcast.ProcessBroadCast"
-            android:process=":better" /> <!-- IPC End -->
-        <activity
-            android:name=".ipc.socket.TcpSocketClientActivity"
-            android:taskAffinity="" />
-        <activity android:name=".annotationProcesser.AnnotationProcesserTestActivity" />
-        <activity android:name=".svg.SVG1Activity" />
-        <activity
-            android:name=".ipc.subthread.SubThreadResultActivity"
-            android:label="@string/title_activity_sub_thread_result"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".problem.webview.WebViewSwipeConflictActivity" />
-        <activity android:name=".ipc.resultreceiver.ResultReceiverTest1Activity" /> <!-- location -->
-        <meta-data
-            android:name="TencentMapSDK"
-            android:value="EXLBZ-B7TH5-CTZIK-QNQFR-76OGO-GNFCS" />
-    </application>
+    <uses-permission android:name="com.github.android.sample.permission.FORECAST_SERVICE" />
 
 </manifest>
