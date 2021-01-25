@@ -20,10 +20,7 @@ import com.github.android.sample.opengl.OpenglMainActivity
 import com.github.android.sample.provider.db.DBActivity1
 import com.github.android.sample.svg.SVG1Activity
 import com.github.android.sample.tools.ToolAttributesTest1Activity
-import view.BaseViewCoordinateActivity
-import view.BaseViewScrollActivity
-import view.BaseViewTouchAnimActivity
-import view.BaseViewXAndTranslationXActivity
+import view.*
 
 /**
  * Created by zhaoyu on 2018/3/11.
@@ -455,6 +452,13 @@ class BaseFunItemTemplate private constructor(ctx: Context) {
                     title = "随着手指滑动"
                     desc = "随着手指滑动"
                     clazz = BaseViewTouchAnimActivity::class.java
+                }
+
+                item {
+                    pid = 8
+                    title = "事件分发"
+                    desc = "事件分发(View & ViewGroup)"
+                    clazz = BaseDispatchTouchEventActivity::class.java
                 }
             }
 

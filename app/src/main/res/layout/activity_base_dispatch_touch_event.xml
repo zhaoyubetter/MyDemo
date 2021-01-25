@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <view.testView.MyRelativeLayout2
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:background="@color/blue_27"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:text="group2"
+            android:textColor="@color/colorAccent" />
+
+        <view.testView.MyRelativeLayout1
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:background="@color/yellow_27">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:text="group1"
+                android:textColor="@color/colorAccent" />
+
+            <view.testView.MyTextView
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:clickable="true"
+                android:layout_centerInParent="true"
+                android:background="@color/green_27"
+                android:gravity="center"
+                android:text="textView" />
+
+        </view.testView.MyRelativeLayout1>
+    </view.testView.MyRelativeLayout2>
+
+</LinearLayout>

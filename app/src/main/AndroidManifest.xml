@@ -2,8 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.github.android.sample">
-    <!-- 自定义权限 start -->
-    <!-- 天气预报查询权限 -->
+    <!-- 自定义权限 end -->
     <application
         android:name="com.better.base.CommonApplication"
         android:allowBackup="true"
@@ -12,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".problem.memory.MemoryBitmapActivity"></activity>
+        <activity android:name="view.BaseDispatchTouchEventActivity"></activity>
+        <activity android:name=".problem.memory.MemoryBitmapActivity" />
         <activity android:name=".opengl.OpenglMainActivity" />
         <activity android:name=".sensor.SensorMainActivity" />
         <activity android:name=".camera.CameraOld3Activity" />
@@ -43,9 +43,7 @@
         <activity android:name=".jetpack.architecture.LiveDataTest1Activity" />
         <activity android:name=".jetpack.architecture.ViewModelTest1Activity" />
         <activity android:name=".ipc.messenger.MessengerPassActivity" />
-
         <activity android:name=".provider.db.DBActivity1" />
-
         <activity
             android:name=".activity_base.singleTask.SingleInstanceActivity"
             android:launchMode="singleInstance" />
@@ -111,7 +109,6 @@
         <activity
             android:name=".ipc.sample.IPCTest1Activity"
             android:process=":remote" />
-
         <activity android:name=".ipc.subthread.SubThreadHandleActivity" />
         <activity
             android:name=".ipc.socket.TcpSocketClientActivity"
@@ -124,9 +121,11 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".problem.webview.WebViewSwipeConflictActivity" />
         <activity android:name=".ipc.resultreceiver.ResultReceiverTest1Activity" />
+
         <meta-data
             android:name="TencentMapSDK"
             android:value="EXLBZ-B7TH5-CTZIK-QNQFR-76OGO-GNFCS" />
+
         <provider
             android:name=".provider.db.database.MyDatabaseProvider"
             android:authorities="${applicationId}"
@@ -135,7 +134,6 @@
         <receiver
             android:name=".ipc.broadcast.ProcessBroadCast"
             android:process=":better" />
-
         <receiver
             android:name=".ipc.broadcast.ProcessBroadCast"
             android:process=":better" />
@@ -185,17 +183,18 @@
             android:enabled="true"
             android:exported="true"
             android:process=":remote" />
-    </application> <!-- 自定义权限 end -->
+    </application>
+
     <permission
         android:name="com.github.android.sample.permission.FORECAST_SERVICE"
         android:protectionLevel="normal" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
     <uses-permission android:name="com.github.android.sample.permission.FORECAST_SERVICE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
