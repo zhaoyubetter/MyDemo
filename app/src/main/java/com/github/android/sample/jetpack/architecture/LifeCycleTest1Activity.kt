@@ -44,6 +44,7 @@ class LifeCycleTest1Activity : AppCompatActivity() {
                     arrayOf(ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION),
                     22)
         } else {
+            lifecycle
             bindLocationListener()
         }
     }
