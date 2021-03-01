@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.github.android.sample.R
-import com.tencent.tencentmap.mapsdk.maps.MapView
-import com.tencent.tencentmap.mapsdk.maps.TencentMap
+//import com.tencent.tencentmap.mapsdk.maps.MapView
+//import com.tencent.tencentmap.mapsdk.maps.TencentMap
 import kotlinx.android.synthetic.main.fragment_map_base.*
 
 
@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_map_base.*
  **/
 class MapUseFragment : Fragment() {
 
-    private var mapView: MapView? = null
+//    private var mapView: MapView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_map_base, container, false)
@@ -32,30 +32,30 @@ class MapUseFragment : Fragment() {
         }
         // 移除
         btn_del.setOnClickListener {
-            mapView?.let {
-                (view as ViewGroup).removeView(it)
-                it.onDestroy()
-                mapView = null
-            }
+//            mapView?.let {
+//                (view as ViewGroup).removeView(it)
+//                it.onDestroy()
+//                mapView = null
+//            }
         }
         // 交通
         chk_traffic.setOnCheckedChangeListener { _, isChecked ->
-            mapView?.map?.isTrafficEnabled = isChecked
+//            mapView?.map?.isTrafficEnabled = isChecked
         }
         // 卫星
         chk_satellite.setOnCheckedChangeListener { _, isChecked ->
-            mapView?.map?.mapType = if (isChecked) TencentMap.MAP_TYPE_SATELLITE else TencentMap.MAP_TYPE_NORMAL
+//            mapView?.map?.mapType = if (isChecked) TencentMap.MAP_TYPE_SATELLITE else TencentMap.MAP_TYPE_NORMAL
         }
     }
 
     private fun initMap() {
-        if (mapView == null) {
-            mapView = MapView(this.context!!)
-            mapView?.layoutParams = ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-            (view as ViewGroup).addView(mapView)
-        }
-        mapView?.onResume()
+//        if (mapView == null) {
+//            mapView = MapView(this.context!!)
+//            mapView?.layoutParams = ViewGroup.LayoutParams(
+//                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+//            (view as ViewGroup).addView(mapView)
+//        }
+//        mapView?.onResume()
     }
 
     /**
@@ -63,9 +63,9 @@ class MapUseFragment : Fragment() {
      */
     private fun settingMap() {
         //获取TencentMap实例
-        val tencentMap = mapView?.getMap()
+//        val tencentMap = mapView?.getMap()
 //        isTrafficEnabled
-        tencentMap?.setCameraCenterProportion(39.0f, 116.0f)
+//        tencentMap?.setCameraCenterProportion(39.0f, 116.0f)
         //设置缩放级别
     }
 
@@ -73,10 +73,10 @@ class MapUseFragment : Fragment() {
      * UiSettings类用于设置地图的视图状态，如Logo位置设置、比例尺位置设置、地图手势开关等
      */
     private fun settingUI() {
-        val uiSystem = mapView?.map?.uiSettings
-        uiSystem?.isRotateGesturesEnabled = true    // 不允许旋转
-        uiSystem?.isMyLocationButtonEnabled = true  // 定位按钮
-        uiSystem?.isCompassEnabled = true       // 指南针
+//        val uiSystem = mapView?.map?.uiSettings
+//        uiSystem?.isRotateGesturesEnabled = true    // 不允许旋转
+//        uiSystem?.isMyLocationButtonEnabled = true  // 定位按钮
+//        uiSystem?.isCompassEnabled = true       // 指南针
     }
 
 
@@ -92,22 +92,22 @@ class MapUseFragment : Fragment() {
 
 
     override fun onDestroy() {
-        mapView?.onDestroy()
+//        mapView?.onDestroy()
         super.onDestroy()
     }
 
     override fun onPause() {
-        mapView?.onPause()
+//        mapView?.onPause()
         super.onPause()
     }
 
     override fun onResume() {
-        mapView?.onResume()
+//        mapView?.onResume()
         super.onResume()
     }
 
     override fun onStop() {
-        mapView?.onStop()
+//        mapView?.onStop()
         super.onStop()
     }
 }
