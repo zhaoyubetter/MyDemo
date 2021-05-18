@@ -12,19 +12,23 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="状态："
             android:textStyle="bold" />
 
         <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/tv_status"
+                android:id="@+id/tv_logs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                tools:text="连接中。。。" />
 
         </ScrollView>
 
@@ -54,18 +58,37 @@
         android:orientation="horizontal">
 
         <EditText
+            android:id="@+id/et_toServer_name"
+            android:layout_width="136dp"
+            android:layout_height="wrap_content"
+            android:hint="发消息给服务"
+            android:lines="1"
+            android:text="getDeviceInfo" />
+
+        <EditText
+            android:id="@+id/et_toServer_params"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="发消息给服务" />
+            android:hint="发送的数据 json 格式"
+            android:text="{ }" />
 
         <Button
             android:id="@+id/btn_sendToServer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ToServer" />
+            android:text="异步掉服务" />
+
+        <Button
+            android:id="@+id/btn_sendToSyncServer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="同步掉服务" />
 
     </LinearLayout>
+
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -74,10 +97,21 @@
         android:orientation="horizontal">
 
         <EditText
+            android:id="@+id/et_toClient_name"
+            android:layout_width="136dp"
+            android:layout_height="wrap_content"
+            android:hint="发消息给客户"
+            android:lines="1"
+            android:text="" />
+
+        <EditText
+            android:id="@+id/et_toClient_params"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="发消息给Client" />
+            android:hint="发送的数据 json 格式"
+            android:text="{ }" />
+
 
         <Button
             android:id="@+id/btn_sendToClient"
