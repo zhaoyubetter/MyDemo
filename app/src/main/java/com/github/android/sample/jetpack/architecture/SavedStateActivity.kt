@@ -19,17 +19,17 @@ class SavedStateActivity : AppCompatActivity() {
         setContentView(R.layout.activity_saved_state)
 
         // 引用一个 SavedStateVMFactory
-        savedStateViewModel = ViewModelProviders.of(this, SavedStateVMFactory(this))
-                .get(SavedStateViewModel::class.java)
-
-        savedStateViewModel.getName().observe(this, Observer<String> {
-            saved_vm_tv.text = it
-        })
-
-        // saved
-        save_bt.setOnClickListener {
-            savedStateViewModel.saveNewName(name_et.text.toString())
-        }
+//        savedStateViewModel = ViewModelProviders.of(this, SavedStateVMFactory(this))
+//                .get(SavedStateViewModel::class.java)
+//
+//        savedStateViewModel.getName().observe(this, Observer<String> {
+//            saved_vm_tv.text = it
+//        })
+//
+//        // saved
+//        save_bt.setOnClickListener {
+//            savedStateViewModel.saveNewName(name_et.text.toString())
+//        }
     }
 
     // 使用 key 来保存数据

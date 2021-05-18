@@ -9,6 +9,7 @@ import com.github.android.sample.canvas_paint.*
 import com.github.android.sample.ipc.aidl.BookManager2Activity
 import com.github.android.sample.ipc.aidl.BookManager3Activity
 import com.github.android.sample.ipc.aidl.BookManagerActivity
+import com.github.android.sample.ipc.aidl.CommunicationEachOtherActivity
 import com.github.android.sample.ipc.forecast.ForecaseActivity
 import com.github.android.sample.ipc.messenger.Messenger2Activity
 import com.github.android.sample.ipc.messenger.MessengerActivity
@@ -177,6 +178,13 @@ class WidgetFunItemTemplate private constructor(ctx: Context) {
                     title = "跨进程 Activity 通信"
                     desc = "最好通过json来交换数据"
                     clazz = AlbumIPCActivity::class.java
+                }
+
+                item {
+                    pid = 3
+                    title = "双向通信示例"
+                    desc = "双向通信（包含相互死亡监听）"
+                    clazz = CommunicationEachOtherActivity::class.java
                 }
 
                 item {
