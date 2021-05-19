@@ -4,8 +4,10 @@ import android.app.Service
 import android.content.Intent
 import android.os.*
 import android.util.Log
+import androidx.annotation.RequiresApi
 import com.better.base.getProcessName
 import com.github.android.sample.ICommuncationEachCallback
+import com.github.android.sample.ICommuncationEachClientInterface
 import com.github.android.sample.ICommuncationEachInterface
 import org.json.JSONObject
 
@@ -20,6 +22,7 @@ class CommunicationEachService : Service() {
     private val mCallbacks: RemoteCallbackList<ICommuncationEachCallback> = RemoteCallbackList()
     private val apis: ApiManager = ApiManager()
     private val binder = CommunicationEachStub()
+    private val clients = HashMap<String, ICommuncationEachClientInterface>()
 
     override fun onBind(intent: Intent?) = binder
 
@@ -55,13 +58,38 @@ class CommunicationEachService : Service() {
         }
 
         val realApi = apis.remoteApis[name]
-        if (realApi == null) {
+        if ("sendEvent" == name) {
+            // 服务端发送消息给客户端
+            sendEventToClient(bundle)
+        } else if(realApi == null)  {
             val apiResult = IpcResponse(msg = "fail:not found api: $name", code = -1, data = "")
             cb.onIpcInvokedCompleted(apiResult)
         } else {
             realApi.invoke(name, params, cb)
             // 直接通过 bundle 将返回值写回给调用方
             bundle.putString("serverInfo", "来着服务端添加的信息")
+        }
+    }
+
+    private fun sendEventToClient(bundle:Bundle) {
+        val appIds = bundle.getStringArrayList("appIds")
+        val data = bundle.getString("data")
+        Log.d(TAG, "收到服务发送事件请求, name: sendEvent, data: $data, process: ${applicationContext.getProcessName()}, thread:${Thread.currentThread().name}")
+        val resp = Bundle()
+        resp.putString("name", "event_play")
+        resp.putString("data", """ 
+                 {
+                    "videoId":1,
+                    "url":"http://111.com"
+                 }
+            """.trimIndent())
+        if(appIds == null || appIds.isEmpty()) {
+
+            clients.forEach { (t, u) -> u.sendEventToMp(resp)}
+        } else {
+            for (id in appIds) {
+                clients.get(id)?.sendEventToMp(resp)
+            }
         }
     }
 
@@ -109,15 +137,29 @@ class CommunicationEachService : Service() {
 
         override fun sendAsync(bundle: Bundle, callback: ICommuncationEachCallback) {
             val eventName = bundle.getString("name") ?: ""
-            val params = JSONObject(bundle.getString("params") ?: "")
+            val params = JSONObject(bundle.getString("data") ?: "")
             mCallbacks.register(callback, eventName)
             async(eventName, params, bundle)
         }
 
         override fun sendSync(bundle: Bundle): Bundle {
             val eventName = bundle.getString("name") ?: ""
-            val params = JSONObject(bundle.getString("params") ?: "")
+            val params = JSONObject(bundle.getString("data") ?: "")
             return sync(eventName, params)
+        }
+
+        override fun registerClient(appId: String, client: ICommuncationEachClientInterface) {
+            synchronized(this) {
+                clients.put(appId, client)
+                Log.d(TAG, "registerClient, appId: $appId, clientSize: ${clients.size}")
+            }
+        }
+
+        override fun unRegisterClient(appId: String) {
+            synchronized(this) {
+                clients.remove(appId)
+                Log.d(TAG, "unRegisterClient, appId: $appId, clientSize: ${clients.size}")
+            }
         }
     }
 }

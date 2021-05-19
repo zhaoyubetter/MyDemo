@@ -77,13 +77,13 @@
             android:id="@+id/btn_sendToServer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="异步掉服务" />
+            android:text="异步服务" />
 
         <Button
             android:id="@+id/btn_sendToSyncServer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="同步掉服务" />
+            android:text="同步服务" />
 
     </LinearLayout>
 
@@ -117,7 +117,7 @@
             android:id="@+id/btn_sendToClient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ToClient" />
+            android:text="服务调客户" />
     </LinearLayout>
 
 </LinearLayout>

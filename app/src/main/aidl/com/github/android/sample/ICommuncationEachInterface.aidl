@@ -2,6 +2,7 @@
 package com.github.android.sample;
 
 import com.github.android.sample.ICommuncationEachCallback;
+import com.github.android.sample.ICommuncationEachClientInterface;
 
 // Declare any non-default types here with import statements
 
@@ -12,4 +13,8 @@ interface ICommuncationEachInterface {
      // 需要在子线程发起 IPC 调用，bundle 可以直接写返回值，callback 可以不使用。
      void sendAsync(inout Bundle bundle, ICommuncationEachCallback callback);
      Bundle sendSync(inout Bundle bundle);
+
+     // 新增记录客户端的方法
+     oneway void registerClient(String appId, ICommuncationEachClientInterface client);
+     oneway void unRegisterClient(String appId);
 }

@@ -12,11 +12,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.better.base.getProcessName
 import com.github.android.sample.ICommuncationEachCallback
+import com.github.android.sample.ICommuncationEachClientInterface
 import com.github.android.sample.ICommuncationEachInterface
 import com.github.android.sample.R
 import kotlinx.android.synthetic.main.fragment_communication1.*
 import org.jetbrains.anko.support.v4.toast
 import org.json.JSONObject
+import java.util.ArrayList
 
 /**
  * 哪个线程发起远程调用，就会回调到哪个线程
@@ -28,6 +30,8 @@ class Communication1Fragment : Fragment(), View.OnClickListener {
     var ipcInterface: ICommuncationEachInterface? = null
     var serviceConnection: ServiceConnection? = null
     val mainHandler = Handler(Looper.getMainLooper())
+    // Running in Client
+    var clientBinder : ClientCommunicationBinder?= null
 
     lateinit var asyncHandler: Handler
 
@@ -73,7 +77,23 @@ class Communication1Fragment : Fragment(), View.OnClickListener {
                 sendToServeSync()
             }
             R.id.btn_sendToClient -> {
+                serveToClient()
+            }
+        }
+    }
 
+    private fun serveToClient() {
+        val name = et_toClient_name.text.toString()
+        val params = et_toClient_params.text.toString()
+        if (ipcInterface != null && name.isNotBlank()) {
+            val bundle = Bundle(2)
+            bundle.putString("name", "sendEvent")
+            bundle.putString("data", params)
+            bundle.putStringArrayList("appIds", ArrayList<String>().apply {
+                add("188")
+            } )
+            asyncHandler.post {
+                ipcInterface?.sendAsync(bundle, ipcInvokeCallback)
             }
         }
     }
@@ -121,7 +141,7 @@ class Communication1Fragment : Fragment(), View.OnClickListener {
         if (ipcInterface != null && name.isNotBlank()) {
             val bundle = Bundle(2)
             bundle.putString("name", name)
-            bundle.putString("params", params)
+            bundle.putString("data", params)
             asyncHandler.post {
                 ipcInterface?.sendAsync(bundle, ipcInvokeCallback)
                 toast(bundle.getString("serverInfo") ?: "无数据")
@@ -139,7 +159,7 @@ class Communication1Fragment : Fragment(), View.OnClickListener {
         if (ipcInterface != null && name.isNotBlank()) {
             val paramBundle = Bundle(2)
             paramBundle.putString("name", name)
-            paramBundle.putString("params", params)
+            paramBundle.putString("data", params)
 
             // 同步调用
             val bundle = ipcInterface?.sendSync(paramBundle)
@@ -170,6 +190,8 @@ class Communication1Fragment : Fragment(), View.OnClickListener {
                     } catch (e: Exception) {
                         Log.e(TAG, "service dead, try to bindService...")
                     }
+                    // 创建 stud
+                    createClientStubAndRegisterToServe()
                 }
 
                 override fun onServiceDisconnected(name: ComponentName?) {
@@ -182,6 +204,41 @@ class Communication1Fragment : Fragment(), View.OnClickListener {
         }
         val i = Intent(activity, CommunicationEachService::class.java);
         context?.bindService(i, serviceConnection!!, Context.BIND_AUTO_CREATE)
+    }
+
+    private fun createClientStubAndRegisterToServe() {
+        clientBinder = ClientCommunicationBinder()
+        ipcInterface?.registerClient("188", clientBinder)
+    }
+
+    //// client binder
+    inner class ClientCommunicationBinder : ICommuncationEachClientInterface.Stub() {
+        override fun sendEventToMp(requestBundle: Bundle): Bundle {
+            val respBundle = Bundle()
+            val name = requestBundle.getString("name")
+            val data = JSONObject(requestBundle.getString("data") ?: "")
+            // 处理来自的事件
+            tv_logs.post {
+                when(name) {
+                    "event_play" -> {
+                        tv_logs.append("收到播放事件: $data\n")
+                        scrollView.scrollTo(0, tv_logs.bottom)
+                    }
+                    "event_stop" -> {
+                        tv_logs.append("收到暂停事件: $data\n")
+                        scrollView.scrollTo(0, tv_logs.bottom)
+                    }
+                    "event_resume" -> {
+                        tv_logs.append("收到 resume 事件: $data\n")
+                        scrollView.scrollTo(0, tv_logs.bottom)
+                    }
+                }
+            }
+
+            respBundle.putInt("code", 0)
+            respBundle.putString("data", "")
+            return respBundle
+        }
     }
 
 }
