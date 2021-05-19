@@ -122,7 +122,12 @@ class Communication1Fragment : Fragment(), View.OnClickListener {
             val bundle = Bundle(2)
             bundle.putString("name", name)
             bundle.putString("params", params)
-            asyncHandler.post { ipcInterface?.sendAsync(bundle, ipcInvokeCallback) }
+            asyncHandler.post {
+                ipcInterface?.sendAsync(bundle, ipcInvokeCallback)
+                toast(bundle.getString("serverInfo") ?: "无数据")
+            }
+            // 测试直接主线程发起
+//            ipcInterface?.sendAsync(bundle, ipcInvokeCallback)
         } else {
             toast("IPC 连接未建立")
         }

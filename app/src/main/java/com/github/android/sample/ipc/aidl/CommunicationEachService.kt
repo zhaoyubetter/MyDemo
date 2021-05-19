@@ -26,7 +26,7 @@ class CommunicationEachService : Service() {
     /**
      * 远程进程运行
      */
-    private fun async(name: String, params: JSONObject) {
+    private fun async(name: String, params: JSONObject, bundle: Bundle) {
         Log.d(TAG, "async invoke, name: $name, params: $params, process: ${applicationContext.getProcessName()}, thread:${Thread.currentThread().name}")
         val cb = object : Api.IpcCallbackWrapper {
             override fun onIpcInvokedCompleted(response: IpcResponse) {
@@ -60,6 +60,8 @@ class CommunicationEachService : Service() {
             cb.onIpcInvokedCompleted(apiResult)
         } else {
             realApi.invoke(name, params, cb)
+            // 直接通过 bundle 将返回值写回给调用方
+            bundle.putString("serverInfo", "来着服务端添加的信息")
         }
     }
 
@@ -109,7 +111,7 @@ class CommunicationEachService : Service() {
             val eventName = bundle.getString("name") ?: ""
             val params = JSONObject(bundle.getString("params") ?: "")
             mCallbacks.register(callback, eventName)
-            async(eventName, params)
+            async(eventName, params, bundle)
         }
 
         override fun sendSync(bundle: Bundle): Bundle {
