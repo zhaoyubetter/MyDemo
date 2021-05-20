@@ -110,7 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="发送的数据 json 格式"
-            android:text="{ }" />
+            android:text="{'type':'event_play'}" />
 
 
         <Button

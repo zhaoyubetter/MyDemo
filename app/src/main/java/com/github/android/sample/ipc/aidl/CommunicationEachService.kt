@@ -2,9 +2,11 @@ package com.github.android.sample.ipc.aidl
 
 import android.app.Service
 import android.content.Intent
-import android.os.*
+import android.os.Bundle
+import android.os.IBinder
+import android.os.RemoteCallbackList
+import android.os.RemoteException
 import android.util.Log
-import androidx.annotation.RequiresApi
 import com.better.base.getProcessName
 import com.github.android.sample.ICommuncationEachCallback
 import com.github.android.sample.ICommuncationEachClientInterface
@@ -61,7 +63,7 @@ class CommunicationEachService : Service() {
         if ("sendEvent" == name) {
             // 服务端发送消息给客户端
             sendEventToClient(bundle)
-        } else if(realApi == null)  {
+        } else if (realApi == null) {
             val apiResult = IpcResponse(msg = "fail:not found api: $name", code = -1, data = "")
             cb.onIpcInvokedCompleted(apiResult)
         } else {
@@ -71,21 +73,23 @@ class CommunicationEachService : Service() {
         }
     }
 
-    private fun sendEventToClient(bundle:Bundle) {
+    private fun sendEventToClient(bundle: Bundle) {
         val appIds = bundle.getStringArrayList("appIds")
-        val data = bundle.getString("data")
-        Log.d(TAG, "收到服务发送事件请求, name: sendEvent, data: $data, process: ${applicationContext.getProcessName()}, thread:${Thread.currentThread().name}")
+        val data = JSONObject(bundle.getString("data"))
+        Log.d(TAG, "收到服务发送事件请求, name: sendEvent, data: $data, " +
+                "process: ${applicationContext.getProcessName()}," +
+                " thread:${Thread.currentThread().name}," +
+                " ClientSize: ${clients.size}")
         val resp = Bundle()
-        resp.putString("name", "event_play")
+        resp.putString("name", data.optString("type"))
         resp.putString("data", """ 
                  {
                     "videoId":1,
                     "url":"http://111.com"
                  }
             """.trimIndent())
-        if(appIds == null || appIds.isEmpty()) {
-
-            clients.forEach { (t, u) -> u.sendEventToMp(resp)}
+        if (appIds == null || appIds.isEmpty()) {
+            clients.forEach { (t, u) -> u.sendEventToMp(resp) }
         } else {
             for (id in appIds) {
                 clients.get(id)?.sendEventToMp(resp)
